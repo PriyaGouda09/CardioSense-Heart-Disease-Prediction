@@ -1,0 +1,329 @@
+═══════════════════════════════════════════════════════════════════════════════════
+FIGURE INSERTION GUIDE — IEEE PAPER PREPARATION
+"An Explainable ML Framework for Multiclass Cardiovascular Disease Severity Prediction"
+═══════════════════════════════════════════════════════════════════════════════════
+
+IMPORTANT: The current IEEE paper document contains placeholder figure captions but no
+actual images. This guide explains exactly which outputs from your Heart_Disease_Complete.ipynb
+notebook should be extracted, saved, and embedded in your final paper.
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+FIGURE EXTRACTION LOCATIONS IN NOTEBOOK:
+
+FIGURE 1: Boxplots of Numerical Features (Outlier Visualization)
+─────────────────────────────────────────────────────────────
+Cell: "6a. Visualize Outliers with Boxplots"
+Current status in paper: Not yet included (add after Outlier Management subsection)
+Purpose: Shows raw outliers before IQR clipping
+Dimensions: 16" × 12-16" (n_rows = (6+2)//3 = 2, so 2×3 subplots)
+Recommended caption: "Fig. 1. Boxplots of numerical features before outlier clipping (IQR method).
+                      Shows upper and lower bounds used for outlier detection in age, trestbps,
+                      chol, thalch, oldpeak, and ca."
+Section placement: End of "III. DATASET AND PREPROCESSING" → "B. Preprocessing Pipeline"
+
+FIGURE 2: Distribution of Numerical Features (EDA)
+──────────────────────────────────────────────
+Cell: "7a. Distribution of Numerical Features"
+Current status in paper: Not yet included (optional for space constraints)
+Purpose: Demonstrates skewness and spread of raw cardiac measurements
+Dimensions: 16" × 12-16" (2×3 subplots with kde curves)
+Recommended caption: "Fig. 2. Distributions of numerical features (histograms with KDE). Note
+                      right-skewed distributions in chol (cholesterol) and trestbps (resting
+                      blood pressure), typical of population cardiac measurements."
+Section placement: Optional; if included, place after Fig. 1 or in appendix
+
+FIGURE 3: Count Plots of Categorical Features (EDA)
+─────────────────────────────────────────────────
+Cell: "7b. Count of Categorical Features"
+Current status in paper: Not yet included (optional)
+Purpose: Shows class distributions of categorical variables
+Dimensions: 16" × 12-16" (2×3 subplots)
+Recommended caption: "Fig. 3. Categorical feature distributions across the dataset. Chest pain
+                      type (cp) and resting ECG (restecg) show clear clustering patterns."
+Section placement: Optional; can combine with Fig. 2 as a two-figure row
+
+FIGURE 4: Bivariate Analysis—Numerical Features vs. Target
+─────────────────────────────────────────────────────────
+Cell: "8a. Numerical Features vs Target"
+Current status in paper: Discussed in methodology but not visualised
+Purpose: Boxplots showing how numeric features separate by disease severity
+Dimensions: 16" × 12-16" (2×3 subplots showing num×{age, trestbps, chol, thalch, oldpeak, ca})
+Recommended caption: "Fig. 4. Numerical features stratified by target class (num = 0–4 severity
+                      levels). Note overlapping distributions across adjacent severity classes,
+                      particularly for Classes 2–4, indicating the multiclass classification challenge."
+Section placement: End of "IV. FEATURE ENGINEERING" or beginning of "VI. RESULTS"
+
+FIGURE 5: Bivariate Analysis—Categorical Features vs. Target
+────────────────────────────────────────────────────────────
+Cell: "8b. Categorical Features vs Target"
+Current status in paper: Not visualised
+Purpose: Stacked countplots showing categorical feature distributions by severity
+Dimensions: 16" × 12-16" (2×3 subplots with hue=num)
+Recommended caption: "Fig. 5. Categorical features versus heart disease severity (target class hue).
+                      Chest pain type shows clear severity gradients; asymptomatic presentations
+                      (cp=4) concentrate in higher severity classes."
+Section placement: Right after Fig. 4 (optional pair)
+
+FIGURE 6: Correlation Heatmap
+────────────────────────────
+Cell: "8c. Correlation Heatmap"
+Current status in paper: Not yet included (important for model interpretation)
+Purpose: Shows feature-to-target and feature-to-feature correlations
+Dimensions: 10" × 8" (square heatmap)
+Recommended caption: "Fig. 6. Pearson correlation matrix across all features and target variable.
+                      Maximum heart rate (thalch, ρ = −0.42) and ST depression (oldpeak, ρ = 0.43)
+                      show strongest univariate associations with severity. Note ca (coronary artery
+                      calcification count) shows ρ = 0.47, the strongest univariate predictor."
+Section placement: End of "IV. FEATURE ENGINEERING" (validates feature selection)
+
+FIGURE 7: Engineered Features Visualisation
+───────────────────────────────────────────
+Cell: "9f. Visualize Engineered Features"
+Current status in paper: Critical—SHOULD BE INCLUDED (validates feature engineering contribution)
+Purpose: Countplots of age_group, chol_risk, oldpeak_cat subsetted by target
+Dimensions: 16" × 5" (1×3 subplots)
+Recommended caption: "Fig. 7. Engineered features versus heart disease severity. (Left) Age group
+                      shows increasing disease prevalence with age. (Middle) Cholesterol risk flag
+                      (>200 mg/dL) shows strong class separation. (Right) Oldpeak severity categories
+                      confirm graded ST depression pattern correlated with severity."
+Section placement: End of "IV. FEATURE ENGINEERING" (immediately after Table I)
+PRIORITY: HIGH — This directly supports the feature engineering contribution claims
+
+FIGURE 8: Confusion Matrices for All Three Models
+─────────────────────────────────────────────────
+Cell: "12b. Confusion Matrices"
+Current status in paper: Placeholder text only ("Fig. 1. Confusion matrices...")
+Purpose: 5×5 confusion matrices for SVM, RF, MLP showing per-class prediction performance
+Dimensions: 18" × 5" (1×3 subplots, each ~5.5" × 5")
+Recommended caption: "Fig. 8. Confusion matrices on test set (n=175 samples). All three models
+                      concentrate predictions on Class 0 (healthy), achieving high recall but
+                      near-zero recall on Classes 3–4. SVM (left) shows the most severe
+                      collapse on minority classes. MLP (right) achieves distributed predictions
+                      across all classes but still misses most Class 4 instances."
+Section placement: "VI. RESULTS AND ANALYSIS" → "Per-Class Performance Analysis"
+PRIORITY: HIGH — Central result showing the class imbalance problem
+
+FIGURE 9: Model Comparison Bar Chart & Feature Importance
+──────────────────────────────────────────────────────────
+Cell: "12c. Model Comparison & Feature Importance"
+Current status in paper: Not yet included
+Purpose: Left panel—CV vs test accuracy comparison; Right panel—Random Forest feature importances
+Dimensions: 14" × 5" (1×2 subplots)
+Recommended caption: "Fig. 9. (Left) Cross-validation vs. test accuracy for all three models.
+                      MLP shows largest CV-test gap (55.31% vs. 59.24%), suggesting modest test-set
+                      bias. (Right) Top 15 feature importances from Random Forest reveal age_thalch_ratio
+                      as the single most predictive feature, validating the engineered interaction term."
+Section placement: End of "VI. RESULTS AND ANALYSIS" (models comparison)
+PRIORITY: MEDIUM–HIGH — Shows engineered feature validation
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+FIGURE EXTRACTION WORKFLOW:
+
+Step 1: Execute the Notebook Cells
+──────────────────────────────────
+Before you can access the images, you must first run the notebook:
+1. Open Heart_Disease_Complete.ipynb in VS Code or Jupyter
+2. Execute cells in sequence (Kernel > Restart and Run All)
+3. matplotlib plots will appear inline below each cell
+4. Each plot is automatically stored in notebook output
+
+Step 2: Save Individual Plots as PNG
+────────────────────────────────────
+Method A: Right-click on each plot in VS Code/Jupyter
+1. Right-click each plot image
+2. Select "Save Image As..."
+3. Save to a new folder: c:\Users\Vinay\Desktop\LY Project Heart disease Prediction\figures\
+4. Name consistently: Fig1_Boxplots.png, Fig2_Distributions.png, etc.
+
+Method B: Export programmatically via script (optional)
+Place this code block in a new notebook cell to re-save all plots:
+
+```python
+import matplotlib.pyplot as plt
+import os
+
+# Create figures directory if it doesn't exist
+os.makedirs('figures', exist_ok=True)
+
+# After each plot generation, add:
+# plt.savefig('figures/Fig1_Boxplots.png', dpi=300, bbox_inches='tight')
+```
+
+Step 3: Optimize Images for Submission
+──────────────────────────────────────
+1. DPI: 300 pixels/inch (publication standard)
+2. Format: PNG (supports lossless compression and transparency)
+   Alternative: TIFF (if conference prefers; ensure LZW compression)
+3. File size: Aim for 400–800 KB per image (not > 1 MB)
+4. Quality check: Ensure all text labels are readable at final size
+
+Convert using ImageMagick (command line):
+  convert -density 300 -quality 95 input.png output_300dpi.png
+
+Or in Python:
+```python
+from PIL import Image
+img = Image.open('figures/Fig1_Boxplots.png')
+img_resized = img.resize((int(img.width * 300/72), int(img.height * 300/72)))
+img_resized.save('figures/Fig1_Boxplots_300dpi.png', dpi=(300, 300), quality=95)
+```
+
+Step 4: Insert into IEEE Paper (MS Word)
+────────────────────────────────────────
+1. Open the formatted IEEE paper in Word
+2. Position cursor where figure should appear (right after describing results)
+3. Insert > Pictures > From this device
+4. Select PNG file (Fig8_ConfusionMatrices.png, etc.)
+5. Right-click image > Wrap Text > Tight (for two-column layout)
+6. Resize to fit single column width (~3.3")
+7. Add caption: Right-click > Insert Caption > "Figure 8. [description]" (below image)
+8. Update figure numbering if you reorder: Right-click > Update Field > Update entire table
+
+Step 5: Cross-reference in Text
+───────────────────────────────
+In the paper text, add references like:
+  "As shown in Fig. 8, all three models concentrate predictions on Class 0..."
+  "The confusionmatrices reveal (Fig. 8) that SVM's collapse on minority classes..."
+
+Automatic cross-reference (Word):
+1. Insert > Cross-reference
+2. Reference type: Figure
+3. Select the figure you want to reference
+4. Choose format: "Figure [number]"
+5. Link will auto-update if figure numbers change
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+RECOMMENDED FIGURE INCLUSION (PRIORITISED):
+
+ESSENTIAL (must include for publication):
+☑ Figure 8: Confusion Matrices (3×1, test set predictions)
+  Reason: Shows core result—why models fail on minority classes
+  Section: VI. RESULTS AND ANALYSIS
+  
+☑ Figure 7: Engineered Features (3×1, countplots)
+  Reason: Validates feature engineering contribution claims
+  Section: IV. FEATURE ENGINEERING (after Table I)
+
+HIGHLY RECOMMENDED (strongly encouraged):
+☑ Figure 9: Model Comparison & Feature Importances (2×1)
+  Reason: Shows age_thalch_ratio emergence as top predictor
+  Section: VI. RESULTS → Per-Class Analysis or VI. RESULTS conclusion
+  
+☑ Figure 1: Boxplots of Outliers (2×3)
+  Reason: Demonstrates IQR clipping method applied in preprocessing
+  Section: III. DATASET AND PREPROCESSING
+
+OPTIONAL (for extended version or supplementary material):
+☐ Figure 2: Distributions of Numerical Features (histograms with KDE)
+☐ Figure 3: Categorical Feature Distributions (countplots)
+☐ Figure 4: Numerical Features vs. Target (boxplots by class)
+☐ Figure 5: Categorical Features vs. Target (stacked countplots)
+☐ Figure 6: Correlation Heatmap
+
+If page limits are strict (4 pages), prioritise:
+  1. Figure 8 (confusion matrices) — NON-NEGOTIABLE
+  2. Figure 7 (engineered features) — essential for contribution claim
+  3. Optionally compress Fig. 1 and Fig. 9 into one multi-panel figure
+
+If you have 8–10 pages available, include all Figures 1, 7, 8, 9.
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+FIGURE CAPTION TEMPLATE (IEEE Style):
+
+Format: "Fig. [number]. [Concise title in sentence case]. [Explanatory sentence with 
+         specific quantitative details or interpretative comment]. Optional: [Methodology note]."
+
+Example (Fig. 8 — Confusion Matrices):
+"Fig. 8. Confusion matrices on the held-out test set (n=175 samples). The SVM model
+(left) assigns 79 of 175 predictions to Class 0 (healthy), achieving high recall for
+Class 0 but complete failure on Classes 3 and 4. Random Forest (middle) shows more
+distributed predictions but still assigns zero instances to Class 4. MLP (right) achieves
+the most balanced class assignment, yet misses 5 of 6 Class 4 instances. These results
+demonstrate that standard classifiers collapse on severely imbalanced minority classes."
+
+Caption placement: Below the figure, left-aligned, 9pt font, italicized label "Fig. 8."
+Number sequences auto-update if you insert/delete figures before it.
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+TECHNICAL NOTES FOR PAPER PRODUCTION:
+
+1. Image Resolution:
+   • Screen preview: 96 dpi (default)
+   • Publication/PDF: 300 dpi minimum
+   • Print (if hardcopy): 600 dpi recommended
+   
+2. Colour vs. Grayscale:
+   • Most IEEE conferences accept colour in PDFs
+   • If printing to paper, ensure plots remain readable in B/W
+   • Heatmaps: Use colourmap that's colourblind-friendly (e.g., "viridis" in matplotlib)
+   • Countplots: Use Set2 or husl palette (more distinguishable in grayscale)
+
+3. Figure File Organization:
+   Create this folder structure:
+   LY Project Heart disease Prediction/
+   ├── figures/
+   │   ├── Fig1_Boxplots_300dpi.png
+   │   ├── Fig7_EngineeredFeatures_300dpi.png
+   │   ├── Fig8_ConfusionMatrices_300dpi.png
+   │   ├── Fig9_ModelComparison_300dpi.png
+   │   └── [other figures]
+   ├── IEEE_Paper_CVD_Severity_Prediction.docx (final formatted version)
+   ├── Heart_Disease_Complete.ipynb
+   └── [other files]
+
+4. Embedded vs. Linked:
+   • Embedded: Image stored inside .docx file (file size larger, ~5–20 MB)
+   • Linked: Image file separate, referenced by path (smaller .docx, but breaks if images move)
+   • Recommendation: For submission, EMBED images into the .docx to ensure portability
+
+5. Conversion to PDF:
+   • Microsoft Word: File > Export as PDF (highest fidelity)
+   • LaTeX/Overleaf: Compile to PDF directly (highest quality for scientific papers)
+   • Check: Open resulting PDF in multiple readers (Adobe, Chrome, Foxit) to verify rendering
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+PUBLICATION CHECKLIST:
+
+Before Submitting Paper with Figures:
+
+☐ All figures numbered sequentially (Fig. 1, Fig. 2, ..., Fig. 9)
+☐ All figure captions descriptive and quantitatively grounded
+☐ All figures referenced in caption text (e.g., "As shown in Fig. 7...")
+☐ Figure quality: No pixelation, all text readable at final size
+☐ Figure dimensions: Fit within single or double column width (~3.3" or 6.8")
+☐ Colour palette: Accessible to colourblind readers where possible
+☐ Figures embedded (not linked) in final .docx or .pdf
+☐ File format consistency: All PNG or all TIFF (not mixed)
+☐ Resolution: 300 dpi minimum for all images
+☐ Captions distinguish between observations and methods
+☐ No figure repeats same information as text (accompanies, doesn't duplicate)
+☐ Figures appear in logical order (EDA before feature engineering before results)
+☐ Legend present on all multipart plots (confusion matrices, subplots)
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+EXPECTED OUTPUT:
+
+After completing this process, your final IEEE paper will contain:
+
+Title page: Author names, affiliations, emails ✓
+Abstract: 180 words + Keywords ✓
+Section I (Introduction): 420 words + strategy for granularity gap ✓
+Section II (Related Work): 480 words + [optional Fig. 6 heatmap] ✓
+Section III (Dataset & Preprocessing): 350 words + [Fig. 1 boxplots] ✓
+Section IV (Feature Engineering): 360 words + Table I + [Fig. 7 engineered features] ✓
+Section V (Methodology): 420 words ✓
+Section VI (Results): 520 words + Table II + [Fig. 8 confusion matrices] + [Fig. 9 importance] ✓
+Section VII (Discussion): 340 words ✓
+Section VIII (Conclusion): 210 words ✓
+References: 8 entries in IEEE format ✓
+
+Total: ~5,100 words + 4–6 figures + 2 tables = Publication-ready conference paper
+
+═══════════════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,1000 @@
+Evaluating the Impact of Feature Selection on
+Ensemble Models for Multiclass Heart Disease
+Prediction
+Jackson
+Information Systems
+Department
+Bina Nusantara University
+Jakarta, Indonesia
+jackson002@binus.ac.id
+Marvino Fransisco
+Information Systems
+Department
+Bina Nusantara University
+Jakarta, Indonesia
+marvino.fransisco@binus.ac.id
+Akira Chandra
+Information Systems
+Department
+Bina Nusantara University
+Jakarta, Indonesia
+akira.chandra@binus.ac.id
+Mediana Aryuni
+Information Systems
+Department
+Bina Nusantara University
+Jakarta, Indonesia
+mediana.aryuni@binus.ac.id
+Abstract—This study discusses the impact of different feature
+selection techniques on the performance of ensemble learning
+algorithms, namely Random Forest and XGBoost, in multiclass
+heart disease prediction. A real-world clinical dataset with class
+imbalances was used, which were resolved using the Synthetic Mi-
+nority Oversampling Technique (SMOTE). Three different fea-
+ture selection techniques—Chi-Square, Mutual Information, and
+SelectFromModel—were tested against baseline models without
+feature selection. The models were trained with hyperparameter
+tuning, and their performance metrics were compared using
+accuracy, precision, recall, and F1-score. The results showed that
+both Random Forest and XGBoost achieved optimal performance
+without feature selection, with the Random Forest model achiev-
+ing the highest accuracy of 57.1%. SHAP interpretations showed
+that erythrocyte, hemoglobin, and hematocrit were the major
+features that determined model predictions. These results suggest
+that tree-based ensemble techniques may have an inherent
+ability for feature relevance handling, reducing the need for
+explicit selection methods. This study adds to the knowledge and
+efficiency of predictive modeling in clinical diagnostics.
+Index Terms—Ensemble Learning, Random Forest, XGBoost,
+Feature Selection, Heart Disease Prediction, SHAP
+I. INTRODUCTION
+Cardiovascular illness is a leading cause of worldwide
+mortality, reported by the World Health Organization (WHO)
+to account for nearly 17 million deaths annually. The accurate
+and timely detection of these disorders is crucial to reducing
+mortality rates, but this evaluation often depends on the
+knowledge and skill of the medical practitioner, leading to
+potential misdiagnoses and increased medical costs [1].
+In recent times, Machine Learning (ML) techniques have
+been increasingly regarded as very potent predictive model
+tools, especially when applied to the diagnosis of cardio-
+vascular diseases [2]. Such increased emphasis on Machine
+Learning is partially due to the remarkable ability of Machine
+Learning to handle large and complicated datasets, uncover
+hidden patterns, and obtain results often beyond the reach of
+human analysis [3].
+Of the wide variety of machine learning algorithms, en-
+semble learning is often considered one of the most powerful
+methods in the field. Ensemble learning combines several base
+learners to create a combined and stronger model. As such,
+ensemble learning offers many advantages that enhance its
+effectiveness as a method for enhancing predictive power on
+a variety of tasks [4].
+Among the most extensively used ensemble algorithms
+are Random Forest (RF) and Extreme Gradient Boosting
+(XGBoost). Random Forest uses a bagging method and builds
+many individual decision trees, and each of these contributes
+to a final classification output [5]. In contrast, XGBoost uses a
+boosting approach and builds decision trees sequentially, with
+each tree designed to minimize the errors of the previous ones.
+This iteration helps to gradually minimize the predictive error
+over many learning iterations [6].
+Despite the empirically proven effectiveness of ensemble
+algorithms like Random Forest and Extreme Gradient Boost-
+ing (XGBoost), their effectiveness is largely dependent on
+the features and nature of the input data. Clinical datasets,
+especially those related to cardiac diseases, tend to have high-
+dimensional spaces with a very high percentage of irrelevant
+or redundant features, and are prone to imbalance in general.
+These issues can lead model overfitting and biased predictions
+[7]. To overcome these challenges, methods like feature selec-
+tion are utilized to maintain discriminating features, while data
+sampling methods like the Synthetic Minority Over-sampling
+Technique (SMOTE) are used to correct class imbalance and
+improve model robustness [8].
+This study investigates the influence of three different fea-
+ture selection methods—Chi-Square, Mutual Information, and
+SelectFromModel—on the performance of Random Forest and
+XGBoost classifiers in terms of multiclass heart disease clas-
+sification. The Synthetic Minority Over-sampling Technique
+(SMOTE) is used to counteract the imbalance in the dataset,
+and hyperparameter tuning improves prediction accuracy. In
+addition, SHAP (SHapley Additive Explanations) is used to
+explain how features contribute to the models’ predictions.
+Against the limitations of the clinical data available, this
+study focuses on the hematologic features remaining with clin-
+2025 10th International Conference on Information Technology and Digital Application (ICITDA) | 979-8-3315-9403-9/25/$31.00 ©2025 IEEE | DOI: 10.1109/ICITDA68167.2025.11332461
+Authorized licensed use limited to: Somaiya University. Downloaded on February 22,2026 at 13:32:40 UTC from IEEE Xplore.  Restrictions apply. 
+ical significance. The following sections of this manuscript are
+organized in this way: the following section are an overview of
+previous research pertinent to cardiovascular disease. Section
+III outlines the methods used in this study. Section IV inter-
+prets the results and the models used. Section V summarizes
+the conclusions from the findings of the research.
+II. RELATED WORKS
+The field of Machine Learning (ML) has received con-
+siderable interest in the medical field, particularly in the
+prediction and diagnosis of cardiovascular disease. Various
+research studies have indicated that ML models have the
+potential to identify patterns in clinical data that often escape
+human analysis. For example, Snigdha Datta et al. utilized
+Logistic Regression to predict cardiovascular disease with an
+accuracy of 81% [9].
+Among the many algorithms studied, ensemble-based algo-
+rithms like Random Forest and XGBoost have always proved
+to be highly effective in cardiovascular disease prediction.
+Madhumita Pal and Smita Parija reported that the Random
+Forest model achieved an accuracy of more than 86.9% in
+predicting heart disease [10]. Similarly, Juan Carlos Yang
+found that XGBoost, when carefully tuned with appropri-
+ate hyperparameters, outperformed conventional models by
+achieving more than 88% accuracy and even reaching up
+to 91% accuracy in certain experiments, thus proving its
+credibility in solving medical datasets [11].
+To further improve the precision of predictions, researchers
+have used feature selection methods with the aim of reducing
+dimensionality and eliminating unnecessary features. Accord-
+ing to Bilal Ahmad et al., Mutual Information (MI) and Chi-
+Square considerably increase the performance of classifiers
+while maintaining computational efficiency [12]. Similarly,
+Saikiran Kutikuppala et al. utilized the SelectFromModel fea-
+ture selection method to simplify the process of classification
+and maximize efficiency through the systematic selection of
+the most relevant features [13].
+One common problem faced in medical datasets is the
+occurrence of class imbalance, which causes overfitting of the
+model and biased prediction generation [7]. To overcome this
+issue, numerous oversampling methods have been extensively
+used, of which the most recognized one is the Synthetic Minor-
+ity Over-Sampling Technique (SMOTE). Anitha Juliette Albert
+et al. proved that the use of SMOTE resulted in significant
+improvements in terms of accuracy, precision, recall, and F1
+score compared with non-sampling datasets [14].
+There has been increased emphasis on interpretability in
+the field of medical machine learning in recent years. SHAP
+(SHapley Additive Explanations) is a remarkable tool that
+provides clear and theory-driven evaluations of feature im-
+portance. According to Amira et al., SHAP ensures that the
+contribution of every feature is fairly allocated, thus providing
+accurate and interpretable explanations for model predictions.
+Its ability to provide both global and local interpretability
+makes it particularly beneficial for unraveling complex ma-
+chine learning models, especially in high-stakes settings like
+medical diagnosis [15].
+While many studies have applied ensemble models or
+feature selection separately, few have systematically examined
+their combined impact on multiclass heart disease classifi-
+cation. Most prior work has focused on binary classifica-
+tion, leaving multiclass prediction underexplored. This study
+addresses these gaps by assessing how Chi-Square, Mutual
+Information, and SelectFromModel affect the performance of
+Random Forest and XGBoost, supported by SMOTE and
+hyperparameter tuning.
+III. METHODOLOGY
+The main aim of this study is to evaluate the impacts
+of three Feature selection techniques—Chi-Square, Mutual
+Information, and SelectFromModels to test the performance
+of Random Forest and XGBoost for multi-class prediction
+of heart disease. The overall framework shown in Figure 1
+includes data preprocessing, SMOTE for handling class imbal-
+ance, feature selection, model building with hyperparameter
+optimization, performance evaluation, and SHAP interpreta-
+tion. Each step is designed to Evaluate how feature selection
+affects the accuracy of the model and determine the essential
+clinical factors leading to cardiovascular disease.
+Fig. 1.
+Research proposed framework
+Authorized licensed use limited to: Somaiya University. Downloaded on February 22,2026 at 13:32:40 UTC from IEEE Xplore.  Restrictions apply. 
+A. Dataset Description
+The data used in the current study come from a medi-
+cal clinic located in West Jakarta and can be accessed at
+https://zenodo.org/records/15172095. The dataset in question
+is obtained from a standalone cardiovascular hospital with
+expertise in the diagnosis and treatment of heart diseases.
+The autonomy ensures that a large percentage of patients who
+report to the hospital have confirmed or suspected cardiac
+conditions, thus making the dataset especially representative
+and relevant to research in the prediction of heart disease.
+The dataset contains ten different attributes and 4,752 in-
+stances, including the class label. The label attribute, which
+is represented as ”icd pr,” indicates the precise type of angina
+pectoris the patient has been diagnosed with. The World Health
+Organization (WHO) classifies unstable angina based on the
+International Classification of Diseases, 10th Revision (ICD-
+10), and assigns it I20.0. This class includes crescendo angina,
+de novo effort angina, and provoked effort angina. In addition,
+the code I20.8 covers other types of angina pectoris, which
+include effort angina and stenocardia, while I20.9 is reserved
+for unspecified angina pectoris, including general angina (NOS
+- Not Otherwise Specified) [16]. The attributes used in this
+study are described as follows:
+• Gender: Categorical variable indicating patient sex (male
+or female).
+• Age: The patients’ ages range from 20 to 94 years.
+• Erythrocyte: Red blood cells responsible for oxygen
+transport. The erythrocyte sedimentation rate (ESR) can
+serve as a biomarker for inflammatory responses associ-
+ated with cardiovascular conditions [17], [18].
+• Hematocrit: Hematocrit levels are indicative of the pro-
+portion of red blood cells in blood volume and can be
+used to assess conditions such as anemia or polycythemia.
+Higher hematocrit levels have been associated with in-
+creased risk of coronary heart disease (CHD) [19], [20].
+• Hemoglobin: A protein in red blood cells that carries
+oxygen. Low hemoglobin levels (e.g., < 14g/dL for
+STEMI or < 11g/dL for NSTE-ACS) are associated with
+increased cardiovascular risk [21].
+• Leukocytes: White blood cell count. An elevated count
+can indicate inflammation and higher cardiovascular risk
+due to neutrophil and monocyte activation [22]. Leuko-
+cytes are also biomarkers for infections, inflammation,
+allergies, and leukemia [23].
+• Thrombocyte: A high level of thrombocytes in the
+patient’s blood indicates an increased risk of coronary
+heart disease [24]. Any increase or decrease in the
+thrombocyte level from the normal range, along with any
+dysfunction, is expected to lead to complications; thus,
+the determination of the level of thrombocytes can help
+in the diagnosis of certain medical conditions [25].
+• Hermch (MCH): Mean corpuscular hemoglobin, indicat-
+ing the average amount of hemoglobin per red blood cell
+[26].
+• Khermchc (MCHC): Mean corpuscular hemoglobin
+concentration (MCHC) measures the concentration of
+hemoglobin in red blood cells [26], [27].
+B. Data Preprocessing
+The preprocessing phase included the conversion of cat-
+egorical variables and normalization of numerical data. The
+’gender’ feature was expressed in binary form, assigning
+1 to females and 0 to males. Target variable ’icd pr’ was
+transformed using LabelEncoder for multiclass classification.
+In addition, features were standardized using the application of
+StandardScaler to normalize their scales and improve learning
+stability. These operations made the dataset comply with
+machine learning algorithm requirements while, at the same
+time, preventing the possibility of biased learning due to scale
+differences among features.
+C. Handling Class Imbalance
+One challenge in this study was class imbalance in the target
+feature that can cause overfitting and bias toward the majority
+classes, thus reducing performance on minority classes [7]. In
+the dataset, 44.9% of instances belong to class I20.0, 31.4% to
+I20.8, with only 23.7% of it being due to I20.9, highlighting
+the need for corrective measures.
+To remedy the problem under study, the Synthetic Minority
+Oversampling Technique (SMOTE) was applied to the dataset.
+SMOTE operates by generating synthetic instances for the
+minority classes through interpolation between current sam-
+ples in the minority class and their k-nearest neighbors [28].
+This worked to effectively balance the distribution across the
+classes, with each class being approximately 33.3% of the
+population in the sample.
+To formalize the SMOTE approach, synthetic samples are
+obtained using the following interpolation equation:
+xnew = xi + λ · (xzi −xi),
+λ ∼U(0, 1)
+where xi is an observation from the minority class, and xzi
+is one of its k-nearest neighbors algorithm, where λ is an
+arbitrarily drawn random variable. An uniform distribution
+between 0 and 1. This description was initially presented as a
+method, called SMOTE, by Chawla et al. [35]
+D. Feature Selection Techniques
+The current study applied three different feature selection
+methods—Chi-Square, Mutual Information, and SelectFrom-
+Model—to analyze their performance in selecting the most
+relevant features for classifying angina pectoris into different
+types. Each of the main types of feature selection was catered
+by a particular method: Chi-Square was used as a standard
+filtering method, Mutual Information was an entropy-based
+filter that is good at identifying both linear and non-linear
+associations, and SelectFromModel was an embedded method
+that makes use of internal model scores to determine sig-
+nificance. This systematic approach allows for a comparison
+between classic univariate statistical methods and model-based
+approaches that are better at handling complex interactions.
+Authorized licensed use limited to: Somaiya University. Downloaded on February 22,2026 at 13:32:40 UTC from IEEE Xplore.  Restrictions apply. 
+First, the input features were normalized using MinMaxS-
+caler to enable the use of the Chi-Square approach, since
+the method requires non-negative input variables. The five
+most important features were determined based on the highest
+Chi-Square values. For the Mutual Information approach,
+normalized data was used to determine the mutual dependence
+of each feature and the target variable, again selecting the
+top five features. Under the SelectFromModel approach, the
+pre-trained Random Forest and XGBoost model was used to
+determine feature importance scores, making it easy to select
+features with importance values above the median.
+E. Modeling
+Random Forest and XGBoost are widely recognized as
+robust models for clinical predictions [31], [32]. As methods
+in ensemble learning, they naturally encompass feature selec-
+tion processes that effectively counteract problems regarding
+multicollinearity, noise, and irrelevant variables without requir-
+ing extra preprocessing. The non-parametric nature of these
+models allows detecting non-linear relationships, making them
+more robust against the outliers commonly seen in clinical
+data [33]. When properly tuned, these models have lower
+probabilities of overfitting, even for scenarios involving class
+imbalances or small sample sizes [34], making them especially
+well-suited to heterogeneous and noisy data.
+In the current study, Random Forest and Extreme Gradient
+Boosting (XGBoost) were selected because of the proven
+success of these techniques on complex classification problems
+and the ability to scale to high-dimensional datasets. Random
+Forest follows a bagging approach, building multiple decision
+trees whose outputs are averaged to yield the final prediction
+[5], while XGBoost has a boosting approach, gradually adding
+trees to correct the faults of previous trees and thus systemat-
+ically reducing prediction error [6].
+All models were trained on the SMOTE-balanced dataset
+using all feature selection variants, namely Chi-Square, Mutual
+Information, and SelectFromModel, and a baseline without
+feature selection. This enabled a direct comparison of their
+individual impacts on performance. Hyperparameters were
+optimised using grid search to ensure the optimal model
+settings.
+For enhancing the models’ interpretability, SHAP (SHapley
+Additive Explanations) was applied on two different setups:
+the baseline Random Forest model without feature selection
+and the XGBoost model with Chi-Square feature selection.
+The Random Forest model, which includes all the available
+features, provides a holistic view of the contribution of each
+clinical attribute to the predictions made. On the other hand,
+the XGBoost model, which uses feature selection, provides
+a more focused and understandable explanation that depends
+only on the variables found to be statistically significant. This
+two-pronged assessment allows for a meaningful comparison
+between full and reduced feature sets and, in doing so,
+highlights the attributes that are key predictors of different
+types of angina pectoris.
+F. Hyperparameter Tuning
+In order to maximize the performance and enable a fair
+comparison between the models, hyperparameter tuning was
+applied on the Random Forest and XGBoost classifiers using
+GridSearchCV, a module found within the Scikit-learn library.
+The GridSearchCV approach is meant to find the best pa-
+rameters for a classifier by tuning specific hyperparameters
+which are not learned automatically when training the model,
+thus improving the ability of the model to make accurate
+predictions on new, never-before-seen data [29].
+For the Random Forest model, the optimized hyperparam-
+eters were n estimators = [50, 100, 150] and max depth =
+[None, 5, 10]. For the XGBoost model, the search space
+for the parameters included n estimators = [50, 100, 150]
+and max depth = [3, 5, 10]. Both models used a grid
+search approach with 3-fold cross-validation, with accu-
+racy as the main evaluation criterion. For XGBoost, the
+use label encoder=False parameter setting was used to avoid
+the use of outdated features, and the ’mlogloss’ evaluation
+metric was used to better support multiclass classification
+problems. The best parameters found for each model were
+then applied uniformly across all experimental trials.
+G. Evaluation Metrics
+The model’s performance was evaluated utilizing a range
+of measures. Accuracy was the overall proportion of instances
+correctly predicted, while precision, recall, and F1-score were
+calculated for each class separately to provide a complete
+assessment—a critical factor within medical datasets, where
+misclassification can have severe consequences. A confusion
+matrix was also generated to illustrate correct and incorrect
+predictions in relation to the three classes of angina pectoris.
+All the analysis steps were performed using functions from
+scikit-learn.
+IV. RESULTS AND DISCUSSIONS
+A. Performance Evaluation of Models
+The performance of both the XGBoost and Random Forest
+classifiers was compared over a variety configurations, includ-
+ing baseline (no feature selection) and three feature selection
+methods: Chi-Square, Mutual Information, SelectFromModel.
+Evaluation metrics included accuracy, precision, recall, and
+F1-Score.
+Table I shows that Random Forest performed better than
+XGBoost in terms of overall accuracy for all tests. The base-
+line Random Forest model with no feature selection produced
+a peak accuracy of 57.1%, while the same configuration for
+XGBoost produced an accuracy of 56.4%.
+For this analysis, strong emphasis was placed on macro-
+averaged measures such as precision, recall, and F1-score to
+balance off against somewhat imbalanced class distributions.
+This framework ensures that minority class performances like
+I20.9 are still focal and not overshadowed by majority class
+prevalence.
+It is significant to note that the models without including
+feature selection performed better. This is an indication that
+Authorized licensed use limited to: Somaiya University. Downloaded on February 22,2026 at 13:32:40 UTC from IEEE Xplore.  Restrictions apply. 
+inherent methodology used by ensemble methods to handle
+feature importance surpasses that provided by explicit feature
+selection methods. This finding is congruent with previous
+work published by Yang et al., which showed that ensemble
+models based on trees, like Random Forest and XGBoost, per-
+form feature selection automatically during tree construction
+and reduce the need for explicit preprocessing mechanisms
+[30].
+TABLE I.
+Performance Comparison of Ensemble Models
+with and without Feature Selection
+No.
+Model
+Precision
+Recall
+F1-Score
+Accuracy (%)
+1
+Random Forest
+0.57
+0.57
+0.57
+57.1
+2
+XGBoost
+0.56
+0.56
+0.56
+56.4
+3
+Random Forest + Chi-Square
+0.56
+0.57
+0.56
+56.5
+4
+Random Forest + Mutual Info
+0.56
+0.56
+0.56
+56.2
+5
+Random Forest + SelectFromModel
+0.55
+0.56
+0.55
+55.7
+6
+XGBoost + Chi-Square
+0.54
+0.54
+0.54
+54.2
+7
+XGBoost + Mutual Info
+0.53
+0.53
+0.53
+53.3
+8
+XGBoost + SelectFromModel
+0.55
+0.55
+0.55
+54.8
+A statistical test was conducted to determine whether the
+differences in performance were statistically significant. The
+one-way ANOVA of the XGBoost results revealed no signifi-
+cant differences between different configurations, as indicated
+by an F-statistic of 0.3643 and a P-value of 0.7792. Never-
+theless, as shown in Table II, the 95% confidence interval
+for the model that did not use feature selection was between
+0.5354 and 0.6486, which did not overlap with the others,
+implying a possible performance gain. This claim is further
+supported by the outcome of the paired t-test shown in Table
+III, which shows that all the comparisons conducted between
+the non-feature selection model and the three feature selection
+methods had p-values less than the 0.05 significance level,
+hence implying statistically significant differences from what
+was observed.
+TABLE II.
+XGBoost Model Accuracy and 95% Confidence
+Intervals by Feature Selection Method
+Model
+Mean Accuracy
+95% CI (Lower)
+95% CI (Upper)
+No Feature Selection (No FS)
+0.5920
+0.5354
+0.6486
+Chi-Square
+0.5619
+0.4949
+0.6289
+Mutual Information
+0.5583
+0.4894
+0.6272
+SelectFromModel
+0.5556
+0.4954
+0.6159
+TABLE III.
+Statistical Comparison of XGBoost Performance
+With and Without Feature Selection Using Paired t-Test
+Comparison
+t-statistic
+p-value
+No Feature Selection vs Chi-Square
+3.3360
+0.0087
+No Feature Selection vs Mutual Information
+3.4223
+0.0076
+No Feature Selection vs SelectFromModel
+6.6423
+0.0001
+On the other hand, the Random Forest approach manifested
+a more stable performance irrespective of the variable settings
+utilized. ANOVA test results provided an F-statistic value of
+0.1762 and a P-value of 0.9118, hence indicating a lack of
+statistically significant differences in the performance between
+the different feature selection algorithms. As shown in Table
+IV, the 95% confidence intervals for each setup bear significant
+overlap. However, the setup without feature selection shows
+marginally higher values at both the lower and upper ends
+of the interval. The results of the paired t-test, as shown in
+Table V, also support this claim, as all the comparisons yielded
+p-values larger than 0.05, hence pointing to the statistical
+insignificance of the observed differences in performance.
+TABLE IV.
+Random Forest Model Accuracy and 95% Con-
+fidence Intervals by Feature Selection Method
+Model
+Mean Accuracy
+95% CI (Lower)
+95% CI (Upper)
+No Feature Selection
+0.6048
+0.5470
+0.6626
+Chi-Square
+0.5814
+0.5137
+0.6491
+Mutual Information
+0.5814
+0.5155
+0.6473
+SelectFromModel
+0.5969
+0.5369
+0.6569
+TABLE V.
+Statistical Comparison of Random Forest Per-
+formance With and Without Feature Selection Using Paired
+t-Test
+Comparison
+t-statistic
+p-value
+No Feature Selection vs Chi-Square
+2.1445
+0.0606
+No Feature Selection vs Mutual Information
+2.1621
+0.0589
+No Feature Selection vs SelectFromModel
+0.9460
+0.3689
+These results indicate that whether feature selection works
+well or not is very much dependent on the learning algorithm
+applied. It is also advised to apply bigger samples or other
+procedures such as bootstrap confidence intervals in order for
+the findings to be robust.
+B. Effect of SMOTE on Model Performance
+To counter the class imbalance detected in the dataset,
+Synthetic Minority Oversampling Technique (SMOTE) was
+applied before the phase where the model was trained. Table
+VI contains the summary comparison between Random Forest,
+XGBoost, both with and without applying SMOTE, while
+omitting the consideration of feature selection.
+Results clearly show that use of the SMOTE method had
+resulted in considerable improvement in all the performance
+parameters of both the models. For Random Forest, accuracy
+improved from 45.5% to 57.1%, while the F1-score improved
+from 0.44 to 0.57. Similarly, XGBoost improved its accuracy
+from 48.2% to 56.4%, with corresponding improvement in the
+F1-score from 0.44 to 0.56.
+The improvements were especially evident in the recall
+measures, which show that SMOTE strongly increases the
+ability of predictive models to effectively detect instances in
+minority classes. As a result, although predictive accuracy
+is boosted, the fairness and robustness of the classification
+system are also increased, making it extremely suitable for
+use in clinical practice with imbalanced medical data.
+Authorized licensed use limited to: Somaiya University. Downloaded on February 22,2026 at 13:32:40 UTC from IEEE Xplore.  Restrictions apply. 
+TABLE VI.
+Effect of SMOTE on the Performance of Ran-
+dom Forest and XGBoost Without Feature Selection
+No.
+Model
+Precision
+Recall
+F1-Score
+Accuracy (%)
+1
+Random Forest (No SMOTE)
+0.45
+0.45
+0.44
+45.5
+2
+Random Forest (With SMOTE)
+0.57
+0.57
+0.57
+57.1
+3
+XGBoost (No SMOTE)
+0.48
+0.44
+0.44
+48.2
+4
+XGBoost (With SMOTE)
+0.56
+0.56
+0.56
+56.4
+C. Confusion Matrix Analysis
+To evaluate the predictive performance for every class,
+confusion matrices were created for four different settings, as
+shown in Figure 2: Random Forest without feature selection,
+XGBoost without feature selection, XGBoost with Chi-Square,
+and XGBoost with Mutual Information. These settings include
+both baseline options as well as those where feature selection
+was applied to the two ensemble methods.
+The Random Forest baseline produced relatively balanced
+predictions across the three angina classes but with a high mis-
+classification rate. XGBoost without feature selection slightly
+improved identification of classes I20.8 and I20.9 but had
+high false positives for class I20.0. Applying Chi-Square or
+Mutual Information reduced true positive rates and increased
+misclassifications in most classes, confirming that external
+feature selection reduced performance compared to using the
+full feature set.
+Overall, the confusion matrices visually reinforce the quan-
+titative findings above by illustrating class-level prediction
+patterns.
+D. Model Interpretability using SHAP
+SHAP (SHapley Additive Explanations) refers to a method
+that defines a class of additive importance functions for fea-
+tures to produce an individual solution that satisfies a number
+of basic properties, such as local accuracy, dealing with
+missing values, and consistency. The framework is based on
+Shapley values, which are rooted in cooperative game theory,
+and seeks to allocate fairly the impact of each feature on the
+difference between the true prediction made by the model
+and the average prediction over all possible combinations of
+features. The method was introduced by Lundberg and Lee
+[36]. Computation of the Shapley value of a feature i is
+performed using the following expression:
+ϕi =
+X
+S⊆F \{i}
+|S|! (|F| −|S| −1)!
+|F|!
+[f(S ∪{i}) −f(S)]
+F is the set of all input features. S is any subset of F that
+does not include feature i. f(S) is the model-predicted value
+when the model utilizes only the features in subset S.
+To improve the interpretability of the models and to ex-
+plore the impact of individual features on predictions, SHAP
+(SHapley Additive Explanations) was applied to two different
+model configurations: a Random Forest model that did not
+use feature selection, and an XGBoost model that used Chi-
+Square feature selection. The aim was to identify and compare
+Fig. 2.
+Confusion matrices of selected models: (a) Random
+Forest (No FS), (b) XGBoost (No FS), (c) XGBoost + Chi2,
+(d) XGBoost + Mutual Information
+the most significant features in each model and determine if
+the Random Forest’s internal feature selection mechanism is
+different from the externally applied features used in XGBoost.
+As shown in Figure 3, both models rank erythrocytes,
+hemoglobin, and hematocrit as the top features relying on
+SHAP values. However, there is a clear difference in their
+distributions: XGBoost has high overall SHAP effects, re-
+flecting a higher reliance on a few dominant features, while
+Random Forest shows a more balanced contribution from its
+dominant features, as in the nature of feature bagging. This
+suggests that while both models give prominence to similar
+biological markers, their interpretive models and sensitivity to
+these markers are different, which can have implications for
+clinical decision-making and the reliability of the models.
+E. Discussion and Implication
+This study investigated the effect of different feature se-
+lection methods on ensemble learning models for predicting
+multiclass heart disease, specifically comparing configurations
+of Random Forest and XGBoost both with and without feature
+selection. The top-performing models did not use formal
+feature selection; in particular, the standard Random Forest
+yielded the highest accuracy of 57.1%, which outperformed
+all variations that used Chi-Square, Mutual Information, or
+SelectFromModel feature selection. The same trend was noted
+with XGBoost. These results suggest that in low-dimensional
+settings, the benefits derived by feature selection are minimal;
+Authorized licensed use limited to: Somaiya University. Downloaded on February 22,2026 at 13:32:40 UTC from IEEE Xplore.  Restrictions apply. 
+Fig. 3.
+Top 3 SHAP Feature Importance: (Top) Random
+Forest without feature selection; (Bottom) XGBoost with Chi-
+Square selection.
+in this study, the main aim was to determine whether different
+selection methods would influence results rather than optimiz-
+ing computational efficiency.
+The findings indicate that tree-based ensembles like Ran-
+dom Forest and XGBoost inherently identify and weight
+important features during training, reducing the need for
+external preprocessing, which may inadvertently remove valu-
+able variables. This aligns with Yang et al., who reported
+that such models perform built-in feature selection during
+tree generation, minimizing reliance on explicit preprocessing
+frameworks [30].
+Moreover, the SHAP analysis showed that erythrocyte
+counts, hemoglobin concentrations, and hematocrit measure-
+ments were always significant in model predictions. These
+clinically relevant variables, linked with known cardiovascular
+indexes, serve to further support correspondence between
+model and existing knowledge in the domain. Importantly,
+even without explicit feature selection toward known targets,
+ensemble methods automatically offset these predictors. This
+property reduces the need for complex preprocessing, whereas
+SHAP-based interpretations provide a means for relating out-
+puts to clinical expertise, enhancing explainability and building
+confidence in medical decision support.
+The model’s accuracy, measured at a relatively modest
+57.1%, is thus limited by the dataset’s sole emphasis on
+hematological markers like red blood cell counts, hemoglobin
+levels, and hematocrit values. Though these markers are of
+clinical interest in certain limited circumstances, they represent
+only a small subset of the many variables that may impact
+cardiovascular disease. Notably, the analysis did not comprise
+other key risk factors, such as blood pressure measurements,
+cholesterol levels, electrocardiogram findings, and disease
+familial history, thus limiting the model’s ability to realize
+high predictive capacity.
+Despite this fact, the level of accuracy achieved should
+not be ignored completely. It illustrates the possibility of
+using basic and easily available blood test information for the
+initial assessment of cardiovascular disease in resources-poor
+settings. This study emphasizes the capability of ensemble
+learning methods in deriving diagnostic information from
+limited datasets, which will be a useful and easily applicable
+tool for making risk assessments. The value of this study lies
+less in the diagnostic accuracy of the predictors and more
+in the development of a clinically meaningful, interpretable,
+and practical machine learning tool within the context of
+cardiovascular disease.
+V. CONCLUSION
+The major aim of this study was to evaluate the impact
+of different feature selection methods on the performance of
+ensemble machine learning models namely, Random Forest
+and XGBoost in the prediction of multiclass diagnoses of
+heart disease. Experimental design used a real clinical dataset
+with an uneven class distribution that was counteracted by the
+use of SMOTE. Various feature selection approaches, such as
+Chi-Square, Mutual Information, and SelectFromModel, were
+tested and compared with baseline models without the use of
+feature selection.
+Results demonstrated both algorithms were optimized with-
+out feature selection, indicating both algorithms’ built-in fea-
+ture evaluation functions were effective for identifying relevant
+features. Without feature selection, Random Forest obtained
+the optimal accuracy of 57.1%, while XGBoost obtained an
+accuracy of 56.4%. By comparison, those models with feature
+selection showed somewhat lower performance. By SHAP
+analysis, erythrocyte count, hemoglobin level, and hematocrit
+were identified as the key predictors for both algorithms,
+paralleling already established clinical predictors for cardiac
+disease.
+The findings highlight the importance of evaluating whether
+there is a need for external feature selection when apply-
+ing tree-based ensemble methods. Additionally, the use of
+interpretable models provides essential insights that enable
+medical decision-making, thus increasing model transparency
+and building confidence in the clinical environment. The study
+is, however, limited by the inherent characteristics of the
+dataset since it was obtained from a single source and included
+a limited range of diagnostic groups.
+Future research activities may involve investigating the
+integration of a wider variety of clinical features, utilize
+datasets acquired from diverse healthcare organizations, and
+investigate the use of deep learning models combined with
+explainability techniques. These improvements can enhance
+diagnostic accuracy and the effectiveness of decision support
+systems in the healthcare industry.
+ACKNOWLEDGMENTS
+Jackson: Conceptualization, Methodology, Writing – Orig-
+inal Draft, Writing – Review & Editing, Software. Marvino
+Fransisco: Writing – Original Draft, Software, Visualization,
+Authorized licensed use limited to: Somaiya University. Downloaded on February 22,2026 at 13:32:40 UTC from IEEE Xplore.  Restrictions apply. 
+Writing – Review & Editing. Akira Chandra: Writing – Orig-
+inal Draft, Writing – Review & Editing, Validation. Mediana
+Aryuni: Supervision, Validation, Writing – Review & Editing.
+REFERENCES
+[1] C. Dangare and S. Apte, “Improved study of heart disease prediction
+system using data mining classification techniques,” International Jour-
+nal of Computer Applications, vol. 47, pp. 44–48, 2012.
+[2] S. Ali and N. Ahmed, “Comparing some machine learning models for
+cardiovascular disease,” Journal of Pioneering Medical Sciences, vol.
+14, pp. 60–66, 2025. doi:10.47310/jpms2025140408.
+[3] A. Ogunpola, F. Saeed, S. Basurra, A. M. Albarrak, and S. N.
+Qasem, “Machine learning-based predictive models for detection of
+cardiovascular diseases,” Diagnostics, vol. 14, no. 2, p. 144, 2024.
+doi:10.3390/diagnostics14020144.
+[4] S. M. Ganie, P. K. D. Pramanik, and Z. Zhao, “Ensemble learn-
+ing with explainable AI for improved heart disease prediction based
+on multiple datasets,” Scientific Reports, vol. 15, p. 13912, 2025.
+doi:10.1038/s41598-025-97547-6.
+[5] S. Asadi, S. Roshan, and M. W. Kattan, “Random forest swarm
+optimization-based for heart diseases diagnosis,” Journal of Biomedical
+Informatics, vol. 115, p. 103690, 2021.
+[6] J. Yang and J. Guan, “A heart disease prediction model based on feature
+optimization and SMOTE-XGBoost algorithm,” Information, vol. 13, no.
+10, p. 475, 2022. doi:10.3390/info13100475.
+[7] M. Imani, A. Beikmohammadi, and H. R. Arabnia, “Comprehensive
+analysis of Random Forest and XGBoost performance with SMOTE,
+ADASYN, and GNUS under varying imbalance levels,” Technologies,
+vol. 13, no. 3, p. 88, 2025. doi:10.3390/technologies13030088.
+[8] Mabrouka Salmi, Dalia Atif, Diego Oliva, Ajith Abraham, and Sebastian
+Ventura, “Handling imbalanced medical datasets: review of a decade of
+research,” Artificial Intelligence Review, vol. 57, pp. 273–298, 2024.
+doi: 10.1007/s10462-024-10884-2.
+[9] S. Datta and I. Gang, “Robust cardiovascular disease prediction using lo-
+gistic regression,” Journal of Management and Engineering Integration,
+vol. 14, pp. 26–36, 2021. doi:10.62704/10057/24766.
+[10] M. Pal and S. Parija, “Prediction of heart diseases using Random Forest,”
+Journal of Physics: Conference Series, vol. 1817, no. 1, p. 012009, 2021.
+doi:10.1088/1742-6596/1817/1/012009.
+[11] J. C. Yang, “The prediction and analysis of heart disease using XGBoost
+algorithm,” Applied and Computational Engineering, vol. 41, pp. 61–68,
+2024.
+[12] B. Ahmad, J. Chen, and H. Chen, “Feature selection strategies
+for optimized heart disease diagnosis using ML and DL models,”
+arXiv preprint arXiv:2503.16577, Mar. 2025. [Online]. Available:
+https://doi.org/10.48550/arXiv.2503.16577
+[13] S. Kutikuppala, P. Kondamadugula, P. S. Katakam, P. R. Kotla, S. S.
+Kanjarla, and Y. Kakde, “Decision tree learning based feature selec-
+tion and evaluation for image classification,” International Journal of
+Research in Applied Science and Engineering Technology, vol. 11, pp.
+2668–2674, 2023.
+[14] A. J. Albert, R. Murugan, and T. Sripriya, “Diagnosis of heart disease
+using oversampling methods and decision tree classifier in cardiol-
+ogy,” Research on Biomedical Engineering, vol. 39, pp. 99–113, 2023.
+doi:10.1007/s42600-022-00253-9.
+[15] M. A. Talukder, A. S. Talaat, and M. Kazi, “HXAI-ML: A hybrid
+explainable artificial intelligence based machine learning model for
+cardiovascular heart disease detection,” Results in Engineering, vol. 25,
+p. 104370, 2025. doi:10.1016/j.rineng.2025.104370.
+[16] World Health Organization, “I20.0 Unstable Angina,” International
+Classification
+of
+Diseases
+(ICD-10),
+2016.
+[Online].
+Available:
+https://icd.who.int/browse10/2016/en#/I20.0.
+[17] L.
+Barbalato
+and
+L.
+S.
+Pillarisetty,
+“Histology,
+Red
+Blood
+Cell,”
+StatPearls
+[Internet],
+Treasure
+Island
+(FL):
+StatPearls
+Publishing;
+updated
+Nov.
+14,
+2022.
+[Online].
+Available:
+https://www.ncbi.nlm.nih.gov/books/NBK539702/
+[18] L. A. Wu, S.-L. Tan, R. S. Wright, S. L. Kopecky, M. F. Burritt, P. J.
+Santrach, R. L. Frye, and J. J. Liu, “Prognostic value of the erythrocyte
+sedimentation rate in patients with unstable angina,” Arch. Pathol. Lab.
+Med., vol. 126, no. 7, pp. 772–777, Jul. 2002.
+[19] H. Mondal and M. Zubair, “Hematocrit,” StatPearls [Internet], Treasure
+Island (FL): StatPearls Publishing; updated Oct. 6, 2024. [Online].
+Available: https://www.ncbi.nlm.nih.gov/books/NBK542276/
+[20] G. A. Mayer, “Hematocrit and myocardial infarction,” Can. Med. Assoc.
+J., vol. 93, no. 22, pp. 1151–1153, Nov. 1965.
+[21] M. S. Sabatine, D. A. Morrow, R. P. Giugliano, P. B. J. Burton,
+S. A. Murphy, C. H. McCabe, C. M. Gibson, and E. Braunwald,
+“Association of hemoglobin levels with clinical outcomes in acute
+coronary syndromes,” Circulation, vol. 111, no. 16, pp. 2042–2049,
+2005, doi: 10.1161/01.CIR.0000162477.70955.5F.
+[22] S. De Servi, A. Mazzone, G. Ricevuti, I. Mazzucchelli, G. Fossati, D.
+Gritti, L. Angoli, and G. Specchia, “Clinical and angiographic correlates
+of leukocyte activation in unstable angina,” J. Am. Coll. Cardiol., vol. 26,
+no. 5, pp. 1146–1150, Nov. 1995, doi: 10.1016/0735-1097(95)00308-8.
+[23] A. Tigner, S. A. Ibrahim, and I. V. Murray, “Histology, White
+Blood
+Cell,”
+StatPearls
+[Internet],
+Treasure
+Island
+(FL):
+Stat-
+Pearls
+Publishing;
+updated
+Nov.
+14,
+2022.
+[Online].
+Available:
+https://www.ncbi.nlm.nih.gov/books/NBK563148
+[24] L. Wilhelmsen, “Thrombocytes and coronary heart disease,” Circulation,
+vol. 84, no. 2, pp. 936–938, Aug. 1991, doi: 10.1161/01.CIR.84.2.936.
+[25] National
+Cancer
+Institute,
+“Thrombocyte,”
+[Internet].
+Bethesda
+(MD):
+National
+Cancer
+Institute;
+[cited
+May
+8,
+2025].
+Available:
+https://www.cancer.gov/publications/dictionaries/cancer-
+terms/def/thrombocyte
+[26] Z. Zhang, S. Gao, M. Dong, J. Luo, C. Xu, W. Wen, Y. Huang, Y. Wu, J.
+Zhou, and Z. Yuan, “Relationship between red blood cell indices (MCV,
+MCH, and MCHC) and major adverse cardiovascular events in anemic
+and nonanemic patients with acute coronary syndrome,” Dis. Markers,
+vol. 2022, Art. no. 2193343, Nov. 2022, doi: 10.1155/2022/2193343.
+[27] M. Choy, Z. Zhen, B. Dong, C. Chen, Y. Dong, C. Liu, W. Liang, and
+R. Xue, “Mean corpuscular haemoglobin concentration and outcomes in
+heart failure with preserved ejection fraction,” ESC Heart Failure, vol.
+10, no. 2, pp. 1214–1221, Apr. 2023, doi: 10.1002/ehf2.14225.
+[28] J. Brandt and E. Lanz´en, “A comparative review of SMOTE and
+ADASYN in imbalanced data classification,” unpublished, 2021.
+[29] C. G. Siji George and B. Sumathi, “Grid search tuning of hyperpa-
+rameters in random forest classifier for customer feedback sentiment
+prediction,” Int. J. Adv. Comput. Sci. Appl., vol. 11, no. 9, pp. 682–687,
+2020, doi: 10.14569/IJACSA.2020.0110920.
+[30] Z. Yang, A. Sudjianto, X. Li, and A. Zhang, “Inherently interpretable
+tree ensemble learning,” arXiv preprint arXiv:2410.19098, Oct. 2024.
+[Online]. Available: https://doi.org/10.48550/arXiv.2410.19098
+[31] M. Khalilia, S. Chakraborty, and M. Popescu, “Predicting disease risks
+from highly imbalanced data using random forest,” BMC Medical
+Informatics and Decision Making, vol. 11, no. 1, p. 51, 2011, doi:
+10.1186/1472-6947-11-51.
+[32] Jiayu Wang, Yikang Xu, Lei Liu, Wei Wu, Chunjian Shen, Henan Huang,
+Ziyi Zhen, Jixian Meng, Chunjing Li, Zhixin Qu, Qinglei He, and Yu
+Tian, “Comparison of LASSO and random forest models for predicting
+the risk of premature coronary artery disease,” BMC Medical Informatics
+and Decision Making, vol. 23, no. 1, p. 297, 2023, doi: 10.1186/s12911-
+023-02407-w.
+[33] Wei Hong, Xiang Zhou, Song Jin, Wenjia Liu, Danyang Cao, Xiaoyang
+Lin, Qing Ye, Shanshan Wang, and Haiyan Yang, “A comparison of
+XGBoost, Random Forest, and nomograph for the prediction of disease
+severity in patients with COVID-19 pneumonia: implications of cytokine
+and immune cell profile,” Frontiers in Cellular and Infection Microbiol-
+ogy, vol. 12, p. 819267, 2022, doi: 10.3389/fcimb.2022.819267.
+[34] Omar Qureshi, Carlos Mena-Hurtado, Ga¨elle Romain, Jacob Cleman,
+Santiago Callegari, and Kim G. Smolderen, “Applying a Random Forest
+approach in predicting health status in patients with carotid artery
+stenosis 30 days post-stenting,” medRxiv, preprint, Aug. 2024. doi:
+10.1101/2024.08.14.24312025.
+[35] N. V. Chawla, K. W. Bowyer, L. O. Hall, and W. P. Kegelmeyer,
+“SMOTE: Synthetic Minority Over-sampling Technique,” Journal of
+Artificial Intelligence Research, vol. 16, pp. 321–357, Jun. 2002. doi:
+10.1613/jair.953.
+[36] S. Lundberg and S.-I. Lee, “A Unified Approach to Interpreting
+Model Predictions,” Advances in Neural Information Processing Sys-
+tems (NeurIPS), vol. 30, 2017. arXiv:1705.07874. [Online]. Available:
+https://doi.org/10.48550/arXiv.1705.07874
+Authorized licensed use limited to: Somaiya University. Downloaded on February 22,2026 at 13:32:40 UTC from IEEE Xplore.  Restrictions apply. 

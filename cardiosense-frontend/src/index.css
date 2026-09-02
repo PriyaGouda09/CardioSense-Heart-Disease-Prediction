@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #0F7A6B;
+  --color-primary-light: #14B8A6;
+  --color-primary-dark: #0B5D52;
+
+  --color-secondary: #3B82F6;
+  --color-secondary-light: #93C5FD;
+
+  --color-severity-0: #2FA37A;
+  --color-severity-1: #7BB661;
+  --color-severity-2: #E0A63C;
+  --color-severity-3: #D9713C;
+  --color-severity-4: #B84C4C;
+
+  --color-bg: #F7FAF9;
+  --color-surface: #FFFFFF;
+  --color-border: #E2E8E6;
+  --color-text-primary: #1A2E2A;
+  --color-text-secondary: #5B6B67;
+  --color-text-muted: #8A9995;
+
+  --color-success: #2FA37A;
+  --color-warning: #E0A63C;
+  --color-error: #C0392B;
+  --color-info: #3B82F6;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Sora', 'Space Grotesk', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.font-mono-val {
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* Custom scrollbar for clinical cleanliness */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F0F4F2;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C4D1CE;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #A5B8B4;
+}
+
+/* Custom transitions and focus states */
+.focus-ring-teal {
+  @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:border-primary;
+}
+
+/* Print styles for Results page PDF export */
+@media print {
+  body {
+    background-color: #FFFFFF !important;
+  }
+  header, footer, .no-print {
+    display: none !important;
+  }
+  .print-page {
+    box-shadow: none !important;
+    border: 1px solid #E2E8E6 !important;
+    padding: 0 !important;
+  }
+}

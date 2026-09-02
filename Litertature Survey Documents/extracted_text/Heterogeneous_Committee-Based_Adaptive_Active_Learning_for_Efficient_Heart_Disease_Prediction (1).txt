@@ -1,0 +1,1211 @@
+Received 28 November 2025, accepted 23 January 2026, date of publication 29 January 2026, date of current version 6 February 2026.
+Digital Object Identifier 10.1109/ACCESS.2026.3659186
+Heterogeneous Committee-Based Adaptive Active
+Learning for Efficient Heart Disease Prediction
+ELAHE GOLI
+AND MELIKE SAH
+Computer Engineering Department, Cyprus International University, 99258 Nicosia, Türkiye
+Corresponding author: Elahe Goli (22300583@student.ciu.edu.tr)
+ABSTRACT Heart disease remains the leading cause of mortality worldwide. Early diagnosis is essential,
+yet traditional machine learning-based diagnostic systems often rely heavily on large amounts of expert-
+labeled data, making them costly and time-consuming to develop. To address this challenge, we propose a
+heterogeneous committee-based adaptive active learning (HC-AAL) framework for heart disease prediction.
+The method integrates multiple machine learning techniques, including XGBoost, Random Forest, and
+Logistic Regression, into a diverse committee that iteratively selects the most informative samples using
+a committee-weighted query-by-committee (CW-QBC) uncertainty measure. To enhance diversity and
+representativeness, K-Means clustering is applied to uncertain instances, and adaptive query control is
+used to dynamically adjust the number of queried samples per iteration. In particular, the adaptive query
+length mechanism dynamically adjusts the number of samples queried at each iteration to balance learning
+efficiency and computational cost. Experimental results demonstrate that the proposed HC-AAL framework
+achieves 96.04% accuracy using only 31.9% of labeled data, significantly outperforming traditional fully
+supervised approaches. These findings highlight the effectiveness of adaptive active learning strategies in
+reducing annotation costs while maintaining high predictive performance.
+INDEX TERMS Committee-based adaptive learning, heart disease prediction, machine learning.
+I. INTRODUCTION
+Heart disease refers to any condition that affects the
+normal functioning of the heart. It is the primary cause
+of death worldwide, contributing to a large percentage of
+annual global fatalities [1]. In China, the number of heart
+disease–related deaths increased from 277,312 in 2013 to
+463,314 in 2021, accounting for over 25% of all deaths
+nationwide [2]. In 2024, heart disease accounted for nearly
+20.5 million deaths in India [3]. Heart disease is also highly
+prevalent in the United States, where the American Heart
+Association estimates that around 82.6 million individuals
+are affected [4]. Obesity, high cholesterol, alcohol use, lack
+of physical activity, high blood pressure, diabetes, and stress
+are among the main contributors to heart disease. In the
+absence of effective prevention, heart disease often leads to
+death [5]. The use of machine learning in medical diagnosis is
+The associate editor coordinating the review of this manuscript and
+approving it for publication was Giacomo Fiumara
+.
+rapidly increasing, as it can reduce human errors and improve
+diagnostic accuracy [6]. Several studies have explored the
+use of machine learning models for heart disease diagnosis,
+focusing on both classification and prediction tasks. In a
+detailed analysis, [7] explored the role of machine learning
+in the detection of heart disease. According to this review,
+existing studies on heart disease detection can be broadly
+classified into three categories: (i) clinical information–based
+detection, (ii) ECG and PCG signal–based detection, and (iii)
+X-ray image–based detection. In this work, we also focus
+on clinical information-based evidence. According to [7],
+studies utilizing standard clinical information, advanced
+models such as XGBoost, Random Forest, Ensemble Learn-
+ing, and Neural Networks outperform conventional machine
+learning techniques. For instance, [8] employed six machine
+learning methods, including XGBoost, Bagging, Random
+Forest, Decision Tree, K-Nearest Neighbor, and Naïve Bayes.
+Among these, XGBoost achieved the best performance with
+an accuracy of 91.3%. In another study, [9] employed a hybrid
+19050
+ 2026 The Authors. This work is licensed under a Creative Commons Attribution 4.0 License.
+For more information, see https://creativecommons.org/licenses/by/4.0/
+VOLUME 14, 2026
+E. Goli, M. Sah: HC-AAL for Efficient Heart Disease Prediction
+machine learning approach (Decision Tree + AdaBoost) to
+predict and classify heart disease. Model performance is
+evaluated using accuracy, True Positive Rate, and specificity.
+However, most of the previous studies utilize 70–80% of
+labeled data to develop machine learning models. Despite the
+growing availability of data, collecting labeled data remains
+challenging as it demands significant effort from domain
+experts and specialists for accurate annotation [10]. This
+challenge is particularly important in supervised learning,
+which relies on labeled data for model training. Since
+labeling samples requires expert input, it is costly and time-
+consuming. To mitigate this, prioritizing informative samples
+is essential. Active Learning (AL) is a technique designed to
+identify the most informative samples, which is the focus of
+the proposed approach.
+Active
+Learning
+(AL)
+methods
+employ
+supervised
+machine learning iteratively, where the most informative
+samples are automatically selected for expert annotation.
+This approach effectively keeps humans in the loop while
+significantly reducing the amount of annotated data needed
+compared with traditional supervised ML methods. Several
+query selection strategies have been developed to identify
+the most informative unlabeled instances for annotation.
+The most commonly used approaches include Uncertainty
+Sampling, where the learner selects samples for which the
+model is least confident; Query-by-Committee (QBC), where
+a committee of models trained on the labeled set votes
+on candidate instances and the sample with the highest
+disagreement is chosen; Expected Model Change, a decision-
+theoretic strategy that selects samples expected to induce
+the largest change in the current model; Expected Error
+Reduction, which targets instances likely to reduce future
+prediction error; Variance Reduction, which aims to minimize
+prediction uncertainty; and Density-Weighted Methods,
+which combine informativeness with representativeness to
+avoid selecting outliers [11]. However, the use of AL in
+clinical information extraction remains limited, particularly
+for medical concept identification [10]. Unlike these existing
+AL strategies that rely on a single criterion, such as
+uncertainty, committee disagreement, or density weighting,
+the proposed method introduces a hybrid multi-criterion
+framework.
+In this work, we propose a heterogeneous committee-based
+adaptive active learning (HC-AAL) approach for heart
+disease prediction using the publicly available Heart Dis-
+ease Dataset [12], which contains clinical and diagnostic
+data from four sources: Cleveland, Hungary, Switzerland,
+and Long Beach V. The dataset includes 76 attributes,
+with 14 key features—such as age, sex, chest pain type,
+blood pressure, cholesterol, ECG results, and exercise test
+outcomes—commonly used for prediction. The proposed
+framework integrates the strengths of multiple machine
+learning models, including XGBoost, Random Forest, and
+Logistic Regression, to form a diverse committee. At each
+iteration, the committee collaboratively evaluates the unla-
+beled data and selects the most informative samples based
+on a committee-weighted query-by-committee (CW-QBC)
+uncertainty measure. To further enhance diversity among
+the selected samples, we apply K-Means clustering to the
+uncertain instances and select representative points closest
+to each cluster centroid. This adaptive querying process is
+one of the key innovations of the proposed approach since it
+dynamically adjusts the query size across iterations, ensuring
+a balance between learning efficiency and computational
+cost. In addition, the iterative selection strategy enables
+efficient learning that boosts high performance with minimal
+labeling effort. Compared with traditional AL methods,
+this approach advances sample selection by simultaneously
+incorporating informativeness, diversity, and adaptive con-
+trol of labeling effort. Experimental results on the heart
+disease dataset show that the proposed HC-AAL method
+achieves 96.04% accuracy using only 31.9% of labeled
+data, significantly outperforming traditional fully supervised
+learning approaches. The main contributions of this paper are
+summarized as follows:
+• We propose a novel heterogeneous committee-based
+adaptive active learning (HC-AAL) framework for heart
+disease prediction.
+• We develop the CW-QBC uncertainty estimation
+method to improve query selection efficiency.
+• We incorporate diversity-based K-Means sampling and
+adaptive query control to enhance sample representa-
+tiveness.
+• Our approach stands out from existing AL methods
+by integrating uncertainty, committee disagreement,
+diversity sampling, and adaptive querying into a single
+hybrid framework.
+• In summary, we introduce a novel heterogeneous
+committee-based adaptive active learning (HC-AAL)
+framework that unifies uncertainty estimation, com-
+mittee disagreement, diversity-driven sampling, and
+adaptive query control to significantly enhance heart
+disease prediction with minimal labeled data.
+• We validate the proposed framework on the heart disease
+dataset, which contains clinical and diagnostic data
+from four sources: Cleveland, Hungary, Switzerland,
+and Long Beach V [12], achieving superior performance
+with significantly reduced labeling cost.
+The remainder of this paper is organized as follows. Section II
+presents the related Literature Review. Section III describes
+the details of the Proposed Work. Section IV discusses
+the Experimental Analysis and results. Finally, Section V
+provides the Conclusion and possible directions for future
+work.
+II. LITERATURE REVIEW
+Heart disease refers to conditions that affect the structure
+and function of the heart. Early detection is crucial to
+reducing the risk of serious complications, such as heart
+attacks and heart failure. Machine learning models can
+analyze historical patient data to identify risk factors and
+VOLUME 14, 2026
+19051
+E. Goli, M. Sah: HC-AAL for Efficient Heart Disease Prediction
+support the timely and reliable detection of heart disease [13].
+Machine learning approaches for heart disease prediction
+have progressed rapidly, demonstrating the successful com-
+bination of medical science and technology [13]. Numerous
+machine learning methods have been applied to heart disease
+prediction and can be broadly grouped into two categories:
+traditional ML-based techniques and active learning–based
+approaches.
+A. TRADITIONAL ML-BASED TECHNIQUES
+Traditional ML models are widely used in heart disease
+prediction, leveraging clinical attributes for risk classification
+and depending on fully labeled data for supervised training.
+For instance, [14] designed an Effective Heart Disease
+Prediction System (EHDPS) that integrates multiple machine
+learning algorithms (K-Nearest Neighbors (KNN), Logistic
+Regression, and Random Forest) to identify individuals at
+risk of cardiovascular disease. The system was evaluated
+using the UCI Heart Disease dataset, including 303 instances
+and 14 medical attributes. Data normalization and missing
+value imputation were applied to improve model consistency.
+Among the models, KNN achieved the highest classification
+accuracy of 88.52%. In another study, [15] utilized the
+Cleveland Heart Disease Dataset obtained from the UCI
+repository, which comprised 12 key features after data clean-
+ing. They evaluated Logistic Regression, Random Forest,
+and Support Vector Machine algorithms. The results revealed
+that Random Forest achieved the highest accuracy (72.33%),
+while Logistic Regression outperformed the others in terms
+of ROC-AUC (0.7810). To improve heart disease prediction,
+[5] proposed a hybrid model combining a Deep Neural
+Network (DNN) for feature extraction, Power Transform
+for normalization, Principal Component Analysis (PCA)
+for dimensionality reduction, and Logistic Regression (LR)
+for classification. They used the Cleveland Heart Disease
+Dataset from the UCI repository, containing 297 instances
+with 13 selected features. With a 70–30 train-test split,
+the model achieved 93.33% accuracy and demonstrated
+superior performance compared to existing approaches. [16]
+analyzed patient data from Khyber Teaching Hospital and
+Lady Reading Hospital, Pakistan, for heart disease prediction.
+Decision Tree, Random Forest, Logistic Regression, Naïve
+Bayes, and SVM were used in this study. Model evaluation
+using exploratory data analysis, confusion matrices, and
+ROC analysis showed that Random Forest performed best,
+achieving an accuracy of 85.01%. [17] Applied machine
+learning to predict heart disease from patient health data.
+They tested MLP, Random Forest, Naïve Bayes, and SVM
+models with preprocessing and feature selection. The SVM
+model achieved an accuracy of 91.67%. [18] developed a
+hybrid ensemble approach that integrates several machine
+learning algorithms to predict heart disease. It combined
+SVM, gradient boosting, decision tree, logistic regression,
+KNN, and random forest. The model achieves 92.95%
+accuracy and precision. A hybrid model was proposed by [19]
+for predicting cardiovascular disease (CVD), which combines
+Random Forests to capture complex nonlinear relationships
+with mixed-effect components from GLMM to account for
+clustered data. The model achieved an accuracy of 0.75 and
+an AUC of 0.80, outperforming standard Decision Tree,
+Random Forest, and GLMM Tree models. In the work
+of [20], a hybrid XGBoost classifier with hyperparameters
+optimized using the Optuna framework was combined with
+outlier removal techniques (z-score and IQR). The highest
+accuracy of 95.45% was achieved on the Cleveland HD
+dataset when outliers were removed and a 90:10 train-test
+split was applied. [21] developed a machine learning frame-
+work to predict cardiovascular disease (CVD). Six machine
+learning models (DT, LR, NB, SVM, RF, and XGBoost)
+were applied to SMOTE-balanced data. The models were
+trained using 10-fold cross-validation, with 80% of the data
+used for training, and hyperparameters optimized through
+grid and randomized search. Two experiments compared
+predictions with and without geographical features. XGBoost
+achieved the highest accuracy of 95.24%, highlighting the
+importance of including geographical factors. The proposed
+work by [22] presents a hybrid approach for predicting
+heart disease, integrating six machine learning classifiers
+(Logistic Regression, K-Nearest Neighbors, Decision Tree,
+Random Forest, Support Vector Machine, and XGBoost) with
+a deep learning sequential model. Performance is evaluated
+on the SMOTE-balanced UCI Heart Disease dataset through
+accuracy and confusion matrices. The deep learning model
+achieved the highest accuracy of 94.2%. [6] developed an
+advanced machine learning-based approach for heart disease
+prediction utilizing the Cleveland dataset, where 70% of
+the data is allocated for training. The model combines
+Random Forest and Decision Tree methods to achieve higher
+accuracy and real-time diagnostic support. The proposed
+hybrid model achieves an accuracy of 88.7%, surpassing
+individual classifiers. A machine learning framework for
+heart disease prediction was proposed by [23], employing
+Random Forest, K-Nearest Neighbors (KNN), and Decision
+Tree classifiers. The data were preprocessed, categorical
+variables were encoded, and features were scaled before
+training. Ten-fold cross-validation was applied, with 90% of
+the dataset used for training in each fold, and patient clinical
+features were considered for model evaluation. Among the
+classifiers, Random Forest achieved the best performance,
+with an accuracy of approximately 83%. The Classification
+and Regression Tree (CART) algorithm, as applied by [24],
+was employed to predict heart disease from the Aggregated
+dataset, including 11 clinical variables. The model was
+trained on 80% of the data, with decision rules derived
+from both categorical and numerical variables. It achieved
+87.25% accuracy. According to [25], a CatBoost-based
+machine learning framework was proposed for heart disease
+prediction. The dataset used in the model combines five UCI
+Heart Disease datasets into a single collection comprising
+918 records and 11 features. Data preprocessing addressed
+missing values and applied SHAP for feature selection.
+After comparing multiple algorithms (XGBoost, AdaBoost,
+19052
+VOLUME 14, 2026
+E. Goli, M. Sah: HC-AAL for Efficient Heart Disease Prediction
+Random Forest, and SVC), the CatBoost model out-
+performed the others. Hyperparameter optimization using
+Optuna resulted in an accuracy of 90.94%. [26] proposed
+an XAI-based ensemble classification framework for heart
+disease prediction using a cardiovascular dataset contain-
+ing 303 samples and 14 features. The model integrates
+SVM, AdaBoost, KNN, Bagging, Logistic Regression, and
+Naïve Bayes within an explainable AI environment. Their
+XAI-based approach achieved a notable accuracy of 89%,
+outperforming conventional models. In all the methods
+discussed above, 70% or more of the data is used for training
+to achieve the reported outcomes.
+B. ACTIVE LEARNING-BASED APPROACHES
+Unlike traditional ML models that depend on fully labeled
+datasets, active learning aims to reduce labeling cost by
+selectively querying the most informative samples. This
+makes it highly suitable for medical domains, where expert
+annotation is expensive and time-consuming. As high-
+lighted by [27], the most heart disease prediction studies
+rely on memorization-based methods that capture relation-
+ships between dataset features and labels. Active learning
+approaches for improving generalization in heart disease
+diagnosis remain largely unexplored. They implemented
+an active learning framework for multi-label heart dis-
+ease prediction using five selection methods (MMC, Ran-
+dom, Adaptive, QUIRE, and AUDI) combined with a
+hyperparameter-tuned label-ranking model. The Adaptive
+method achieved the highest performance, with an accuracy
+of 57.4% when the labeled sample cost was at least 40.
+In another study, [4] proposed a probabilistic KNN enhanced
+with MCMC-based metric learning and active learning
+for heart disease prediction. The model uses a dataset of
+299 samples with 13 features, split into ≈70% labeled for
+training and ≈30% unlabeled/test, and iteratively queries
+the most uncertain instances to improve learning. Using k =
+5 nearest neighbors (number of neighbors considered for
+classification) and Q = 10 queries (number of most uncertain
+instances added per iteration), it achieves 92.22% accuracy
+and 81.08% F1-score, outperforming baseline classifiers
+such as RF, SVM, and ANN. In this work, we introduce a
+novel active learning framework for heart disease prediction,
+designed to achieve high performance using minimal labeled
+data. Initially trained on only 1.5% of labeled data, the model
+incrementally improves by querying the most informative
+samples. Uncertainty is quantified using the Committee-
+Weighted Query-by-Committee (CW-QBC) strategy, which
+integrates the outputs of a diverse ensemble comprising
+XGBoost, Random Forest, and Logistic Regression models.
+To ensure diversity among the queried samples, a K-
+Means–based sampling strategy is applied to select points
+closest to the cluster centers. The model achieves 96.04%
+accuracy while using only 31.9% of the dataset for training,
+demonstrating superior performance with limited labeled
+data.
+FIGURE 1. Overview of the proposed heterogeneous committee-based AL
+framework using the hybrid multi-criterion.
+III. PROPOSED WORK
+In this work, a novel active learning (AL) framework
+is introduced for heart disease classification, integrating
+both uncertainty- and diversity-based sampling criteria. The
+proposed framework employs a heterogeneous committee
+of classifiers, including XGBoost, Random Forest, and
+Logistic Regression, to evaluate unlabeled samples. Sam-
+ple uncertainty is measured using a Committee-Weighted
+Query-by-Committee (CW-QBC) approach, which quanti-
+fies disagreement among the models to identify the most
+informative instances. Furthermore, K-Means clustering
+is applied to the most uncertain samples to ensure the
+selection of diverse and representative data points in the
+feature space. This integration enables the framework to
+balance accuracy and data efficiency, providing a practical
+and cost-effective solution for heart disease diagnosis.
+Figure 1 shows an overview of the proposed general
+model.
+A. INITIAL LABELED SET
+Active Learning (AL) enables models to learn effectively
+from fewer labeled examples by actively selecting which
+data to label [11]. Since labeling data often requires costly
+input from human experts, it is important to build an
+accurate prediction model using only a small number of
+labeled examples [27]. Following the standard practice in AL
+literature [11], we initialize the labeled training set with a
+small fraction of the dataset to simulate a real-world scenario
+where labeling is expensive. In our experiments, we select
+1.5% of the dataset as the initial labeled set. This fraction
+was chosen as a design decision based on an ablation study
+that evaluated different initial fractions and found that 1.5%
+provides a good trade-off between initial model performance
+and labeling efficiency.
+VOLUME 14, 2026
+19053
+E. Goli, M. Sah: HC-AAL for Efficient Heart Disease Prediction
+Algorithm 1 Initial Labeled Set Selection
+Require: Dataset D = {(xi, yi)}N
+i=1, initial fraction ρ (e.g.,
+ρ = 0.015), random seed s
+Ensure: Initial labeled set L0, Unlabeled pool U0
+1: // Split features and labels
+2: X ←{xi}N
+i=1,
+Y ←{yi}N
+i=1
+3: // Compute initial labeled set size
+4: n0 ←max
+ 1, ⌊ρ · N⌋
+
+▷ensure at least one sample
+5: // Reproducible random partition: equivalent to
+train_test_split(..., train_size=
+ρ, random_state=s )
+6: Randomly permute indices
+I = permute(1, . . . , N; seed = s)
+7: Itrain ←I[1 : n0]
+8: Ileft ←I[n0 + 1 : N]
+9: // Build labeled and unlabeled sets
+10: L0 ←{(X[i], Y[i]) | i ∈Itrain}
+11: U0 ←{(X[i], Y[i]) | i ∈Ileft}
+12: return L0, U0
+The dataset is defined as:
+D = {(xi, yi)}N
+i=1,
+(1)
+where xi is the feature vector of the i-th instance, and yi is its
+label.
+We start by randomly selecting a small portion of the data
+as the initial labeled set:
+D(0)
+labeled ⊂D,
+|D(0)
+labeled| = 0.015 · N.
+(2)
+The remaining data forms the unlabeled pool:
+Dunlabeled = D \ D(0)
+labeled.
+(3)
+This method represents real situations where labeling data
+is costly. The active learning algorithm selects the most
+informative samples from Dunlabeled to efficiently improve
+the model. Algorithm 1 summarizes the initialization and
+iterative selection procedure used in the proposed active
+learning framework.
+B. HETEROGENEOUS COMMITTEE DESIGN
+In contrast to homogeneous ensembles that rely on models
+with identical structures (e.g., multiple instances of the
+same learning algorithm trained on different data subsets),
+heterogeneous ensembles integrate classifiers from diverse
+algorithmic families [28]. This diversity allows the ensemble
+to capture multiple perspectives of the underlying data
+distribution. When their complementary biases are combined,
+the ensemble approach effectively mitigates individual model
+weaknesses and strikes a balance between bias and variance.
+As a result, it achieves greater accuracy and robustness
+compared to homogeneous ensembles [29]. As shown in
+Algorithm 2, the proposed Active Learning (AL) framework
+in this work employs a heterogeneous committee of classi-
+fiers. The committee consists of three classifiers based on
+distinct learning algorithms (XGBoost, Random Forest, and
+Logistic Regression) to achieve a balanced trade-off between
+accuracy, robustness, and interpretability.
+The XGBoost classifier is integrated as a key component
+to handle the binary prediction task. Its design follows a
+boosting strategy, where multiple decision trees are trained
+sequentially, and each new tree focuses on correcting the
+errors made by the previous ones. This iterative learning
+process allows the model to capture complex, non-linear
+relationships among clinical features. Within the framework,
+XGBoost is used to provide a strong and reliable learner
+that complements other classifiers in the committee. During
+the active learning process, it is repeatedly retrained with
+the newly labeled data to evaluate how model performance
+improves as more information becomes available. At the
+end of the iterative process, XGBoost serves as the final
+classifier to perform the overall evaluation of the system.
+Ensemble diversity is strengthened by the Random Forest
+classifier through the development of multiple decision trees,
+each derived from randomized selections of the data and
+feature space. This randomness reduces model variance and
+prevents overfitting, leading to more stable and generalized
+predictions. The ensemble voting process of Random Forest
+mitigates the influence of noisy features, and its proficiency
+in representing non-linear feature interactions complements
+the gradient-based optimization used in XGBoost. Within
+the committee, Random Forest contributes alternative prob-
+abilistic estimates that strengthen uncertainty measurement
+and improve the reliability of sample selection. Logistic
+Regression functions as an interpretable and computationally
+efficient model that complements the complexity of tree-
+based classifiers. The model predicts the probability of
+each class using a logistic function, which results in a
+linear boundary between the classes. Implemented as part
+of a standard preprocessing pipeline, it preserves numerical
+stability and normalizes the influence of all features. Despite
+its simpler structure, Logistic Regression introduces a distinct
+algorithmic perspective by modeling linear relationships that
+tree-based classifiers may overlook. Its complementary con-
+tribution supports a more balanced and robust interpretation
+of the data distribution.
+C. ADAPTIVE UNCERTAINTY AND DIVERSITY-BASED
+QUERY DESIGN
+To efficiently expand the labeled dataset, the proposed active
+learning framework employs an adaptive uncertainty and
+diversity-based query strategy. This strategy leverages the
+heterogeneous committee of classifiers described earlier to
+identify the most informative samples from the unlabeled
+pool. In each iteration, all committee members (XGBoost,
+Random Forest, and Logistic Regression) predict the class
+probabilities of the unlabeled samples. The Committee-
+Weighted Query-by-Committee (CW-QBC) approach is then
+applied to quantify the level of disagreement among the
+models. [30], [31].
+19054
+VOLUME 14, 2026
+E. Goli, M. Sah: HC-AAL for Efficient Heart Disease Prediction
+Algorithm 2 Heterogeneous Committee Design
+Require: Labeled dataset L = {(xi, yi)}n
+i=1, base learners
+{M1, M2, . . . , Mk}
+Ensure: Trained heterogeneous committee
+C = {M1, M2, . . . , Mk}
+1: Define base learners:
+• M1: XGBoost classifier (XGBClassifier)
+• M2: Random Forest classifier
+• (RandomForestClassifier)
+• M3: Logistic Regression with data standardization
+pipeline
+2: for each model Mj ∈{M1, M2, M3} do
+3:
+Train Mj on L using features xi and labels yi
+4: end for
+5: Form the heterogeneous committee:
+C = {M1, M2, M3}
+6: return C
+CW-QBC extends entropy-based QBC disagreement
+by operating on probabilistic predictions and enabling
+confidence-weighted
+contributions
+from
+heterogeneous
+committee members. Suppose M denotes the number of
+models in the committee, and consider pm(xi) represents the
+probability predicted by model m for sample xi belonging
+to the positive class. The average probability across the
+committee is computed as:
+¯p(xi) = 1
+M
+M
+X
+m=1
+pm(xi)
+(4)
+The CW-QBC score for each sample xi is then calculated
+as:
+CW_score(xi) =
+M
+X
+m=1
+pm(xi) · log pm(xi) + ϵ
+¯p(xi) + ϵ
+(5)
+where ϵ is a small constant added to prevent division by
+zero. Let Q denote the set of top uncertain samples and k
+the number of samples to query. K-Means clusters Q into k
+groups:
+{C1, C2, . . . , Ck} = KMeans(Q, k)
+(6)
+For each cluster Cj, the sample closest to the centroid µj is
+selected:
+x∗
+j = arg min
+x∈Cj ∥x −µj∥2
+(7)
+Algorithm 3 provides a summary of the adaptive query
+selection process. In summary, after creating the initial
+labeled set, the framework expands it iteratively. At each
+iteration, the heterogeneous committee is retrained on the
+current labeled set, and CW-QBC scores are computed to
+identify the most uncertain samples. Based on an adaptive
+query size, the algorithm chooses the most uncertain samples,
+clusters them with K-Means, and selects one representative
+Algorithm 3 Adaptive Uncertainty and Diversity-Based
+Query
+Require: Unlabeled pool U, initial labeled set (XL, YL),
+committee of M classifiers {Cm}M
+m=1, adaptive query size
+schedule Q = {qt}, maximum iterations T
+Ensure: Expanded labeled set (XL, YL)
+1: Initialize iteration t ←0
+2: while t < T and stopping criterion not met do
+3:
+Train each classifier Cm on (XL, YL)
+4:
+for each sample x ∈U do
+5:
+Compute predicted probabilities pm(x) from each
+Cm
+6:
+Compute
+mean
+probability
+¯p(x)
+=
+1
+M
+PM
+m=1 pm(x)
+7:
+Compute CW-QBC uncertainty score:
+sCW(x) =
+M
+X
+m=1
+pm(x) log
+pm(x) + ε
+¯p(x) + ε
+
+8:
+end for
+9:
+Set adaptive query size q ←Q[t]
+10:
+Select top 2q uncertain samples Uuncertain with
+highest sCW
+11:
+Apply K-Means clustering (k = q) on Uuncertain
+12:
+For each cluster, select sample closest to centroid
+13:
+Query oracle (or reveal ground-truth) for labels of
+selected samples
+14:
+Update labeled set:
+XL ←XL ∪{xj}q
+j=1,
+YL ←YL ∪{yj}q
+j=1
+15:
+Remove selected samples from U
+16:
+t ←t + 1
+17: end while
+18: return (XL, YL)
+per cluster to ensure diversity. The selected samples are then
+added to the labeled set and removed from the unlabeled
+pool. Model performance is continuously monitored on a
+hold-out test set, and the process repeats until a stopping
+criterion, such as reaching a maximum number of iterations
+or sufficient labeled data, is met. In a real-world active
+learning scenario, the selected samples would be sent to
+a domain expert for annotation before being added to the
+labeled dataset. However, in this work, to ensure a controlled
+and reproducible evaluation, the expert annotation process
+is simulated using the known ground-truth labels of the
+selected instances. In the experimental implementation, this
+iterative process was executed for 78 iterations to ensure
+convergence and to assess the highest performance across
+successive labeling stages.
+IV. EXPERIMENTAL ANALYSIS
+A. DATASET
+The proposed method is evaluated using the Heart Disease
+dataset, which was collected from four sources: Cleveland,
+Hungary, Switzerland, and Long Beach V, and is widely
+VOLUME 14, 2026
+19055
+E. Goli, M. Sah: HC-AAL for Efficient Heart Disease Prediction
+FIGURE 2. Target class distribution.
+TABLE 1. Heart disease dataset attributes.
+available on the Kaggle platform for machine learning
+datasets [12]. The dataset contains 1,025 instances with
+14 attributes, including the target variable. The target
+variable, heart_disease, indicates whether a patient has heart
+disease (0 = no, 1 = yes). The dataset is approximately
+balanced, with 526 positive cases and 499 negative cases,
+eliminating the need for any balancing techniques.Figure 2
+shows the distribution of the target classes in our dataset.
+Furthermore, there are no missing values in any of the
+attributes. All features are numeric, with most represented
+as integers (int64) and one continuous feature, oldpeak,
+represented as a float (float64). Table 1 summarizes the
+attributes of the Heart Disease dataset.
+B. EVALUATION METRICS
+To evaluate the proposed approach, this study uses several
+standard metrics, including accuracy, precision, recall, F1-
+score, and AUC-ROC, which provide a detailed understand-
+ing of model performance. A description of each metric [32]
+is provided below:
+Accuracy measures the overall correctness of the model
+predictions and is calculated as:
+Accuracy = Correct Predictions
+Total Predictions
+(8)
+Precision indicates the proportion of true positive predic-
+tions among all instances classified as positive:
+Precision =
+TP
+TP + FP
+(9)
+Recall measures the proportion of true positive predictions
+among all actual positive instances:
+Recall =
+TP
+TP + FN
+(10)
+F1-score is the harmonic mean of precision and recall,
+providing a balance between the two:
+F1-score = 2 · Precision · Recall
+Precision + Recall
+(11)
+AUC-ROC quantifies the ability of the model to distin-
+guish between classes and is obtained from the area under
+the ROC curve.
+C. EXPERIMENTAL SETUP
+All computational experiments were executed in Python
+using standard machine learning and data analysis libraries.
+We evaluate our proposed active learning framework using a
+heterogeneous committee of classifiers: XGBoost, Random
+Forest, and Logistic Regression. StandardScaler is applied
+only within the Logistic Regression pipeline since tree-based
+models are scale-invariant and do not require feature nor-
+malization [33]. K-Means clustering is used to select diverse
+samples from the most uncertain points in each iteration.
+The active learning setup uses an initial labeled set of
+15 samples (1.5% of the 1,025-instance dataset) and an initial
+unlabeled pool of 1,010 samples. In each active learning
+iteration, 2 × query_size samples (ranging from 6 to 10) are
+first selected based on uncertainty, and query_size samples
+(ranging from 3 to 5) are finally selected using K-Means
+diversity. Each experiment is repeated 10 times to account for
+variability, and the active learning loop runs for 78 iterations
+per experiment, tracking performance metrics at each step.
+All hyperparameters used in the experimental setup are
+summarized in Table 2.
+D. RESULT EXPLANATION
+The proposed active learning framework was evaluated on the
+heart disease dataset using a heterogeneous committee con-
+sisting of XGBoost, Random Forest, and Logistic Regression
+models. The system began with only 1.5% of the labeled data
+and iteratively queried the most informative samples based on
+committee disagreement (using the CW-QBC measure) and
+K-Means clustering to ensure diversity among the queried
+instances. To obtain statistically consistent results and reduce
+the influence of randomness, the experiment was conducted
+10 times, and the reported metrics represent the mean values
+over these runs, shown in Figure 3.
+Using only 31.9% of the dataset for training, the model
+achieved an accuracy of 96.04%, AUC of 97.08%, precision
+of 95.24%, recall of 98.07%, and an F1-score of 96.62%. The
+high accuracy (96.04%) and AUC (97.08%) indicate that the
+19056
+VOLUME 14, 2026
+E. Goli, M. Sah: HC-AAL for Efficient Heart Disease Prediction
+TABLE 2. Hyperparameters of the active learning framework.
+FIGURE 3. Average performance metrics (accuracy, AUC, precision, recall,
+and F1-score) of the proposed framework over multiple runs.
+proposed model effectively distinguishes between patients
+with and without heart disease. The high recall (98.07%)
+shows that the model successfully identifies nearly all
+positive (disease) cases, which is critical in medical diagnosis
+to minimize false negatives. The precision (95.24%) confirms
+that most of the positive predictions are correct, meaning few
+false positives. The F1-score (96.62%) balances precision and
+recall, indicating strong overall classification performance.
+Figure 4 illustrates the evolution of model accuracy and the
+proportion of labeled data across successive active learning
+iterations. As shown in the figure, a noticeable increase in
+accuracy is observed during the initial iterations with minimal
+labeled data. The continuous improvement in accuracy
+confirms that the proposed framework efficiently selects
+informative samples, achieving near-optimal performance
+(96%) with only 31.9% labeled data.
+To ensure the reliability of the reported performance, the
+active learning process was repeated 10 times. Figure 5
+presents the accuracy trends across these runs. Minor
+fluctuations from random sampling are observed; however,
+FIGURE 4. Performance metrics across active learning iterations.
+FIGURE 5. Model accuracy across active learning iterations using
+different amounts of training data.
+accuracy in all runs follows a consistent upward trend,
+demonstrating the robustness and stability of the proposed
+framework.
+To further validate the consistency between different
+evaluation metrics, the relationship between accuracy and
+AUC across 10 runs is illustrated in Figure 6. Each data
+point corresponds to one run of the experiment, indicating
+small fluctuations in accuracy and AUC across repeated
+trials. As depicted, the results remain consistently high, with
+accuracy ranging between 95% and 97% and AUC between
+96% and 98%. The strong positive correlation between the
+two metrics indicates that the proposed framework achieves
+stable and reliable classification performance across different
+runs, confirming its robustness against random initialization
+and data sampling effects.
+E. EFFECT OF ADAPTIVE QUERY SIZE
+The proposed model employs an adaptive query size strategy,
+dynamically adjusting the number of queried samples within
+the range of 3 to 6 (query_sizes
+=
+list(range(3, 6))).
+To evaluate its effectiveness, we compared the adaptive
+strategy against fixed query sizes of 3, 4, 5, 8, and 10. All
+results reported in Table 3 represent the average performance
+over 10 runs. As the table depicts, the adaptive query size
+approach achieves a strong balance between performance and
+labeling efficiency. Its Accuracy (96.04%), Recall (98.07%),
+and F1-Score (96.62%) surpass all fixed query sizes. While
+fixed sizes of 3, 4, and 5 are within the adaptive range,
+VOLUME 14, 2026
+19057
+E. Goli, M. Sah: HC-AAL for Efficient Heart Disease Prediction
+FIGURE 6. Relationship between accuracy and AUC across
+10 independent runs, demonstrating consistent and reliable model
+performance.
+FIGURE 7. Accuracy vs. Training data for fixed and adaptive query sizes.
+dynamically adjusting the query size ensures more consistent
+and effective learning since it dynamically selects the
+number of samples based on the current uncertainty and
+informativeness of the model. The small size of 3 can
+slow convergence by providing too few informative samples
+per iteration. The adaptive approach effectively balances
+exploration and exploitation, selecting smaller batches when
+fine-grained updates are needed and larger batches when
+more information can accelerate learning. Although fixed
+query sizes of 8 and 10 show slightly higher Precision
+and AUC, they require approximately 50% of the dataset
+for training (nearly 20% more than the adaptive approach).
+By using only 31.90% of the data, the adaptive strategy attains
+comparable or better overall performance, demonstrating that
+dynamically adjusting the query batch size maximizes model
+performance while minimizing labeling effort, which is a key
+goal in active learning. Figure 7 demonstrates the Comparison
+of Accuracy and Training Data Percentage across Different
+Query Sizes.
+FIGURE 8. Accuracy vs. Training data for different adaptive query sizes.
+F. ABLATION STUDY ON THE QUERY SIZE RANGE
+We selected list(range(3, 6)) based on an ablation
+study that compared several alternative query-size intervals,
+including
+list(range(5, 8)),
+list(range(6,
+10)),
+list(range(3, 8)),
+list(range(10,
+15)), and list(range(15, 20)). All configurations
+were evaluated under identical experimental conditions,
+and results were averaged over 10 runs. The goal of this
+study was to determine whether wider or shifted ranges
+could improve predictive performance or labeling efficiency.
+Table 4 reports the results in terms of Accuracy, Precision,
+Recall, F1-Score, AUC, and the percentage of training data
+used. Among the alternatives, list(range(10, 15))
+performs competitively across several metrics, showing
+slightly higher Accuracy (96.28%), Precision (96.75%),
+and AUC (98.19%). However, its Recall (96.09%) and
+F1-Score (96.40%) remain lower than those of the pro-
+posed configuration. More critically, it requires labeling
+50.94% of the training data (about 19% more than our
+proposed range) which reduces its suitability for active
+learning, where minimizing annotation cost is crucial.
+Similarly, list(range(15, 20)) provides a marginal AUC
+improvement but requires labeling over 51% of the data,
+further demonstrating the inefficiency of larger query-size
+intervals.
+In contrast, the proposed range (list(range(3,
+6)))
+achieves
+the
+highest
+Recall
+(98.07%)
+and
+F1-Score (96.62%), while maintaining competitive Accuracy
+(96.04%), Precision (95.24%), and a strong AUC (97.08%).
+Importantly, it achieves this performance using only 31.90%
+of the training data (substantially less than any other
+configuration), highlighting both its predictive strength
+and superior labeling efficiency. Figure 8 illustrates the
+proportion of training data and model accuracy.
+G. ABLATION STUDY ON INITIAL LABELED SET
+An ablation study was conducted to evaluate the impact of
+varying the proportion of initially labeled samples on model
+performance. Table 5 reports the results for initial training
+sizes ranging from 1% to 12% of the dataset, along with
+our proposed strategy using only 1.5% of labeled data. All
+experiments were conducted under identical conditions, and
+results were averaged over 10 runs to ensure reliability.
+19058
+VOLUME 14, 2026
+E. Goli, M. Sah: HC-AAL for Efficient Heart Disease Prediction
+TABLE 3. Performance for fixed and adaptive query sizes.
+TABLE 4. Performance comparison for different query size ranges.
+As shown in the Table, the proposed 1.5% initial set achieves
+the best performance across all metrics, with an accuracy of
+96.04%, F1-score of 96.62%, and AUC of 97.08%, while
+requiring only 31.90% of the total training data. In contrast,
+using 12% of the dataset as the initial set achieves only a
+marginal improvement in AUC while consuming around 11%
+more data initially and around 10% more of the total training
+data. Consequently, larger initial sets were not explored,
+as they would further increase labeling costs without yielding
+significant performance gains.
+H. COMPARATIVE ANALYSIS WITH BASELINE ACTIVE
+LEARNING METHODS
+To validate the effectiveness of the proposed frame-
+work, a comparative analysis was performed against four
+baseline active learning (AL) strategies: Random Sam-
+pling [34], Certain Sampling [35], Diversity Sampling [36],
+and Confidence-Weighted Query-by-Committee [30]. Each
+method was implemented under identical experimental
+conditions using the same heart disease dataset, initialized
+with 1.5% labeled data. To ensure statistical reliability and
+minimize the influence of random variations, all experiments
+were repeated over 10 runs, and the reported performance
+metrics represent the averaged results across these runs.
+As shown in Table 6, the Random Sampling achieved
+91.32% accuracy, 91.50% precision, 91.52% recall, 91.47%
+F1-score, and 96.42% AUC using 31.90% of the labeled
+training data. In this baseline, samples are selected randomly
+from the unlabeled dataset during each active learning
+iteration. In Certain Sampling, instances are chosen from
+the unlabeled dataset in a predefined or fixed sequence,
+without employing any uncertainty or diversity criteria.
+the model recorded an accuracy of 91.53%, precision of
+92.97%, recall of 90.33%, F1-score of 91.59%, and an
+AUC of 96.44%. An analysis of individual criteria was
+conducted to evaluate the importance of uncertainty and
+diversity. Two experiments were performed to assess the
+effect of each criterion separately. In the first experiment,
+FIGURE 9. Comparison of the HC-AAL with uncertainty-only and
+diversity-only.
+only the diversity criterion was considered. The model selects
+samples purely based on diversity, covering the feature
+space without considering model uncertainty. With Diversity
+Sampling, performance metrics were: 87.16% accuracy,
+87.20% precision, 88.56% recall, 87.84% F1-score, and
+93.46% AUC. In the second experiment, we focused on
+uncertainty. The model chooses samples solely based on
+the uncertainty estimated by the committee scores. The
+model achieved 93.67% accuracy, 92.24% precision, 97.27%
+recall, 94.67% F1-score, and 95.06% AUC. When integrating
+both uncertainty and diversity criteria, the proposed model
+achieves over 96% accuracy, 95% precision, 98% recall,
+a 96% F1-score, and a 97% AUC. A comparison of the
+proposed method with the two single-criterion experiments is
+presented in Fig. 9, and its performance relative to all baseline
+methods is shown in Fig. 10.
+I. COMPARATIVE ANALYSIS WITH EXISTING APPROACHES
+This section presents a comparison of the proposed method
+with existing approaches for heart disease classification,
+VOLUME 14, 2026
+19059
+E. Goli, M. Sah: HC-AAL for Efficient Heart Disease Prediction
+TABLE 5. Performance metrics for different initial training sizes.
+TABLE 6. Comparative analysis with baseline active learning methods.
+TABLE 7. Comparison of the proposed method with existing approaches for heart disease classification.
+FIGURE 10. Comparison of the HC-AAL with baselines.
+as summarized in Table 7, The proposed model (HC-AAL)
+achieves superior performance compared with recent state-
+of-the-art methods for heart disease classification. The model
+in [5], trained on 70% of the dataset, reached an accuracy
+of 93.33% with a precision of 95% and a recall of 90.48%.
+The SVM model in [17], trained on 80% of the data,
+reached 91.67% accuracy and 92.31% precision. Similarly,
+the HRFLM model in [18] also utilized 80% of the training
+data and obtained an accuracy of 92.95%. The GMERF
+method in [19], which was trained on 80% of the dataset,
+showed a relatively low performance with an accuracy of 75%
+and an AUC-ROC of 80%. The Optimized XGBoost model
+in [20] used 90% of the training data to achieve a higher
+accuracy of 95.45%, along with 100% precision and 92.86%
+recall. The standard XGBoost model in [21], trained on 80%
+of the data, reported 95.24% accuracy, 98.11% precision, and
+an AUC-ROC of 98%. the CART model in [24] used 80% of
+the data and achieved 87.25% accuracy, whereas the CatBoost
+approach in [25] trained on 70% of the dataset and reached
+90.94% accuracy. Reference [4], a probabilistic KNN with
+MCMC-based metric learning and active learning, trained on
+70% dataset. It achieved 92.22% accuracy and 81.08% F1-
+score. In contrast, Active learning (AL) aims to achieve high
+accuracy with minimal labeled data by selectively querying
+the most informative samples [27]. In the proposed HC-AAL
+framework, this is accomplished through a combination of
+uncertainty-based and diversity-based sampling. As shown,
+with only 31.9% of the data labeled, the model achieves a
+high accuracy of 96.04%, 98.07% recall, 96.62% F1-score,
+and 97.08% AUC-ROC, highlighting its strong performance
+and data efficiency while significantly reducing labeling
+cost.
+19060
+VOLUME 14, 2026
+E. Goli, M. Sah: HC-AAL for Efficient Heart Disease Prediction
+V. CONCLUSION AND FUTURE WORK
+This study introduced a heterogeneous committee-based
+adaptive active learning (HC-AAL) framework for efficient
+and accurate heart disease prediction. By integrating a diverse
+committee of machine learning models with a CW-QBC
+uncertainty measure, diversity-enhancing K-Means sam-
+pling, and an adaptive query-length strategy, the proposed
+method effectively reduces dependence on large labeled
+datasets while maintaining high predictive performance.
+A comprehensive comparison with existing state-of-the-art
+models further demonstrates the effectiveness of the proposed
+framework. Traditional approaches, such as SVM, CART,
+CatBoost, HRFLM, GMERF, and optimized XGBoost,
+typically rely on 70–90% of labeled data to reach accuracies
+ranging between 75% and 95.45%. In contrast, the HC-AAL
+model achieves 96.04% accuracy, 98.07% recall, 96.62%
+F1-score, and 97.08% AUC-ROC while utilizing only 31.9%
+of labeled samples. This clearly highlights its superior data
+efficiency and strong predictive capability.
+Overall, the HC-AAL framework demonstrates that
+combining adaptive active learning with heterogeneous
+committee learning can substantially reduce labeling costs
+without compromising model performance. These findings
+provide a promising pathway for developing scalable, cost-
+effective diagnostic systems in medical domains where expert
+annotation is limited.
+Future work includes extending HC-AAL to multi-modal
+data, integrating semi- or self-supervised learning to reduce
+labeling further, developing real-time adaptive query strate-
+gies, and validating the approach on larger, more diverse
+datasets to enhance generalizability.
+REFERENCES
+[1] Q. Zhenya and Z. Zhang, ‘‘A hybrid cost-sensitive ensemble for heart
+disease prediction,’’ BMC Med. Informat. Decis. Making, vol. 21, no. 1,
+Feb. 2021, Art. no. 14, doi: 10.1186/s12911-021-01436-7.
+[2] Y. Yang, J. Min, and Y. Zha, ‘‘Unveiling China’s heart disease challenges:
+A comprehensive retrospective study on national mortality burden,’’
+BMC Public Health, vol. 25, no. 1, Mar. 2025, Art. no. 21710, doi:
+10.1186/s12889-025-21710-x.
+[3] Z. Sun, W. Dong, H. Shi, H. Ma, L. Cheng, and Z. Huang, ‘‘Comparing
+machine learning models and statistical models for predicting heart failure
+events: A systematic review and meta-analysis,’’ Frontiers Cardiovascular
+Med., vol. 9, Apr. 2022, Art. no. 812276, doi: 10.3389/fcvm.2022.812276.
+[4] N. K. Rout, L. Dora, and S. Agrawal, ‘‘Heart disease classification utilizing
+modified probabilistic K-nearest neighbor with active learning,’’ in Proc.
+Int. Conf. Mach. Learn. Auto. Syst. (ICMLAS), Mar. 2025, pp. 732–739,
+doi: 10.1109/ICMLAS64557.2025.10968593.
+[5] D. Hassan, H. I. Hussein, and M. M. Hassan, ‘‘Heart disease prediction
+based on pre-trained deep neural networks combined with principal
+component analysis,’’ Biomed. Signal Process. Control, vol. 79, Jan. 2023,
+Art. no. 104019, doi: 10.1016/j.bspc.2022.104019.
+[6] M. Kavitha, G. Gnaneswar, R. Dinesh, Y. R. Sai, and R. S. Suraj, ‘‘Heart
+disease prediction using hybrid machine learning model,’’ in Proc. 6th Int.
+Conf. Inventive Comput. Technol. (ICICT), Jan. 2021, pp. 1329–1333, doi:
+10.1109/ICICT50816.2021.9358597.
+[7] M. Hajiarbabi, ‘‘Heart disease detection using machine learning methods:
+A comprehensive narrative review,’’ J. Med. Artif. Intell., vol. 7, p. 21,
+Jun. 2024, doi: 10.21037/jmai-23-152.
+[8] R. C. Das, M. C. Das, Md. A. Hossain, Md. A. Rahman, M. H. Hossen, and
+R. Hasan, ‘‘Heart disease detection using ML,’’ in Proc. IEEE 13th Annu.
+Comput. Commun. Workshop Conf. (CCWC), Mar. 2023, pp. 0983–0987,
+doi: 10.1109/CCWC57344.2023.10099294.
+[9] R. D. Roja, S. S. Vellela, S. K. K. Basha, and V. R. B. Venkateswara,
+‘‘Coronary heart disease prediction and classification using hybrid
+machine
+learning
+algorithms,’’
+in
+Proc.
+Int.
+Conf.
+Innov.
+Data
+Commun.
+Technol.
+Appl.
+(ICIDCA),
+Mar.
+2023,
+pp. 1–7,
+doi:
+10.1109/ICIDCA56705.2023.10099579.
+[10] M. Kholghi, L. Sitbon, G. Zuccon, and A. Nguyen, ‘‘Active learning: A step
+towards automating medical concept extraction,’’ J. Amer. Med. Inform.
+Assoc., vol. 23, no. 2, pp. 289–296, Mar. 2016, doi: 10.1093/jamia/ocv069.
+[11] (2009). Active Learning Literature Survey. Accessed: Nov. 22, 2025.
+[Online]. Available: http://digital.library.wisc.edu/1793/60660
+[12] Heart Disease Dataset. Accessed: Sep. 22, 2025. [Online]. Available:
+https://www.kaggle.com/datasets/johnsmith88/heart-disease-dataset
+[13] M. A. Naser, A. A. Majeed, M. Alsabah, T. R. Al-Shaikhli, and K. M. Kaky,
+‘‘A review of machine learning’s role in cardiovascular disease prediction:
+Recent advances and future challenges,’’ Algorithms, vol. 17, no. 2, p. 78,
+Feb. 2024, doi: 10.3390/a17020078.
+[14] H. Jindal, S. Agrawal, R. Khera, R. Jain, and P. Nagrath, ‘‘Heart
+disease prediction using machine learning algorithms,’’ in Proc. 1st Int.
+Conf. Comput. Res. Data Anal. (ICCRDA), Oct. 2020, p. 12072, doi:
+10.1088/1757-899X/1022/1/012072.
+[15] P. K. Bhowmik, M. N. I. Miah, M. K. Uddin, M. M. H. Sizan, L. Pant,
+M. R. Islam, and N. Gurung, ‘‘Advancing heart disease prediction through
+machine learning: Techniques and insights for improved cardiovascular
+health,’’ Brit. J. Nursing Stud., vol. 4, no. 2, pp. 35–50, Oct. 2024, doi:
+10.32996/bjns.2024.4.2.5.
+[16] A. Khan, M. Qureshi, M. Daniyal, and K. Tawiah, ‘‘A novel study
+on machine learning algorithm-based cardiovascular disease prediction,’’
+Health Social Care Community, vol. 2023, pp. 1–10, Feb. 20, 2023, doi:
+10.1155/2023/1406060.
+[17] C. Boukhatem, H. Y. Youssef, and A. B. Nassif, ‘‘Heart disease
+prediction using machine learning,’’ in Proc. Adv. Sci. Eng. Technol.
+Int. Conf. (ASET), Feb. 2022, pp. 1–6, doi: 10.1109/aset53988.2022.
+9734880.
+[18] S. A. J. Zaidi, A. Ghafoor, J. Kim, Z. Abbas, and S. W. Lee,
+‘‘HeartEnsembleNet: An innovative hybrid ensemble learning approach
+for cardiovascular risk prediction,’’ Healthcare, vol. 13, no. 5, p. 507,
+Feb. 26, 2025, doi: 10.3390/healthcare13050507.
+[19] F. Asadi, R. Homayounfar, Y. Mehrali, C. Masci, S. Talebi, and F. Zayeri,
+‘‘Detection of cardiovascular disease cases using advanced tree-based
+machine learning algorithms,’’ Sci. Rep., vol. 14, no. 1, Sep. 27, 2024,
+Art. no. 22230, doi: 10.1038/s41598-024-72819-9.
+[20] S. Dhanka and S. Maini, ‘‘A hybridization of XGBoost machine learning
+model by optuna hyperparameter tuning suite for cardiovascular disease
+classification with significant effect of outliers and heterogeneous training
+datasets,’’ Int. J. Cardiol., vol. 420, Feb. 2025, Art. no. 132757, doi:
+10.1016/j.ijcard.2024.132757.
+[21] B. E. Sianga, M. C. Mbago, and A. S. Msengwa, ‘‘Predicting the
+prevalence of cardiovascular diseases using machine learning algo-
+rithms,’’ Intell.-Based Med., vol. 11, Jan. 2025, Art. no. 100199, doi:
+10.1016/j.ibmed.2025.100199.
+[22] R. Bharti, A. Khamparia, M. Shabaz, G. Dhiman, S. Pande, and P. Singh,
+‘‘Prediction of heart disease using a combination of machine learning and
+deep learning,’’ Comput. Intell. Neurosci., vol. 2021, no. 1, Jul. 1, 2021,
+Art. no. 8387680, doi: 10.1155/2021/8387680.
+[23] V. Chang, V. R. Bhavani, A. Q. Xu, and M. Hossain, ‘‘An artificial
+intelligence model for heart disease detection using machine learning
+algorithms,’’ Healthcare Anal., vol. 2, Nov. 2022, Art. no. 100016, doi:
+10.1016/j.health.2022.100016.
+[24] M.
+Ozcan
+and
+S.
+Peker,
+‘‘A
+classification
+and
+regression
+tree
+algorithm for heart disease modeling and prediction,’’ Healthcare
+Anal., vol. 3, Nov. 2023, Art. no. 100130, doi: 10.1016/j.health.2022.
+100130.
+[25] N. A. Baghdadi, S. M. Farghaly Abdelaliem, A. Malki, I. Gad, A. Ewis,
+and E. Atlam, ‘‘Advanced machine learning techniques for cardiovascular
+disease early detection and diagnosis,’’ J. Big Data, vol. 10, no. 1,
+Sep. 17, 2023, Art. no. 144, doi: 10.1186/s40537-023-00817-1.
+[26] P. Guleria, P. Naga Srinivasu, S. Ahmed, N. Almusallam, and F. K.
+Alarfaj, ‘‘XAI framework for cardiovascular disease prediction using
+classification techniques,’’ Electronics, vol. 11, no. 24, p. 4086, Dec. 2022,
+doi: 10.3390/electronics11244086.
+[27] I. M. El-Hasnony, O. M. Elzeki, A. Alshehri, and H. Salem, ‘‘Multi-label
+active learning-based machine learning model for heart disease predic-
+tion,’’ Sensors, vol. 22, no. 3, p. 1184, Feb. 2022, doi: 10.3390/s22031184.
+VOLUME 14, 2026
+19061
+E. Goli, M. Sah: HC-AAL for Efficient Heart Disease Prediction
+[28] M. Gashler, C. Giraud-Carrier, and T. Martinez, ‘‘Decision tree ensemble:
+Small heterogeneous is better than large homogeneous,’’ in Proc.
+7th Int. Conf. Mach. Learn. Appl., Jan. 2008, pp. 900–905, doi:
+10.1109/icmla.2008.154.
+[29] M. Sabzevari, G. Martínez-Muñoz, and A. Suárez, ‘‘Building het-
+erogeneous ensembles by pooling homogeneous ensembles,’’ Int. J.
+Mach. Learn. Cybern., vol. 13, no. 2, pp. 551–558, Feb. 2022, doi:
+10.1007/s13042-021-01442-1.
+[30] B. Quan, M. Yang, X. Li, Q. Chen, G. Liu, J. Hong, Z. Hao, L. Li,
+and H. Wei, ‘‘Research on the design of active learning algorithm
+based on query-by-Committee for intelligent fetal monitoring,’’ in Proc.
+IEEE Int. Conf. Bioinf. Biomed. (BIBM), Dec. 2021, pp. 515–521, doi:
+10.1109/BIBM52615.2021.9669325.
+[31] C. Zhang and T. Chen, ‘‘An active learning framework for content-based
+information retrieval,’’ IEEE Trans. Multimedia, vol. 4, no. 2, pp. 260–268,
+Jun. 2002, doi: 10.1109/TMM.2002.1017738.
+[32] E. Goli and M. Şah, ‘‘Diabetes classification using deep learning with
+a hybrid data imbalance handling approach,’’ in Proc. 9th Int. Symp.
+Innov. Approaches Smart Technol. (ISAS), Jun. 2025, pp. 1–8, doi:
+10.1109/isas66241.2025.11101940.
+[33] J. M. H. Pinheiro, S. V. B. de Oliveira, T. H. S. Silva, P. A. R. Saraiva,
+E. F. de Souza, R. V. Godoy, L. A. Ambrosio, and M. Becker, ‘‘The
+impact of feature scaling in machine learning: Effects on regression and
+classification tasks,’’ 2025, arXiv:2506.08274.
+[34] H. Woo and C. H. Park, ‘‘An efficient active learning method based
+on random sampling and backward deletion,’’ in Intelligent Science
+and Intelligent Data Engineering. Berlin, Germany: Springer, 2013,
+pp. 683–691.
+[35] W. Cai, M. Zhang, and Y. Zhang, ‘‘Active learning for ranking with
+sample density,’’ Inf. Retr. J., vol. 18, no. 2, pp. 123–144, Apr. 2015, doi:
+10.1007/s10791-015-9250-6.
+[36] D. Garcia, J. Carias, T. Adão, R. Jesus, A. Cunha, and L. G. Magalhães,
+‘‘Ten years of active learning techniques and object detection: A
+systematic review,’’ Appl. Sci., vol. 13, no. 19, p. 10667, Sep. 2023, doi:
+10.3390/app131910667.
+ELAHE GOLI received the B.Eng. degree in com-
+puter software engineering from the Mazandaran
+University of Science and Technology, Iran, and
+the M.Eng. degree in computer engineering from
+Cyprus International University, Nicosia, in 2025.
+She is currently affiliated with the Computer
+Engineering Department, Cyprus International
+University, Nicosia, NorthCyprus. Her current
+research interests include artificial intelligence,
+deep learning, deep reinforcement learning, hybrid
+model design, and edge–cloud computing environments.
+MELIKE SAH received the B.Sc. and M.Sc.
+degrees in computer engineering from Eastern
+Mediterranean University, North Cyprus, and
+the Ph.D. degree in computer science from the
+University of Southampton, U.K., in 2009. She
+was a Postdoctoral Researcher with Trinity Col-
+lege Dublin, Ireland, from 2009 to 2014. She
+is currently a Professor with Cyprus Interna-
+tional University, North Cyprus. She is also the
+Co-Founding Director of Vindio AI Software Ltd.
+Her current research interests include artificial intelligence, deep learning,
+computer vision, and biomedical signal/data analysis. She served as an
+Associate Editor for IEEE TRANSACTIONS ON BIG DATA and IEEE TRANSACTIONS
+ON ARTIFICIAL INTELLIGENCE.
+19062
+VOLUME 14, 2026

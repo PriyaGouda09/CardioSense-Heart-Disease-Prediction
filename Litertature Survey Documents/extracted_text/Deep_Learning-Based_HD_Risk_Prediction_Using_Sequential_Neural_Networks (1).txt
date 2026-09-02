@@ -1,0 +1,763 @@
+ 
+Deep Learning-Based HD Risk Prediction Using 
+Sequential Neural Networks 
+ 
+Sujatha Krishna 
+Department of Computing and 
+Information Sciences, Software 
+Engineering and Data Technologies 
+Unit, University of Technology and 
+Applied Sciences, AI-Aqr, Shinas, 324, 
+Oman 
+sujatha.krishna@utas.edu.om 
+Pandian Vaidhyanathan 
+Department of Supportive 
+Requirements, Sciences and 
+Mathematics Unit, University of 
+Technology and Applied Sciences, AI-
+Aqr, Shinas, 324, Oman 
+vaidhy@utasoman.onmicrosoft.com
+ 
+Amna Salim Rashid Al Kaabi 
+Department of Computing and 
+Information Sciences, Software 
+Engineering and Data Technologies 
+Unit, University of Technology and 
+Applied Sciences, AI-Aqr, Shinas, 324, 
+Oman 
+Amna.Alkaabi@utas.edu.om 
+Amina Salim Mohammed AlJabri 
+Department of Computing and 
+Information Sciences, Software 
+Engineering and Data Technologies 
+Unit, University of Technology and 
+Applied Sciences, AI-Aqr, Shinas, 324, 
+Oman 
+Amina.AlJabri@utas.edu.om 
+Abstract—Cardiovascular diseases (CVD) continue to be 
+the leading cause of global death, requiring accurate and 
+efficient prediction technology to aid clinicians in their 
+decision-making.  Conventional diagnostic methods, 
+such as ECG or stress tests, need manual assessment and 
+may lead to diagnostic delays or inconsistencies.  Recent 
+breakthroughs in AI and deep learning have potential 
+for computer-automated risk prediction models that 
+alleviate diagnostic uncertainties.  This study presents a 
+deep learning methodology (Sequential ANN) for 
+forecasting HD.  A dataset on Heart Disease (HD), 
+containing 14 clinical factors such as sex, age, fasting 
+blood sugar resting blood pressure, cholesterol levels 
+and chest pain type, is employed for model training.  The 
+trained artificial neural network utilizes the Adam 
+optimizer (AO) and binary cross-entropy loss (BCEL), 
+leading to swift convergence and improved classification 
+accuracy.  The experimental results demonstrate that 
+the predictive performance is outstanding, with the 
+model attaining an overall performance of 98% 
+(Precision: 98.01%, Recall: 98%, F1 score: 98%, ROC 
+AUC: 97.77%).  Experimental results demonstrate the 
+effectiveness and efficiency of the proposed method for 
+early cardiac disease prediction, applicable in real-time 
+risk assessment and clinical decision support systems. 
+Keywords— Heart disease (HD) prediction, Artificial 
+Neural Network (ANN), Sequential deep learning, 
+Cardiovascular 
+dataset, 
+Medical 
+diagnosis, 
+Early 
+detection, Clinical decision support. 
+I. 
+INTRODUCTION 
+  Cardiovascular illnesses represent a significant global 
+health crisis, resulting in millions of fatalities annually. 
+Timely diagnosis and risk assessment are crucial for patients 
+with ASUC to avert serious health repercussions and 
+enhance 
+their 
+prognosis. 
+Standard 
+diagnostics 
+like 
+electrocardiograms, cholesterol profiles, and stress tests can 
+provide significant insights into underlying issues; however, 
+they may not necessarily present a comprehensive overview 
+[1]. The vast volume of digital data in healthcare 
+increasingly necessitates efficient, accurate, and automated 
+diagnosis. Recent advancements in (AI) and (ML)have been 
+employed as computational instruments for intricate medical 
+datasets to reveal concealed patterns. Employing these tools 
+within cardiovascular research could significantly enhance 
+early prediction, diagnosis, and therapeutic planning [2]. 
+Cardiovascular disease constitutes a significant global 
+public health issue, resulting in millions of fatalities 
+annually and imposing considerable financial burdens on 
+healthcare systems. Timely identification is essential; yet, 
+traditional diagnostic methods are often impeded by 
+constraints in accuracy and speed, hence restricting effective 
+intervention. The vast quantity of medical information 
+necessitates sophisticated technologies capable of analyzing 
+intricate patterns and making precise predictions. Artificial 
+intelligence 
+(AI), 
+especially 
+through 
+deep 
+learning 
+techniques, has demonstrated significant potential in the 
+medical industry for diagnosis by uncovering intrinsic data 
+patterns that are not immediately observable. There is a 
+genuine necessity for appealing and sophisticated predictive 
+models to facilitate precise and straightforward decision-
+making regarding cardiac disorders, hence assisting 
+physicians. This study aims to enhance patient outcomes 
+and reduce mortality, advancing "Towards Data-Driven 
+Preventive Medicine" in the context of data analytics and 
+healthcare [3]. 
+Several writers have investigated ML methodologies for 
+coronary HD prediction utilizing clinical data. Logistic 
+regression and decision trees are prevalent methodologies; 
+yet, they often fail to model non-linear connections 
+effectively. SVM and RF classifiers achieve superior 
+accuracies; however, they require substantial parameter 
+adjustment. The Naïve Bayes and KNN algorithms were 
+also tested; despite their simplicity, they fared poorly with 
+large datasets. Ensemble learning techniques have recently 
+been employed to enhance predictive accuracy. DL models, 
+such 
+as 
+ANN 
+and 
+CNN, 
+demonstrate 
+remarkable 
+performance due to their ability to analyze non-linear input 
+patterns. However, model interpretability, generalization, 
+and implementation in real-world healthcare remain hard. 
+This study introduces a sequential ANN model for 
+accurate prediction of HD based on clinical variables. The 
+model analyzes 13 parameters, encompassing patient 
+2025 IEEE International Conference on Machine Learning and Applied Network Technologies (ICMLANT) | 979-8-3315-6871-9/25/$31.00 ©2025 IEEE | DOI: 10.1109/ICMLANT68509.2025.11394857
+Authorized licensed use limited to: Somaiya University. Downloaded on February 22,2026 at 13:18:22 UTC from IEEE Xplore.  Restrictions apply. 
+ 
+ 
+demographics, vital signs, and test findings, to identify 
+patterns 
+associated 
+with 
+cardiovascular 
+risk. 
+The 
+preprocessing and normalization of the data will facilitate 
+your model's learning from this dataset. The artificial neural 
+network is optimized using the Adam algorithm and BCEL 
+for effective classification. Experimental results indicate 
+that our model attains excellent accuracy and dependability 
+while being computationally economical enough to facilitate 
+real-time clinical decision-making [4]. 
+This paper's primary contributions are as follows: 
+• 
+We suggested a sequential artificial neural 
+network methodology to predict cardiovascular 
+illness utilizing 14 clinical factors. 
+• 
+Implemented 
+preprocessing 
+techniques 
+to 
+enhance data quality and model efficacy, 
+including 
+normalization 
+and 
+categorical 
+encoding. 
+• 
+Utilized the AO  and BCEL to train the ANN for 
+efficient learning and resilient classification. 
+• 
+In comparison to conventional machine learning 
+techniques, we achieved superior prediction 
+performance 
+with 
+exceptional 
+accuracy, 
+precision, recall, and ROC AUC. 
+• 
+A real-time predictive interface for probability-
+driven risk evaluation to support clinical 
+decision-making in early diagnosis. 
+This paper is organized as follows:  Section II reviews 
+related literature, whereas Section III describes the 
+technique.  Section IV describes the experimental results, 
+while Section V ends and suggests future research. 
+ 
+II. 
+RELATED WORK 
+Mondal, S. A et al. [5] (2025) study introduces an ANN-
+based intelligent healthcare system for predicting CHD risk, 
+utilizing advanced preprocessing and sampling techniques 
+to address class imbalance. Experimental results indicate 
+that attaining high validation accuracy and recall value is 
+more desirable, suggesting the model's potential as a 
+dependable decision support tool. Nonetheless, numerous 
+constraints exist: reliance on a single dataset, restricted 
+generalization, and the necessity for real-world clinical 
+validation prior to adoption. 
+Lilhore, U. K et al. [6] (2025) proposed work introduces 
+a MMAM with Deep BiLSTM (M2AM with Deep 
+BiLSTM) to enhance HD classification through the dynamic 
+selection of class-specific attention weights. The results 
+demonstrate higher performance in accuracy, precision, 
+recall, and F-measure, greatly surpassing conventional 
+ML/DL techniques, while also reducing noise and 
+misclassification. 
+Nonetheless, 
+the 
+attention-based 
+architecture is intricate and relies on computationally 
+intensive preparation procedures for acquiring data 
+representations that can be efficiently extended to our varied 
+real-world datasets. 
+Kalatehjari, E et al. [7] (2024) work presents an EOA-
+enhanced 
+LSTM 
+(O-SBGC-LSTM) 
+that 
+effectively 
+integrates spatial-temporal correlations for the early 
+prevention and detection of diabetes. Experimental results 
+indicate that the suggested model achieves superior 
+performance, with an accuracy over 98%, surpassing 
+conventional machine learning and hybrid DL models 
+through the integration of fuzzy-based inference for 
+preventive 
+recommendations. 
+Limitations 
+encompass 
+significant model complexity and the necessity for vast 
+datasets to adequately train the systems, along with a need 
+for further broad clinical validation proof of concepts. 
+ Kalatehjari, E. et al. [8] (2025) study introduces a CNN-
+BiLSTM fusion model that utilizes both ECG and PCG 
+inputs to improve the diagnosis and risk classification of 
+CAD patients. The findings indicate that the bilinear fusion 
+of CNN and BiLSTM predictions achieves a diagnosis 
+accuracy of 97% on the PhysioNet CinC 2016 dataset, 
+surpassing models trained with single signals or other 
+prevalent competitors. Nonetheless, constraints encompass 
+dependence on a singular benchmark dataset, heightened 
+computing expenses for ensemble-based architectures, and 
+the necessity for comprehensive real-world clinical 
+validation. 
+Yu, J et . al [9] (2025) study utilizes a longitudinal deep 
+learning model, Dynamic-DeepHit, to predict ten-year 
+ASCVD risk by employing eight years of repeated risk 
+factor data, rather than the conventional cross-sectional PCE 
+approach. Outcomes the deep learning model surpassed 
+PCE anyway. SOFA attained an AUROC of 0.815, 
+surpassing 0.792, with comparable calibration and a net 
+reclassification score of 0.385, highlighting the enhanced 
+value derived from incorporating predictions of longitudinal 
+risk factors. Caveats encompass the utilization of cohort-
+based data, possible computational expenses for drug 
+development applications, and the necessity for validation in 
+external cohorts comprising a broader patient demographic. 
+ 
+III. PROPOSED WORK 
+The aim of this study is to develop a sequential ANN-
+DL model capable of predicting heart illnesses with superior 
+interpretability compared to shallow networks. The model 
+employs 
+13 
+clinical 
+inputs, 
+encompassing 
+patient 
+demographics, vital signs, and diagnostic tests, to identify 
+patterns potentially associated with cardiovascular disease 
+(CVD). Data cleansing and preparation techniques, 
+including normalization and categorical data encoding, are 
+employed based on data quality. The ANN model comprises 
+several hidden layers utilizing ReLU activation functions to 
+identify non-linear correlations between dependent and 
+independent variables. Dropout layers are employed to 
+mitigate overfitting and enhance the model's generalization 
+capabilities. The concluding layer is an output layer that 
+employs sigmoid activation to assess the risk of HD. It 
+utilizes 
+the 
+AO 
+with 
+BCEL, 
+facilitating 
+efficient 
+convergence [10]. 
+ 
+Fig 1. Block diagram of proposed model 
+Authorized licensed use limited to: Somaiya University. Downloaded on February 22,2026 at 13:18:22 UTC from IEEE Xplore.  Restrictions apply. 
+ 
+ 
+A. 
+Dataset Acquisition and Understanding 
+This study used a cardiovascular disease dataset of 14 
+clinical characteristics. One aspect pertains to demographic 
+variables such as sex and age ,while the other encompasses 
+diagnostic factors including maximum heart rate achieved,  
+cholesterol level, resting ECG results,  resting blood 
+pressure, exercise-induced angina, fasting blood sugar, chest 
+pain type, slope (slope of the peak ST segment during 
+exercise), oldpeak (ST depression induced by exercise 
+relative to rest)and the number of major vessels [11]. The 
+goal classes are 0 and 1, denoting the absence and presence 
+of cardiac disease, respectively. The dataset comprises 
+diverse category, binary, and numeric variables, rendering it 
+suitable for (ML) and (DL) classification applications. 
+Features are articulated in medical units, ensuring that 
+forecasts are therapeutically relevant. This diversity of 
+features provides a robust foundation for training models to 
+identify 
+patterns 
+potentially 
+associated 
+with 
+urban 
+cardiovascular risk [12]. 
+B. Data Preprocessing 
+Preprocessing was performed before the modeling phase 
+to remove data outliers. Polygons with missing or altered 
+values were treated accordingly to prevent bias in the 
+learning 
+process. 
+Numerical 
+properties 
+have 
+been 
+normalized by min-max scaling to ensure all variables are 
+within a uniform range. Categorical features, such as chest 
+pain kind, resting ECG, slope of ST segment, and number of 
+main vessels, were converted into numerical format using 
+label encoding. Categorical variables, such as fasting blood 
+sugar, 
+gender, 
+and 
+exercise-induced 
+angina, 
+were 
+maintained in their binary form. The dataset was randomly 
+mixed to eliminate any ordering effects and thereafter 
+divided into training and testing sets for equitable 
+comparison. These measures were essential for maintaining 
+a clean, consistent, and well-structured dataset for effective 
+deep learning [13]. 
+C. Model Architecture 
+The predictor is a sequential artificial neural network for 
+binary classification. The network initiates with an input 
+layer that processes 13 inputs supplied by the dataset. We 
+incorporated an additional hidden layer, consisting of a fully 
+linked layer with a ReLU activation function, enabling the 
+learning of more intricate non-linear patterns at the input 
+stage. 
+Dropout 
+layers 
+are 
+employed 
+to 
+enhance 
+generalization and prevent overfitting. The output layer 
+employs the sigmoid activation function to provide 
+probabilities ranging from 0 to 1 for heart illness. The model 
+employs an AO that determines distinct learning rates for 
+each feature dimension based on the previous gradient, with 
+a BCEL appropriate for binary classification. This system is 
+intricate yet effectively balances strength and efficiency in 
+risk distribution, ensuring consistent performance in risk 
+type categorization [14]. 
+D. Model Training and Optimization 
+The 
+artificial 
+neural 
+network 
+was 
+trained 
+on 
+preprocessed data utilizing a supervised learning method. 
+The model underwent extensive training over numerous 
+epochs, 
+with 
+simultaneous 
+modification 
+of 
+the 
+corresponding weights to reduce classification error. We 
+utilize mini-batch gradient descent to enhance model 
+stability 
+and 
+decrease 
+computational 
+expenses. 
+We 
+employed the Adam method for optimization, which 
+enhances learning rate adaptability and facilitates expedited 
+convergence [15]. We employed BCEL during training to 
+mitigate erroneous predictions. The entire dataset was 
+randomly divided into training and testing subsets during 
+the training process to evaluate performance and prevent 
+overfitting. The accuracy and loss functions over the epochs 
+were graphed, demonstrating that both curves converged 
+without exhibiting signs of instability. These were several 
+factors contributing to the success of ANN in classification 
+[16]. 
+E. Performance Evaluation 
+ 
+The model was evaluated after training with a testing 
+dataset. To assess performance, we construct a confusion 
+matrix comprising (FP),(TP), (FN) and (TN).  Standard 
+evaluation criteria, including accuracy, recall (sensitivity), 
+precision, F1-score, and ROC AUC, are employed to offer a 
+comprehensive assessment of the model's performance [17]. 
+The model demonstrated exceptional performance across all 
+evaluation metrics, indicating a strong capability for 
+forecasting cardiac morbidity. Accuracy/loss curves and 
+receiver operating characteristic (ROC) curves were 
+employed 
+to 
+illustrate 
+the 
+learning 
+behavior 
+and 
+classification efficacy. The ANN is capable of processing 
+both linear and nonlinear data patterns, as indicated in this 
+observation [18]. 
+F. Prediction and Decision Support 
+ 
+The novel model assessed the risk of cardiovascular 
+illness in new patients. For each input case, the model 
+generates a likelihood score to predict cardiovascular 
+disease (CVD). A cutoff value is established to distinguish 
+between those with the condition and those without it [19]. 
+The suggested methodology is demonstrated by case studies 
+that effectively differentiate between low- and high-risk 
+experimental units with notable accuracy and confidence. 
+The suggested system provides a decision assistance tool for 
+physicians that substantially decreases dispensing time 
+while ensuring more consistent risk assessments. Employing 
+clinical characteristics and deep learning facilitates early 
+diagnosis for intervention, perhaps resulting in improved 
+patient outcomes [20]. 
+IV. RESULT ANALYSIS 
+The Sequential ANN model had an overall performance 
+of 98%, indicating strong predictive capability. The 
+confusion matrix revealed 81 TN and 114 TN, alongside 
+two FN and three FNs, signifying minimal misclassification. 
+Precision, recall, and F1-score were 98.01%, 98%, and 98%, 
+respectively, indicating an effective equilibrium between 
+sensitivity and specificity. The ROC AUC estimate of 
+97.77% further corroborated the model's discriminatory 
+capacity between sick and non-diseased cases. The accuracy 
+curves attained a convergence rate of roughly 95–98% for 
+both training and validation, with loss values progressively 
+declining below 0.1, signifying effective learning during 
+information retrieval. Similarly, high confidence was 
+Authorized licensed use limited to: Somaiya University. Downloaded on February 22,2026 at 13:18:22 UTC from IEEE Xplore.  Restrictions apply. 
+ 
+ 
+achieved in case studies, with 99.86% for low-risk outcomes 
+and 96.09% for high-risk outcomes. 
+Table 1. Sequential ANN Model Evaluation Metrics 
+Metric 
+Score (%) 
+ROC AUC 
+97.77 
+Accuracy 
+98.00 
+Recall 
+98.00 
+F1 Score 
+98.00 
+Precision 
+98.01 
+ 
+Fig 2. Sequential ANN Model Evaluation Metrics graph  
+Table 1 and Figure 2 show the HD prediction 
+model's performance on numerous measures.  The model's 
+98% accuracy proved its categorization usefulness.  An 
+effective balance between accurate positive identifications 
+and erroneous negatives is shown by accuracy and recall 
+scores of 98%.  The harmonic mean of precision and recall, 
+the F1-score, is 98%, indicating good predictions.  The 
+model identifies HD from non-HD with a ROC curve AUC 
+of 97.77%.  These results show that the cascaded ANN 
+method predicts medical dangers well. 
+ 
+Fig 3. Confusion matrix of the Sequential ANN model 
+The confusion matrix of the serial ANN model depicted 
+in Figure 3 provides a comprehensive depiction of the 
+classification process. A total of 81 samples designated as 
+"No Disease" were accurately identified as real negatives, 
+whereas 114 samples classified as "Disease" were genuinely 
+positive. Two classes were inaccurately classified as 
+diseased (false positives), whereas three records were 
+overlooked by the model and not identified as diseased 
+(false 
+negatives). 
+The 
+comparatively 
+reduced 
+misclassification rate indicates that the model is highly 
+resilient. The matrix indicates that the model has an 
+effective balance between sensitivity and specificity. In 
+conclusion, it validates the efficacy of the suggested ANN 
+in accurately detecting cardiovascular illness. 
+ 
+Fig 4. Training and validation accuracy of the Sequential 
+ANN model 
+Figure 4 illustrates the training and validation accuracy 
+of the Sequential ANN model over 20 epochs. The training 
+accuracy commences at a diminished level but escalates 
+swiftly, surpassing 95% after a few epochs. The validation 
+accuracy also increases consistently and stabilizes at 
+approximately 94% after several epochs. This will verify 
+that our model can generalize effectively for the test data 
+and assist in mitigating overfitting. Validation accuracy 
+exhibits little indication of significant changes, as 
+anticipated in practical datasets. The curve demonstrates 
+effective learning and convergence, indicating that the 
+suggested ANN model operates robustly. 
+ 
+ 
+Fig 5. Training and validation Loss of the Sequential 
+ANN model 
+Authorized licensed use limited to: Somaiya University. Downloaded on February 22,2026 at 13:18:22 UTC from IEEE Xplore.  Restrictions apply. 
+ 
+ 
+Figure 5 illustrates the training and validation loss of the 
+Sequential ANN model over 20 epochs. Initially, both losses 
+are elevated but decrease rapidly within the first few epochs 
+(accelerated learning). The training loss steadily decreases 
+until it gradually converges to a minimal value, signifying 
+the effective resolution of the optimization problem. The 
+validation loss decreases consistently, plateaus after several 
+epochs, and remains low. The minimal disparity between 
+the training and validation loss suggests that the model 
+exhibits limited overfitting. Overall, the evidence supports 
+that our ANN achieved strong convergence and reliable 
+performance on novel data. 
+ 
+ 
+ 
+Fig 6. Low-Risk HD Prediction (Patient Input and 
+Model Output) and 
+Figure 6 depicts a 45-year-old man with typical anginal 
+symptoms, a normal resting ECG, 120 mmHg resting blood 
+pressure, 200 mg/dL serum cholesterol, and a 150 maximal 
+heart rate. Also considered are exercise-induced angina, 
+fasting blood sugar exceeding 120 mg/dL, an upsloping ST 
+segment, and no major vasculature. These clinical indicators 
+suggest reduced HD risk, according to the model. The 
+prediction result shows 99.86% confidence that the patient 
+will live a healthy life. This conclusion shows that the 
+model can confidently identify low-risk individuals. 
+ 
+Fig 7. High-Risk HD Prediction (Patient Input and 
+Model Output) 
+Refer to Fig. 7 for a 65-year-old woman with atypical 
+angina, ST-T ECG abnormalities, a resting BP of 190 
+mmHg, and serum cholesterol of 300 mg/dl. Exercise-
+induced 
+angina, 
+fasting 
+blood 
+sugar 
+>120 
+mg/dl, 
+downsloping ST segment, and >2 major arteries are present. 
+Maximal HR is 180. For this input, the model predicts high 
+HD risk with 96.09% confidence. Example: The model 
+recommends a cardiologist to the patient, identifying critical 
+circumstances needing rapid medical expert consultation. 
+V. 
+CONCLUSION 
+ 
+This study has demonstrated that the sequential ANN is 
+optimal for accurately and reliably predicting the risk of 
+HD. 
+Utilizing 
+13 
+clinical 
+features 
+and 
+extensive 
+preprocessing, the model successfully identified both linear 
+and nonlinear associations within the data. The performance 
+evaluation yielded outstanding results across several criteria, 
+hence validating the model's appropriateness for clinical 
+applications. The case studies also validated its capacity to 
+accurately differentiate between low- and high-risk patients. 
+In conclusion, the suggested framework offers a pragmatic 
+decision support instrument for early diagnosis and 
+healthcare prevention. In the future, the model may be 
+expanded and generalized utilizing bigger, well-diversified 
+datasets from single-center research, employing the XAI 
+technique in conjunction with large-scale wearable IoT 
+devices for continuous real-time patient monitoring. 
+REFERENCES 
+[1] Pan, Y., Fu, M., Cheng, B., Tao, X., & Guo, J. (2020). 
+Enhanced deep learning assisted convolutional neural 
+network for HD prediction on the internet of medical 
+things platform. Ieee Access, 8, 189503-189512. 
+DOI: 10.1109/ACCESS.2020.3026214 
+Authorized licensed use limited to: Somaiya University. Downloaded on February 22,2026 at 13:18:22 UTC from IEEE Xplore.  Restrictions apply. 
+ 
+ 
+[2] Karna, V. V. R., Karna, V. R., Janamala, V., Devana, 
+V. K. R., Ch, V. R. S., & Tummala, A. B. (2025). A 
+comprehensive review on HD risk prediction using 
+machine learning and deep learning algorithms. 
+Archives of Computational Methods in Engineering, 
+32(3), 1763-1795. https://doi.org/10.1007/s11831-024-
+10194-4 
+[3] Atta Ur Rahman, Bibi Saqia, Yousef S. Alsenani, & 
+Inam Ullah. (2024). Data Quality, Bias, and Strategic 
+Challenges in Reinforcement Learning for Healthcare: 
+A Survey. International Journal of Data Informatics and 
+Intelligent 
+Computing, 3(3), 
+24–42. 
+https://doi.org/10.59461/ijdiic.v3i3.128 
+[4] Liza, I. A., Hossain, S. F., Saima, A. M., Akter, S., 
+Akter, R., Al Amin, M., ... & Marzan, A. (2025). HD 
+Risk Prediction Using Machine Learning: A Data-
+Driven Approach for Early Diagnosis and Prevention. 
+British Journal of Nursing Studies, 5(1), 38-54. 
+https://doi.org/10.32996/bjns.2025.5.1.5 
+[5] Mondal, S., Maity, R., & Nag, A. (2025). An efficient 
+artificial neural network-based optimization techniques 
+for the early prediction of coronary HD: comprehensive 
+analysis. 
+Scientific 
+Reports, 
+15(1), 
+4827. 
+https://doi.org/10.1038/s41598-025-85765-x  
+[6] Lilhore, U. K., Simaiya, S., Khan, M., Alroobaea, R., 
+Baqasah, A. M., Alsafyani, M., & Alhazmi, A. (2025). 
+A deep learning approach for HD detection using a 
+modified 
+multiclass 
+attention 
+mechanism 
+with 
+BiLSTM. 
+Scientific 
+Reports, 
+15(1), 
+25273. 
+https://doi.org/10.1038/s41598-025-09594-8 
+[7] Ramesh, B., & Lakshmanna, K. (2024). A novel early 
+detection and prevention of coronary HD framework 
+using hybrid deep learning model and neural fuzzy 
+inference system. IEEe Access, 12, 26683-26695. 
+DOI: 10.1109/ACCESS.2024.3366537 
+[8] Kalatehjari, E., Hosseini, M. M., Harimi, A., & 
+Abolghasemi, V. (2025). Advanced ensemble learning-
+based CNN-BiLSTM network for cardiovascular 
+disease classification using ECG and PCG signal. 
+Biomedical Signal Processing and Control, 108, 
+107846. https://doi.org/10.1016/j.bspc.2025.107846 
+[9] Yu, J., Yang, X., Deng, Y., Krefman, A. E., Pool, L. R., 
+Zhao, L., ... & Allen, N. B. (2024). Incorporating 
+longitudinal history of risk factors into atherosclerotic 
+cardiovascular disease risk prediction using deep 
+learning. 
+Scientific 
+reports, 
+14(1), 
+2554. 
+https://doi.org/10.1038/s41598-024-51685-5 
+[10] Zhao, B., Peng, J., Chen, C., Fan, Y., Zhang, K., & 
+Zhang, Y. (2025). Diagnosis of Coronary HD through 
+Deep Learning-Based Segmentation and Localization in 
+Computed Tomography Angiography. IEEE Access. 
+DOI: 10.1109/ACCESS.2025.3528638 
+[11] Krishnan, S., Magalingam, P., & Ibrahim, R. (2023). 
+Enhanced recurrent neural network (RNN) for HD risk 
+prediction 
+using 
+Framingham 
+datasets. 
+Open 
+International Journal of Informatics, 11(1), 41-52. DOI: 
+https://doi.org/10.11113/oiji2023.11n1.242 
+[12] Liao, Y., Tang, Z., Gao, K., & Trik, M. (2024). 
+Optimization of resources in intelligent electronic 
+health systems based on Internet of Things to predict 
+HDs via artificial neural network. Heliyon, 10(11). 
+DOI: 10.1016/j.heliyon.2024.e32090  
+[13] Dani, D., Shaikh, S., Agrawal, G., & Vyawahare, M. 
+(2025, March). Predicting Cardiovascular Disease Risk 
+using Artificial Neural Networks Models. In 2025 IEEE 
+International 
+Conference 
+on 
+Interdisciplinary 
+Approaches in Technology and Management for Social 
+Innovation (IATMSI) (Vol. 3, pp. 1-6). IEEE. 
+DOI: 10.1109/IATMSI64286.2025.10984675 
+[14] Sultan, S. Q., Javaid, N., Alrajeh, N., & Aslam, M. 
+(2025). Machine learning-based stacking ensemble 
+model for prediction of HD with explainable ai and k-
+fold 
+cross-validation: 
+A 
+symmetric 
+approach. 
+Symmetry, 
+17(2), 
+185. 
+https://doi.org/10.3390/sym17020185 
+[15] Kumar Mohan, Yousuf Fadhil Salim AL-Mamari, & 
+Mohammed Ahmed Mohammed AL-Najadi. (2023). 
+Techniques of Machine Learning for Detecting Heart 
+Failure. International Journal of Data Informatics and 
+Intelligent 
+Computing, 2(2), 
+47–54. 
+https://doi.org/10.59461/ijdiic.v2i2.62 
+[16] Sadr, H., Salari, A., Ashoobi, M. T., & Nazari, M. 
+(2024). Cardiovascular disease diagnosis: a holistic 
+approach using the integration of machine learning and 
+deep learning models. European Journal of Medical 
+Research, 29(1), 455. https://doi.org/10.1186/s40001-
+024-02044-7 
+[17] Tyagi, P., & S. K. Manju Bargavi. (2023). Using 
+Federated Artificial Intelligence System of Intrusion 
+Detection for IoT Healthcare System Based on 
+Blockchain. International Journal of Data Informatics 
+and 
+Intelligent 
+Computing, 2(1), 
+1–10. 
+https://doi.org/10.59461/ijdiic.v2i1.42 
+[18] Askarali, K. T., & Fredrik, E. T. (2023, November). 
+Classification and Prediction of Spinal Tuberculosis 
+Disease Using Optimization of Convolution Neural 
+Network Using Spatial and Temporal Constraints. In 
+International Conference on Artificial Intelligence and 
+its Application (pp. 109-121). Cham: Springer Nature 
+Switzerland. https://doi.org/10.1007/978-3-031-84397-
+6_8 
+[19] Nithya, V. P., Mohanasundaram, N., & Santhosh, R. 
+(2024). An early detection and classification of 
+Alzheimer's disease framework based on ResNet-50. 
+Current Medical Imaging, 20(1), e250823220361. 
+DOI: https://doi.org/10.2174/157340562066623082511
+3344 
+[20] Mahadev, N., Shankar, R., Sowmya, V. L., Premkumar, 
+A., Natarajan, R., Thangarasu, N., & Gupta, S. K. 
+(2025). AI-Based Intelligent System for Healthcare 
+Application Using Edge-Based Neural Random Back 
+Propagation Technique. International Research Journal 
+of Multidisciplinary Technovation, 7(3), 15-26. DOI: 
+https://doi.org/10.54392/irjmt2532 
+Authorized licensed use limited to: Somaiya University. Downloaded on February 22,2026 at 13:18:22 UTC from IEEE Xplore.  Restrictions apply. 

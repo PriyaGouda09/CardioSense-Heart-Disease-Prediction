@@ -1,0 +1,1270 @@
+Survey of the Performance of Classification 
+Algorithms on Heart Disease Datasets: A Systematic 
+Literature Review 
+ 
+Adi Suwondo  
+S3 Informatika 
+Universitas Amikom Yogyakarta 
+Yogyakarta, Indonesia 
+adisuwondo@students.amikom.ac.id 
+Ema Utami  
+S3 Informatika 
+Universitas Amikom Yogyakarta 
+Yogyakarta, Indonesia 
+ema.u@amikom.ac.id 
+Kusrini    
+S3 Informatika 
+Universitas Amikom Yogyakarta 
+Yogyakarta, Indonesia 
+kusrini@amikom.ac.id 
+Kumara Ari Yuana 
+S3 Informatika 
+Universitas Amikom Yogyakarta 
+Yogyakarta, Indonesia 
+kumara.a@amikom.ac.id  
+Abstract—Machine learning is widely applied in medical 
+informatics, especially for predicting heart disease. Despite 
+numerous studies, there is a lack of systematic reviews that 
+comprehensively map the classification algorithms used, datasets 
+employed, and performance metrics evaluated within this field. 
+This research provides a systematic review of the literature 
+(SLR) focused on the performance of classification algorithms in 
+predicting heart disease using real-world datasets. Adopting the 
+PRISMA framework, we conducted a structured search across 
+Scopus, IEEE Xplore, ACM, Springer, and ScienceDirect from 
+January 2022 to December 2024. Forty-two peer-reviewed 
+studies met our inclusion criteria. We extracted data on 
+algorithm types, datasets, evaluation metrics, and feature 
+engineering strategies. The most common datasets include 
+Cleveland, Statlog, and Framingham, with Support Vector 
+Machines (SVM) and Random Forest (RF) as dominant 
+classifiers. However, algorithm performance varies significantly 
+depending on feature selection and preprocessing techniques. 
+This review identifies current research gaps, such as limited use 
+of multiclass labels, insufficient real-clinical datasets, and lack of 
+comparative benchmarks, suggesting directions for future 
+research. 
+Keywords— classification, heart disease, machine learning, 
+systematic review, SVM, ensemble learning, PRISMA 
+I. INTRODUCTION 
+A diverse array of heart disease datasets is utilized in 
+machine learning research, accessible from a variety of 
+repositories, including the UCI Machine Learning Repository 
+[1], Kaggle [2], PhysioNet [3], OpenML [4], and the National 
+Institutes of Health (NIH) [5], among others.  
+This review incorporates datasets such as Cleveland, 
+Statlog (Heart), Framingham, Hungarian, Z-Alizadeh Sani, 
+Long Beach VA, and South African, each offering distinct 
+features and demographics.  
+This paper centers on the Cleveland heart disease dataset, 
+sourced from the UCI Repository, which comprises a well-
+organized structure of 76 attributes and a single class label. 
+Since 2022, this dataset has been referenced as secondary data 
+across 28 peer-reviewed studies, underscoring its pivotal role 
+in heart disease research and its extensive applicability for 
+developing predictive models. 2022.  
+ Machine learning represents an advanced computational 
+technique capable of aiding in the classification of heart disease 
+[6]. Through computational approaches, machines can learn 
+from datasets, made possible by machine learning algorithms 
+[7]. In machine learning, classification aims to accurately 
+predict the correct label for given input data [8]. However, not 
+all machine learning classification models excel in accurately 
+discerning classes; a significant limitation lies in their inability 
+to extrapolate beyond existing data. Nonetheless, the scope of 
+application can be expanded relatively easily by integrating 
+new data points [9]. This limitation in class recognition 
+presents an ongoing challenge for researchers, spurring efforts 
+to optimize machine learning classification methods for 
+improved accuracy and adaptability. 
+Optimization efforts in machine learning, particularly in 
+classification, encompass various sophisticated strategies, 
+including data preprocessing [10], feature selection [11], [12], 
+ensemble learning [13], and deep learning techniques [14]. 
+Additionally, established classification algorithms such as K-
+Nearest Neighbors, Decision Tree, Random Forest, Support 
+Vector Machine (SVM), and Naïve Bayes remain integral to 
+the field [15]. With continuous advancements in machine 
+learning and artificial intelligence, these algorithms offer 
+tailored solutions for diverse, complex contexts [7].  
+Classification algorithm development involves partitioning 
+data into two primary sets: a larger training set, essential for 
+model construction, and a test set, necessary for evaluating 
+model performance and accuracy through predictive output.  
+This systematic literature review (SLR) synthesizes the 
+latest advancements in classification algorithm performance on 
+heart disease datasets, presenting a comprehensive view of the 
+state-of-the-art algorithms and setting the foundation for 
+emerging research directions. By emphasizing strategies such 
+as preprocessing, targeted feature selection, and ensemble 
+modeling, this SLR underscores the pathways to enhance 
+model 
+accuracy 
+and 
+robustness. 
+These 
+optimization 
+approaches aim to maximize the efficacy of classification 
+algorithms on heart disease datasets within the machine 
+2025 International Electronics Symposium (IES)
+979-8-3315-5415-6/25/$31.00 ©2025 IEEE
+539
+2025 International Electronics Symposium (IES) | 979-8-3315-5415-6/25/$31.00 ©2025 IEEE | DOI: 10.1109/IES67184.2025.11161964
+Authorized licensed use limited to: Somaiya University. Downloaded on February 11,2026 at 05:49:11 UTC from IEEE Xplore.  Restrictions apply. 
+learning paradigm, thus facilitating more precise and reliable 
+predictive outcomes in clinical and research applications.  
+This paper underscores the critical research avenues that 
+warrant further exploration to optimize the performance of 
+classification algorithms, employing the strategies previously 
+discussed, with the overarching goal of identifying the most 
+effective classification techniques. Through this systematic 
+literature review (SLR), we provide an in-depth overview of 
+machine learning methodologies for heart disease prediction. 
+The paper is structured as follows. Section I introduces the 
+theoretical background of machine learning and its application 
+to heart disease algorithms. Section II, Background Theory, 
+establishes the foundational scientific concepts underpinning 
+the study. Section III, Methods, outlines the detailed 
+methodological framework guiding the literature exploration. 
+Section IV, Results and Discussion, presents the findings, 
+offering a nuanced analysis of the data. Lastly, Section V, 
+Conclusion, 
+synthesizes 
+key 
+insights 
+and 
+delineates 
+prospective research directions within this evolving field.. 
+II. BACKGROUND TEORY 
+A. Machine Learning 
+Machine learning (ML) is a key branch of artificial 
+intelligence (AI) [16]–[18] Which focuses on creating 
+advanced algorithms that allow computers to independently 
+learn and make decisions based on data [17]. The primary aim 
+of ML is to discern patterns within datasets [19], which can 
+subsequently be leveraged for prediction, classification, or 
+deriving insights with minimal human intervention. Challenges 
+across diverse domains that prove difficult to resolve through 
+traditional computational methods often become more 
+manageable through using machine learning methods [20]. The 
+ML process necessitates a structured learning phase utilizing 
+training data. Following this, the model generated from the 
+algorithm undergoes rigorous testing and validation against a 
+previously unencountered test dataset. The performance of this 
+model is assessed based on its accuracy, which is quantified by 
+comparing the predicted outcomes against the actual values 
+[21], [22]. This systematic approach not only enhances 
+predictive capabilities but also contributes to the ongoing 
+refinement of ML methodologies in various application. 
+B. Machine Learning Classification 
+Classification is a core task in machine learning [16], [17]. 
+It is a key component of supervised learning techniques, 
+characterized by the availability of labeled data [23]. In this 
+context, the model represents trained on input features 
+associated with the relevant output labels [16]. The 
+foundational concept in classification begins with the number 
+of classes: a binary class scenario involves the model 
+classifying data into one of two possible categories, while a 
+multi-class scenario requires the model to assign data to one of 
+several categories. Following this, the process involves 
+ensuring the availability of training data, where the model 
+learns from labeled examples, and subsequently testing the 
+model on previously unseen data. The last step consists of 
+assessing the model's performance using standard evaluation 
+metrics [16], [17], [24]. This systematic approach is essential 
+for evaluating the effectiveness and precision of classification 
+models across different applications. 
+C. Evaluation model 
+To assess the performance of machine learning 
+classification models, several tools are utilized, one of which 
+is the confusion matrix [17], [25]. It presents a tabular layout 
+that displays the intersection of rows and columns, referred to 
+as cells; each cell indicates the predicted values. This method 
+assesses the performance of the classification model by 
+measuring how well it aligns the predicted results compared to 
+the actual outcomes. By analyzing the various components 
+with analyzing the confusion matrix—containing true 
+positives, false positives, true negatives, and false negatives—
+researchers can compute valuable metrics like accuracy, 
+precision, recall, and F1 score, offering a thorough assessment 
+of the model's performance. 
+ 
+ 
+Fig. 1. Confusion matric 
+The following method is Accuracy [17], [26]–[28] 
+Accuracy, 
+
+  , 
+(1) 
+Precision, 
+
+ 
+(2) 
+Recall, rec
+
+ 
+(3) 
+ F1-Score  1 −= 2
+.
+ 
+(4) 
+ In addition to the aforementioned metrics, graphical model 
+evaluation techniques such as the Receiver Operating 
+Characteristic (ROC) curve [29] are used to display 
+performance. The ROC curve shows the connection between 
+sensitivity (True Positive Rate, TPR) and 1-specificity (False 
+Positive Rate, FPR). In other words, the ROC curve aids in 
+understanding the balance between sensitivity and specificity 
+for a particular model. 
+III. METHODS 
+A. Research Question (RQ) 
+At this stage, the research questions are identified as 
+follows: 
+RQ1 : 
+What heart disease datasets have been most 
+commonly used in classification research between 
+2022 and 2024? 
+RQ2 : 
+What feature sets are frequently selected from these 
+datasets, and how do they impact model 
+performance?  
+540
+Authorized licensed use limited to: Somaiya University. Downloaded on February 11,2026 at 05:49:11 UTC from IEEE Xplore.  Restrictions apply. 
+RQ3 : 
+Which 
+classification 
+algorithms 
+demonstrate 
+superior accuracy in recent studies on heart disease 
+prediction? 
+RQ4 : 
+What are the prevailing trends, challenges, and 
+research gaps in applying machine learning to heart 
+disease classification? 
+B. Review Protocol and Search Strategy 
+This SLR follows the PRISMA 2020 guidelines [30]. 
+Literature was retrieved from five major databases: Scopus, 
+IEEE Xplore, ScienceDirect, SpringerLink, and ACM Digital 
+Library. The search focused on articles published between 
+January 2022 and December 2024. The following search 
+string was used: 
+("heart disease" OR "cardiac disease") AND ("classification 
+algorithm" OR "machine learning") AND ("accuracy" OR 
+"performance") 
+C. Criteria for Inclusion and Exclusion 
+To maintain the quality and relevance of the studies 
+incorporated in this review, criteria for inclusion and 
+exclusion were applied. Studies were included if they were 
+peer-reviewed 
+journal 
+or 
+conference 
+publications, 
+Concentrated on classifying heart disease through machine 
+learning algorithms, presenting performance metrics such as 
+accuracy, precision, and F1-score. 
+Conversely, studies were excluded if they were not written 
+in English, categorized as editorial notes or narrative reviews, 
+or lacked sufficient methodological detail such as the 
+description of the dataset, algorithm implementation, or 
+evaluation process. 
+D. Study Selection and Screening Process 
+A total of 241 articles were initially retrieved. After 
+removing duplicates (n=32), 209 papers remained for abstract 
+and title screening. 83 articles were excluded during this 
+screening due to irrelevance to the research focus, such as not 
+addressing classification algorithms or heart disease. 
+Of the remaining 126 full-text articles assessed for 
+eligibility, 84 were excluded for the following reasons, 32 
+articles lacked sufficient methodological detail, 27 did not 
+report quantitative performance metrics, 15 were general 
+reviews not focused on classification algorithms, 10 were non-
+English or had inaccessible full texts. 
+Finally, 42 articles satisfied the inclusion criteria and were 
+incorporated into the final synthesis. The Fig. 2 illustrates the 
+detailed process of study identification, screening, exclusion, 
+and inclusion based on the PRISMA 2020 guidelines [30]. It 
+includes reasons and counts for exclusions at each stage to 
+improve transparency and reproducibility.  
+ 
+Fig. 2 PRISMA Flow Diagram 
+E. Quality Assessment 
+To evaluate the methodological rigor of the included 
+studies, a structured quality assessment was conducted based 
+on four criteria: (1) use of a valid and publicly recognized 
+dataset; (2) clear definition and explanation of algorithm and 
+methodological procedures; (3) provision of performance 
+evaluation metrics such as accuracy or F1-score; and (4) 
+sufficient documentation to ensure reproducibility of results. 
+Each study was scored on a binary scale (0 or 1) for each 
+criterion, resulting in a total quality score ranging from 0 to 4. 
+Only studies with a minimum score of 3 were considered 
+eligible for inclusion in this review to ensure robustness and 
+reliability of the synthesized findings 
+F. Data Extraction 
+A standardized approach to data extraction was 
+implemented to ensure uniformity and comprehensiveness. 
+For each selected study, the following elements were 
+systematically recorded: the names of the authors, year of 
+publication, dataset(s) used, feature selection techniques 
+applied, classification algorithm(s) employed, presented 
+performance metrics such as accuracy, precision, recall, and 
+F1-score, and any noted limitations or unique contributions. 
+These extracted attributes formed the basis for the synthesis of 
+results and the comparative analysis presented in Section IV 
+ 
+IV. RESULT AND DISCUSION 
+A. Dataset Utilization (RQ1) 
+Among the 42 studies, the Cleveland dataset was the most 
+commonly utilized dataset (n=26), followed by Statlog 
+(n=10), Framingham (n=6), and Z-Alizadeh Sani (n=4). Many 
+studies favored Cleveland due to its availability and 
+541
+Authorized licensed use limited to: Somaiya University. Downloaded on February 11,2026 at 05:49:11 UTC from IEEE Xplore.  Restrictions apply. 
+manageable number of attributes. The Cleveland dataset, 
+created by the Robert Detrano team at the Cleveland Clinic 
+Foundation, is accessible via the UCI Machine Learning 
+Repository, has become the de facto benchmark dataset for 
+heart disease prediction due to several factors. First, it offers a 
+well-structured and relatively clean set of attributes, with 76 
+features initially collected, 14 of which are most commonly 
+used in ML studies [6], [12]. Second, its use in many prior 
+peer-reviewed studies enables comparative evaluation and 
+benchmarking across research works [31], [32]. 
+Furthermore, its moderate sample size (303 instances) 
+makes it computationally efficient for training a wide range of 
+ML models, from logistic regression to deep learning, without 
+necessitating excessive computing resources. Several works 
+[33], [34] also highlight the dataset’s compatibility with 
+feature selection techniques and its adaptability to both binary 
+and multiclass classification scenarios. Due to these reasons, 
+the Cleveland dataset remains the preferred choice in recent 
+literature. 
+TABLE 1 Datasets used in Research 
+Dataset 
+General 
+information 
+sources, amount of 
+data, features 
+Total 
+Paper 
+Cleveland 
+UCI, 303, 14 
+28 
+[35]–[62] 
+Statlog 
+(Heart)  
+UCI, 270, 13 
+8 
+[59], [60], [63], 
+[64], [61], [47], 
+[62], [65] 
+Framingham 
+UCI, 5000, 15 
+5 
+[55], [66], [67], 
+[47], [58] 
+Hungarian 
+UCI, 294, 13 
+5 
+[35][68][56][36][5
+7] 
+Z-Alizadeh 
+Sani 
+UCI, 303, 56 
+3 
+[47], [69], [70]  
+Long Beach 
+VA 
+Long Beach Veterans 
+Affairs Medical 
+Center, 200, 15 
+2 
+[36], [56]  
+South 
+African 
+UCI, 462, 9 
+1 
+[47] 
+ 
+ 
+Table 2 summarizes the data extraction and quality 
+assessment process for the 42 studies included in this review. 
+It includes information on dataset(s) used, classification 
+algorithm(s) employed, feature selection methods, reported 
+performance metrics, and the quality score for each study 
+based on a 4-point checklist. Notably, 10 of the 42 studies 
+achieved an average quality score above 3, highlighting their 
+methodological rigor and reliability. This allows for a 
+comparative analysis of the studies' methodologies and 
+performance. 
+TABLE 2 Data Extraction and Quality Assessment Table 
+N
+o 
+Author 
+(Year) 
+Dataset 
+Algorit
+hm 
+Accur
+acy 
+Featur
+e 
+Selecti
+on 
+Quali
+ty 
+Score 
+(0-4) 
+1 
+Ram 
+Kumar 
+(2024) 
+Clevelan
+d 
+KNN, 
+SVM, 
+ANN, 
+CNN 
+83.6% 
+Not 
+stated 
+3 
+2 
+Komal 
+Kumar 
+(2024) 
+Clevelan
+d 
+LR, 
+SVM, 
+NB, 
+KNN 
+89.9% 
+RFE 
+4 
+3 
+Ozcan & 
+Peker 
+(2023) 
+Clevelan
+d, 
+Hungary, 
+Statlog 
+CART 
+87% 
+Not 
+stated 
+3 
+4 
+Khan et al. 
+(2023) 
+Khyber 
+Hospital 
+DT, RF, 
+NB, 
+SVM 
+75-
+85% 
+Not 
+stated 
+3 
+5 
+Dalal et al. 
+(2023) 
+UCI, 
+Kaggle 
+QUEST
+, RF, 
+NN 
+99.1% 
+PCA 
+4 
+6 
+Chandrase
+khar 
+(2023) 
+Clevelan
+d 
+RF, 
+KNN, 
+AdaBoo
+st 
+93.4%-
+95% 
+ReliefF 
+4 
+7 
+Ullah et al. 
+(2022) 
+Clevelan
+d 
+DT, 
+SVM, 
+LR 
+97.9% 
+Manual 
+4 
+8 
+Saboor et 
+al. (2022) 
+Multiple 
+RF, 
+GA, 
+NB, 
+SVM 
+83.6%-
+96.7% 
+GA 
+4 
+9 
+Bora et al. 
+(2022) 
+Clevelan
+d 
+RF, 
+GBoost, 
+NB 
+73%-
+96% 
+LASSO 
+4 
+1
+0 
+Ambrish G 
+(2022) 
+Clevelan
+d, 
+Framing
+ham 
+LR, RF, 
+SGB 
+87.1% 
+Embed
+ded 
+4 
+ 
+B. Feature Selection and Dataset Attributes (RQ2) 
+Although the Cleveland dataset contains 76 features, most 
+studies use only 13–14 key attributes. Typical features consist 
+of age, sex, chest pain type, resting blood pressure, serum 
+cholesterol, and maximum heart rate. Techniques for feature 
+selection, including Recursive Feature Elimination (RFE), 
+Genetic Algorithms (GA), and Principal Component Analysis 
+(PCA), are employed to reduce dimensionality and improve 
+model performance. Studies that applied feature selection 
+methods generally reported increased accuracy, often by 2–
+10%, compared to models that utilize the complete set of 
+features. For example, models that implemented RFE on the 
+Cleveland dataset achieved accuracy improvements from 
+~85% to 95%. This suggests that selecting relevant and non-
+redundant attributes significantly contributes to model 
+generalizability and computational efficiency. 
+Notably, a study by Komal Kumar et al. [35] implemented 
+RFE in combination with SVM and reported an accuracy of 
+89.91%, outperforming configurations without feature 
+selection. Similarly, Chandrasekhar and Peddakrishna [34] 
+combined Relief F-based selection with ensemble classifiers 
+and achieved up to 95% accuracy. These examples illustrate 
+the importance of carefully engineered feature subsets in 
+maximizing model performance while reducing computational 
+costs. 
+ 
+542
+Authorized licensed use limited to: Somaiya University. Downloaded on February 11,2026 at 05:49:11 UTC from IEEE Xplore.  Restrictions apply. 
+TABLE 3 14 key attributes  
+No 
+Variable 
+Name 
+Role 
+Type 
+Description 
+1 
+age 
+Feature 
+Integer 
+  
+2 
+sex 
+Feature 
+Categorical 
+  
+3 
+cp 
+Feature 
+Categorical 
+  
+4 
+trestbps 
+Feature 
+Integer 
+Resting blood pressure (at 
+the time of hospital 
+admission) 
+5 
+chol 
+Feature 
+Integer 
+Serum cholesterol levels 
+6 
+fbs 
+Feature 
+Categorical 
+Fasting blood sugar levels 
+exceeding 120 mg/dl 
+7 
+restecg 
+Feature 
+Categorical 
+  
+8 
+thalach 
+Feature 
+Integer 
+Peak heart rate achieved 
+9 
+exang 
+Feature 
+Categorical 
+Angina triggered by exercise 
+10 
+oldpeak 
+Feature 
+Integer 
+Exercise-induced ST 
+depression compared to rest 
+11 
+slope 
+Feature 
+Categorical 
+  
+12 
+ca 
+Feature 
+Integer 
+Number of major vessels (0-
+3) highlighted by 
+fluoroscopy 
+13 
+thal 
+Feature 
+Categorical 
+  
+14 
+num 
+Target 
+Integer 
+Heart disease diagnosis 
+ 
+C. Algorithm Performance (RQ3) 
+SVM (n=15) and RF (n=13) are the most frequently used 
+classifiers, followed by Logistic Regression, KNN, and Naïve 
+Bayes. Ensemble techniques like Gradient Boosting, 
+XGBoost, and AdaBoost demonstrated improved accuracy 
+when paired with feature selection. However, CNNs and Deep 
+Neural Networks are underexplored due to dataset size 
+limitations. 
+In terms of performance, SVM classifiers achieved 
+accuracies ranging between 85% and 95% across various 
+studies. For instance, Ullah et al. [71] reported an SVM 
+accuracy of 97.9% using the Cleveland dataset. Random 
+Forest classifiers also demonstrated strong performance, with 
+accuracies typically falling between 88% and 95%, such as in 
+the work of Chandrasekhar and Peddakrishna [34]. Logistic 
+Regression models showed slightly lower accuracy, generally 
+ranging from 80% to 89%, while KNN and Naïve Bayes 
+varied between 75% and 90% depending on the dataset and 
+preprocessing applied. 
+Boosting algorithms reported some of the highest 
+accuracies when combined with optimized feature selection. 
+Dalal et al. [72] achieved 99.1% accuracy using a combination 
+of QUEST, Random Forest, and Neural Networks. Similarly, 
+the use of XGBoost and Gradient Boosting in studies by Bora 
+et al. [73] and Budholiya et al. [44] resulted in accuracies 
+between 95% and 98%. 
+Fig. 3 illustrates the reported accuracy ranges for each 
+classification algorithm, highlighting how ensemble methods 
+generally outperform traditional models when appropriately 
+tuned and combined with effective feature engineering 
+strategies 
+ 
+Fig. 3 Reported Accuracy Ranges by Classification Algorithm (SVM: 85–
+97.9%, RF: 88–95%, LR: 80–89%, KNN/NB: 75–90%, Boosting: 95–98%, 
+Ensemble: up to 99.1%) 
+These results suggest that while traditional algorithms like 
+SVM and RF remain highly reliable, ensemble techniques—
+especially when paired with effective feature engineering—
+offer significant advantages in predictive accuracy. While 
+traditional algorithms like SVM and RF remain highly 
+reliable, ensemble techniques—especially when paired with 
+effective feature engineering—offer significant advantages in 
+predictive accuracy. 
+D. Trends, Gaps, and Challenges (RQ4) 
+The examination of the chosen studies highlights various 
+trends, challenges, and research gaps in the field of heart 
+disease classification through machine learning. One 
+prominent trend is the dominant reliance on open-access 
+datasets such as Cleveland and Statlog. These datasets are 
+widely used due to their accessibility and structured formats, 
+enabling comparative evaluations across different studies. In 
+terms of classification tasks, most research is focused on 
+binary classification (i.e., forecasting the presence or absence 
+of heart disease), with limited exploration of multiclass 
+classification that could reflect various stages or types of heart 
+conditions. Furthermore, the emergence of ensemble learning 
+and hybrid modeling techniques has gained traction, 
+particularly in achieving improved accuracy and robustness. 
+Despite these advancements, several gaps persist. Many 
+studies still depend on benchmark datasets rather than real 
+clinical data sourced directly from hospitals or health 
+institutions, limiting the generalizability of their findings. 
+Moreover, the interpretability of machine learning models is 
+still insufficiently explored, with limited studies utilizing 
+explainable AI (XAI) methods to enhance the transparency 
+and 
+comprehensibility 
+of 
+predictions 
+for 
+medical 
+professionals. 
+Major obstacles also impede further advancement, such as 
+the problem of imbalanced class distributions in datasets, 
+which can bias classifiers toward the majority class, and the 
+absence of standardized benchmarks that complicate 
+performance 
+comparisons. 
+Another 
+challenge 
+is 
+the 
+inconsistency in data preprocessing and feature engineering 
+practices, which affects reproducibility across studies. 
+Addressing these limitations through more diverse datasets, 
+543
+Authorized licensed use limited to: Somaiya University. Downloaded on February 11,2026 at 05:49:11 UTC from IEEE Xplore.  Restrictions apply. 
+standardized 
+methodologies, 
+and 
+the 
+integration 
+of 
+interpretability tools is essential for advancing reliable and 
+clinically applicable ML-based heart disease prediction 
+systems 
+E. Related research  
+ Table 3 presents a comprehensive list of studies conducted 
+between 2022 and 2024 that focus regarding the performance 
+of classification algorithms used on heart disease datasets. 
+TABLE 4 Research on the performance of classification algorithms applied 
+to heart disease datasets. 
+Authors 
+and  
+Year of 
+publish 
+Dataset 
+Methods 
+Result 
+R Ram 
+Kumar at al 
+2024 [54] 
+Cleveland  
+KNN, SVM, ANN, 
+CNN 
+83.61% 66.7% 
+74.2% 70.08%  
+Komal 
+Kumar at al 
+2024[35] 
+Cleveland 
+LR, SVM, NB, KNN, 
+SGD, DT, ADB, MLP 
+89,91% 
+Ozcan and 
+Peker 
+2023[32] 
+Cleveland, 
+Hungarian, 
+Switzerland, 
+Long Beach 
+VA, and 
+Statlog 
+Classification and 
+Regression Tree 
+(CART) 
+87% 
+Khan et al  
+2023 [74] 
+Khyber 
+Teaching 
+Hospital and 
+Lady 
+Reading 
+Hospital in 
+Pakistan 
+DT, RF, LR, NB, 
+SVM 
+83% 85% 
+83% 75% 83% 
+Dalal et al  
+2023[72] 
+Compare 
+UCI and 
+Kaggle 
+Dataset 
+QUEST, RF, NN, BN 
+99.1% 
+Chandras 
+ekhar and 
+Peddakris 
+hna 
+2023[34] 
+Cleveland 
+RF, KNN, LR, NB, 
+Gradient Boosting, 
+AdaBoost 
+93.44% 95.00% 
+Ullah et al  
+2022[71] 
+Cleveland 
+DT, NN, SVM, KNN, 
+LR. 
+97.9% 
+Saboor et al  
+2022[33] 
+UCI, Z-
+Alizadeh 
+Sanitation 
+Heart, 
+Hungarian 
+and Long 
+Beach VA, 
+Cleveland, 
+Hungary, 
+Switzerland 
+KNN, NN, SVM, GA, 
+J48 (DT), RF, NB 
+83.66% to 
+96.72% 
+Bora et al  
+2022 [73] 
+Cleveland 
+LR, SVM, RF, NB, 
+KNN, GBoost, 
+XGBoost 
+73% to 96% 
+Ambrish G 
+et al  
+2022[75] 
+Cleveland, 
+Framingham  
+LR, SVM, RF, SGB, 
+J48, MP 
+87.10% 
+AHMAD et 
+al  
+2022[76] 
+Heart 
+Statlog, 
+Cleveland 
+Hungary, 
+Heart 
+Disease 
+Clinical 
+Record Data 
+Set 2020 
+LDA, RF, GBC, DT, 
+SVM, KNN 
+100% 84.09% 
+100% 95.78% 
+85.71% 
+V. CONCLUSION 
+This systematic review offers a thorough synthesis of 
+recent studies on the effectiveness of classification algorithms 
+used on heart disease datasets. The Cleveland dataset became 
+the most commonly used source, primarily due to its structured 
+features, moderate size, and established benchmarking 
+potential. Feature selection techniques such as RFE, PCA, and 
+GA were shown to enhance classification accuracy by up to 
+10%, with studies demonstrating substantial improvements 
+when these methods were used. 
+Support Vector Machine (SVM) and Random Forest (RF) 
+remain the most frequently implemented algorithms, offering 
+robust performance with accuracies ranging between 85–
+97.9% and 88–95%, respectively. Ensemble and boosting 
+methods such as XGBoost and hybrid approaches showed 
+superior accuracy, with some reaching 99.1% when combined 
+with optimized feature engineering. 
+Emerging trends include an increased focus on ensemble 
+learning, while challenges persist around class imbalance, lack 
+of real clinical datasets, and the limited use of explainable AI 
+techniques. This review highlights critical research gaps such 
+as the need for multiclass classification studies, model 
+transparency, and standardized benchmarking frameworks. 
+Future work should prioritize expanding dataset diversity, 
+utilizing models that are interpretable and explainable, 
+assessing models in multiclass scenarios or real-time clinical 
+environments. Such advancements are essential to enhanced 
+the reliability, generalizability, and the clinical applicability of 
+machine learning-based heart disease prediction systems. 
+  
+REFERENCES 
+[1] 
+UCI, “UCI Machine Learning Repository,” 2023. [Online]. 
+Available: https://archive.ics.uci.edu/ml/index.php. 
+[2] 
+Kaggle, “Heart Disease UCI,” 2023. [Online]. Available: 
+https://www.kaggle.com/uciml/heart-disease-uci. 
+[3] 
+PhysioNet, “Heart Disease Data,” 2023. [Online]. Available: 
+https://physionet.org/static/published-projects/. 
+[4] 
+OpenML, “Heart Disease Dataset,” 2023. [Online]. Available: 
+https://www.openml.org/d/1464. 
+[5] 
+National Institutes of Health, “Heart Disease Dataset,” 2023. 
+[Online]. Available: https://www.nih.gov/. 
+[6] 
+J. P. Li, A. U. Haq, S. U. Din, J. Khan, A. Khan, and A. Saboor, 
+“Heart disease identification method using machine learning 
+classification in e-healthcare,” IEEE access, vol. 8, pp. 107562–
+107582, 2020. 
+[7] 
+I. Ibrahim and A. Abdulazeez, “The role of machine learning 
+algorithms for diagnosing diseases,” J. Appl. Sci. Technol. Trends, 
+vol. 2, no. 01, pp. 10–19, 2021. 
+[8] 
+P. Saraswat, “Supervised machine learning algorithm: A review of 
+classification techniques,” Integr. Emerg. Methods Artif. Intell. \& 
+Cloud Comput., pp. 477–482, 2021. 
+[9] 
+M. R. Dobbelaere, P. P. Plehiers, R. Van de Vijver, C. V Stevens, 
+544
+Authorized licensed use limited to: Somaiya University. Downloaded on February 11,2026 at 05:49:11 UTC from IEEE Xplore.  Restrictions apply. 
+and K. M. Van Geem, “Machine Learning in Chemical 
+Engineering: Strengths, Weaknesses, Opportunities, and Threats,” 
+Engineering, vol. 7, no. 9, pp. 1201–1211, 2021. 
+[10] 
+R. Rajendran and A. Karthi, “Heart disease prediction using entropy 
+based feature engineering and ensembling of machine learning 
+classifiers,” Expert Syst. Appl., vol. 207, p. 117882, 2022. 
+[11] 
+M. S. Pathan, A. Nag, M. M. Pathan, and S. Dev, “Analyzing the 
+impact of feature selection on the accuracy of heart disease 
+prediction,” Healthc. Anal., vol. 2, p. 100060, 2022. 
+[12] 
+P. Ghosh et al., “Efficient prediction of cardiovascular disease 
+using machine learning algorithms with relief and LASSO feature 
+selection techniques,” IEEE Access, vol. 9, pp. 19304–19326, 2021. 
+[13] 
+M. Hosni et al., “A systematic mapping study for ensemble 
+classification methods in cardiovascular disease,” Artif. Intell. Rev., 
+vol. 54, pp. 2827–2861, 2021. 
+[14] 
+A. Rath, D. Mishra, G. Panda, and S. C. Satapathy, “Heart disease 
+detection using deep learning methods from imbalanced ECG 
+samples,” Biomed. Signal Process. Control, vol. 68, p. 102820, 
+2021. 
+[15] 
+M. Bansal, A. Goyal, and A. Choudhary, “A comparative analysis 
+of K-nearest neighbor, genetic, support vector machine, decision 
+tree, and long short term memory algorithms in machine learning,” 
+Decis. Anal. J., vol. 3, p. 100071, 2022. 
+[16] 
+T. M. Mitchell and T. M. Mitchell, Machine learning, vol. 1, no. 9. 
+McGraw-hill New York, 1997. 
+[17] 
+C. M. Bishop and N. M. Nasrabadi, Pattern recognition and 
+machine learning, vol. 4, no. 4. Springer, 2006. 
+[18] 
+C. Krittanawong et al., “Machine learning prediction in 
+cardiovascular diseases: a meta-analysis,” Sci. Rep., vol. 10, no. 1, 
+p. 16057, 2020. 
+[19] 
+D. Sacha et al., “What you see is what you can change: Human-
+centered 
+machine 
+learning 
+by 
+interactive 
+visualization,” 
+Neurocomputing, vol. 268, pp. 164–175, 2017. 
+[20] 
+D. Maulud and A. M. Abdulazeez, “A review on linear regression 
+comprehensive in machine learning,” J. Appl. Sci. Technol. Trends, 
+vol. 1, no. 2, pp. 140–147, 2020. 
+[21] 
+V. Sharma, S. Yadav, and M. Gupta, “Heart disease prediction 
+using machine learning techniques,” in 2020 2nd international 
+conference on advances in computing, communication control and 
+networking (ICACCCN), 2020, pp. 177–181. 
+[22] 
+C. M. Bhatt, P. Patel, T. Ghetia, and P. L. Mazzeo, “Effective heart 
+disease prediction using machine learning techniques,” Algorithms, 
+vol. 16, no. 2, p. 88, 2023. 
+[23] 
+P. Cunningham, M. Cord, and S. J. Delany, “Supervised Learning,” 
+in Machine Learning Techniques for Multimedia: Case Studies on 
+Organization and Retrieval, M. Cord and P. Cunningham, Eds. 
+Berlin, Heidelberg: Springer Berlin Heidelberg, 2008, pp. 21–49. 
+[24] 
+T. Hastie, R. Tibshirani, J. H. Friedman, and J. H. Friedman, The 
+elements of statistical learning: data mining, inference, and 
+prediction, vol. 2. Springer, 2009. 
+[25] 
+S. V Stehman, “Selecting and interpreting measures of thematic 
+classification accuracy,” Remote Sens. Environ., vol. 62, no. 1, pp. 
+77–89, 1997. 
+[26] 
+P. Cichosz, “Assessing the quality of classification models: 
+Performance measures and evaluation procedures,” Cent. Eur. J. 
+Eng., vol. 1, pp. 132–158, 2011. 
+[27] 
+A. Ng, “Machine learning yearning: Technical strategy for AI 
+engineers, in the era of deep learning,” 2018. 
+[28] 
+E. Alpaydin, Introduction to machine learning. MIT press, 2020. 
+[29] 
+T. Fawcett, “An introduction to ROC analysis,” Pattern Recognit. 
+Lett., vol. 27, no. 8, pp. 861–874, 2006. 
+[30] 
+N. R. Haddaway, M. J. Page, C. C. Pritchard, and L. A. 
+McGuinness, “PRISMA2020: An R package and Shiny app for 
+producing PRISMA 2020-compliant flow diagrams, with 
+interactivity for optimised digital transparency and Open 
+Synthesis,” Campbell Syst. Rev., vol. 18, no. 2, p. e1230, Jun. 2022. 
+[31] 
+A. G, B. Ganesh, A. Ganesh, C. Srinivas, Dhanraj, and K. 
+Mensinkal, “Logistic regression technique for prediction of 
+cardiovascular disease,” Glob. Transitions Proc., vol. 3, no. 1, pp. 
+127–130, 2022. 
+[32] 
+M. Ozcan and S. Peker, “A classification and regression tree 
+algorithm for heart disease modeling and prediction,” Healthc. 
+Anal., vol. 3, p. 100130, 2023. 
+[33] 
+A. Saboor, M. Usman, S. Ali, A. Samad, M. F. Abrar, and N. Ullah, 
+“A Method for Improving Prediction of Human Heart Disease 
+Using Machine Learning Algorithms,” Mob. Inf. Syst., vol. 2022, 
+no. 1, p. 1410169, Jan. 2022. 
+[34] 
+N. Chandrasekhar and S. Peddakrishna, “Enhancing heart disease 
+prediction accuracy through machine learning techniques and 
+optimization,” Processes, vol. 11, no. 4, p. 1210, 2023. 
+[35] 
+K. K. Napa, A. K. Kumar, S. Murugan, K. Mahammad, T. A. 
+Assegie, and K. Okokpujie, “Early prediction of chronic heart 
+disease with recursive feature elimination and supervised learning 
+techniques,” IAES Int. J. Artif. Intell., vol. 13, no. 1, pp. 730 – 736, 
+2024. 
+[36] 
+G. N. Ahmad et al., “Mixed Machine Learning Approach for 
+Efficient Prediction of Human Heart Disease by Identifying the 
+Numerical and Categorical Features,” Appl. Sci., vol. 12, no. 15, 
+2022. 
+[37] 
+R. A. Kanza, M. U. H. Al Rasyid, and S. Sukaridhoto, “Efficient 
+Early Detection of Patient Diagnosis and Cardiovascular Disease 
+using an IoT System with Machine Learning and Fuzzy Logic,” Int. 
+J. Comput. Digit. Syst., vol. 16, no. 1, pp. 183 – 199, 2024. 
+[38] 
+S. Gandhi, T. Poongodi, and K. Sampath Kumar, “Enhancing data 
+security of cardiac patients in IoMT with Twin-Shield Encryption,” 
+J. Auton. Intell., vol. 7, no. 2, 2024. 
+[39] 
+S. Alsubai, A. Alqahtani, A. Binbusayyis, M. Sha, A. Gumaei, and 
+S. Wang, “Heart Failure Detection Using Instance Quantum Circuit 
+Approach and Traditional Predictive Analysis,” Mathematics, vol. 
+11, no. 6, 2023. 
+[40] 
+G. Abdulsalam, S. Meshoul, and H. Shaiba, “Explainable Heart 
+Disease Prediction Using Ensemble-Quantum Machine Learning 
+Approach,” Intell. Autom. Soft Comput., vol. 36, no. 1, pp. 761 – 
+779, 2023. 
+[41] 
+M. D. Fathima, S. J. Samuel, and S. P. Raja, “HDDSS: An 
+Enhanced Heart Disease Decision Support System Using RFE-
+ABGNB Algorithm,” Int. J. Interact. Multimed. Artif. Intell., vol. 8, 
+no. 2, pp. 29 – 37, 2023. 
+[42] 
+P. A. Sadiyamole and S. Manju Priya, “A Robust Cardiovascular 
+Disease Predictor Based on Genetic Feature Selection and 
+Ensemble Learning Classification,” Int. J. Electr. Comput. Eng. 
+Syst., vol. 14, no. 7, pp. 799 – 809, 2023. 
+[43] 
+K. Chandrashekar and A. T. Narayanreddy, “An Ensemble Feature 
+Optimization for an Effective Heart Disease Prediction Model,” Int. 
+J. Intell. Eng. Syst., vol. 16, no. 2, pp. 517 – 525, 2023. 
+[44] 
+K. Budholiya, S. K. Shrivastava, and V. Sharma, “An optimized 
+XGBoost based diagnostic system for effective prediction of heart 
+disease,” J. King Saud Univ. - Comput. Inf. Sci., vol. 34, no. 7, pp. 
+4514 – 4523, 2022. 
+[45] 
+S. Christal, M. Sundararajan, G. U. Maheswari, P. Kaur, and A. 
+Kaushik, “Heart Diseases Diagnosis Using Chaotic Harris Hawk 
+Optimization with E-CNN for IoMT Framework,” Inf. Technol. 
+Control, vol. 52, no. 2, pp. 500 – 514, 2023. 
+[46] 
+K. V. V. Reddy, I. Elamvazuthi, A. A. Aziz, S. Paramasivam, H. N. 
+Chua, and S. Pranavanand, “An Efficient Prediction System for 
+Coronary Heart Disease Risk Using Selected Principal Components 
+and Hyperparameter Optimization,” Appl. Sci., vol. 13, no. 1, 2023. 
+[47] 
+N. P and S. Narayan, “Cardiac disease detection using cuckoo 
+search enabled deep belief network,” Intell. Syst. with Appl., vol. 
+16, p. 200131, 2022. 
+[48] 
+B. A. Majeed, A. Y. Hardan, B. Y. Hardan, and D. F. Munaf, 
+“Accurate AI-Based Chatbot to Diagnose Heart Diseases Pre-
+Human Doctor Consultation,” Rev. d’Intelligence Artif., vol. 38, no. 
+1, pp. 213 – 220, 2024. 
+[49] 
+S. Meda and R. Bhogapathi, “An Integrated Machine Learning 
+Model for Heart Disease Classification and Categorization,” J. 
+Comput. Sci., vol. 18, no. 4, pp. 257 – 265, 2022. 
+[50] 
+S. Bashir, I. U. Khattak, A. Khan, F. H. Khan, A. Gani, and M. 
+Shiraz, “A Novel Feature Selection Method for Classification of 
+Medical 
+Data 
+Using 
+Filters, 
+Wrappers, 
+and 
+Embedded 
+Approaches,” Complexity, vol. 2022, 2022. 
+[51] 
+S. Das, S. K. Pradhan, S. Mishra, S. Pradhan, and P. K. Pattnaik, 
+545
+Authorized licensed use limited to: Somaiya University. Downloaded on February 11,2026 at 05:49:11 UTC from IEEE Xplore.  Restrictions apply. 
+“DIAGNOSIS OF CARDIAC PROBLEM USING ROUGH SET 
+THEORY AND MACHINE LEARNING,” Indian J. Comput. Sci. 
+Eng., vol. 13, no. 4, pp. 1112 – 1131, 2022. 
+[52] 
+S. Karthikeyini, G. Vidhya, T. Vetriselvi, and K. Deepa, “Heart 
+Disease Prognosis Using D-GRU with Logistic Chaos Honey 
+Badger Optimization in IoMT Framework,” Inf. Technol. Control, 
+vol. 52, no. 2, pp. 367 – 380, 2023. 
+[53] 
+A. K. Berdaly and Z. M. Abdiahmetova, “PREDICTING HEART 
+DISEASE USING MACHINE LEARNING ALGORITHMS,” 
+Kazn. Bull. Math. Mech. Comput. Sci. Ser., vol. 115, no. 3, pp. 101 
+– 111, 2022. 
+[54] 
+R. P. Ram Kumar et al., “Investigations on cardiovascular diseases 
+and predicting using machine learning algorithms,” Cogent Eng., 
+vol. 11, no. 1, p. 2386381, 2024. 
+[55] 
+S. C. M. Sundararajan, G. P. Bharathi, U. Loganathan, and S. 
+Vadivel, “Improved smart healthcare system of cloud-based IoT 
+framework for the prediction of heart disease,” Inf. Technol. 
+Control, vol. 52, no. 2, pp. 529–540, 2023. 
+[56] 
+S. Molla et al., “A predictive analysis framework of heart disease 
+using machine learning approaches,” Bull. Electr. Eng. Informatics, 
+vol. 11, no. 5, pp. 2705–2716, 2022. 
+[57] 
+A. K. Dubey, A. K. Sinhal, and R. Sharma, “An improved auto 
+categorical PSO with ML for heart disease prediction,” Eng. 
+Technol. \& Appl. Sci. Res., vol. 12, no. 3, pp. 8567–8573, 2022. 
+[58] 
+B. A. M. Metwally, N. E. Mekky, and I. M. Elhenawy, “Heart 
+Disease Prediction Using Genetic Algorithm with Machine 
+Learning Classifiers,” Int. J. Adv. Sci. Eng. Inf. Technol., vol. 12, 
+no. 5, pp. 1887 – 1894, 2022. 
+[59] 
+K. Dissanayake and M. G. M. Johar, “Two-level boosting 
+classifiers ensemble based on feature selection for heart disease 
+prediction,” Indones. J. Electr. Eng. Comput. Sci., vol. 32, no. 1, pp. 
+381–391, 2023. 
+[60] 
+C.-L. Cocianu, C. R. Uscatu, K. Kofidis, S. Muraru, and A. G. 
+V\uaduva, “Classical, evolutionary, and deep learning approaches 
+of automated heart disease prediction: a case study,” Electronics, 
+vol. 12, no. 7, p. 1663, 2023. 
+[61] 
+A. K. Dubey, U. Gupta, and S. Jain, “Medical data clustering and 
+classification using TLBO and machine learning algorithms,” 
+Comput. Mater. Contin., vol. 70, no. 3, pp. 4523 – 4543, 2022. 
+[62] 
+R. Aggarwal and S. Kumar, “Classification Model for Meticulous 
+Presaging of Heart Disease Detection through SDA and NCA using 
+Machine learning:CMSDANCA,” Int. J. Recent Innov. Trends 
+Comput. Commun., vol. 10, no. 1, pp. 217 – 224, 2022. 
+[63] 
+T. Karadeniz, H. H. Mara\cs, G. Tokdemir, and H. Ergezer, “Two 
+majority voting classifiers applied to heart disease prediction,” 
+Appl. Sci., vol. 13, no. 6, p. 3767, 2023. 
+[64] 
+K. V. V. Reddy, I. Elamvazuthi, A. A. Aziz, S. Paramasivam, H. N. 
+Chua, and S. Pranavanand, “An efficient prediction system for 
+coronary heart disease risk using selected principal components and 
+hyperparameter optimization,” Appl. Sci., vol. 13, no. 1, p. 118, 
+2022. 
+[65] 
+A. Dubey, U. Gupta, and S. Jain, “Medical data clustering and 
+classification using TLBO and machine learning algorithms,” 
+Comput. Mater. Contin., vol. 70, no. 3, pp. 4523–4543, 2021. 
+[66] 
+P. Gupta and D. Seth, “Comparative analysis and feature 
+importance of machine learning and deep learning for heart disease 
+prediction,” Indones. J. Electr. Eng. Comput. Sci., vol. 29, no. 1, p. 
+451, 2022. 
+[67] 
+L. Riyaz, M. A. Butt, and M. Zaman, “A novel ensemble deep 
+learning model for coronary heart disease prediction,” Rev. 
+d’Intelligence Artif., vol. 36, no. 6, pp. 825–832, 2022. 
+[68] 
+A. Ramesh, C. K. Subbaraya, and R. K. G. Krishnegowda, “A 
+remote health monitoring framework for heart disease and diabetes 
+prediction using advanced artificial intelligence model.,” Indones. 
+J. Electr. Eng. Comput. Sci., vol. 30, no. 2, p. 846, 2023. 
+[69] 
+J. J. Gabriel and L. J. Anbarasi, “Optimizing Coronary Artery 
+Disease Diagnosis: A Heuristic Approach Using Robust Data 
+Preprocessing and Automated Hyperparameter Tuning of eXtreme 
+Gradient Boosting,” IEEE Access, vol. 11, pp. 112988–113007, 
+2023. 
+[70] 
+P. Anuradha and V. K. David, “Feature selection by 
+ModifiedBoostARoota and classification by CatBoost model on 
+high dimensional heart disease datasets,” Int. J. Comput. Theory 
+Eng., vol. 14, no. 01, p. 2022, 2022. 
+[71] 
+A. Ullah, S. A. Khan, T. Alam, S. Luma-Osmani, and M. Sadie, 
+“Heart disease classification using various heuristic algorithms,” 
+Int. J. Adv. Appl. Sci., vol. 2252, no. 8814, p. 8814, 2022. 
+[72] 
+S. Dalal et al., “Application of machine learning for cardiovascular 
+disease risk prediction,” Comput. Intell. Neurosci., vol. 2023, no. 1, 
+p. 9418666, 2023. 
+[73] 
+N. Bora, S. Gutta, and A. Hadaegh, “Using machine learning to 
+predict heart disease,” California State University San Marcos, 
+2021. 
+[74] 
+A. Khan, M. Qureshi, M. Daniyal, and K. Tawiah, “A novel study 
+on machine learning algorithm-based cardiovascular disease 
+prediction,” Heal. \& Soc. Care Community, vol. 2023, no. 1, p. 
+1406060, 2023. 
+[75] 
+G. Ambrish, B. Ganesh, A. Ganesh, C. Srinivas, K. Mensinkal, and 
+others, 
+“Logistic 
+regression 
+technique 
+for prediction 
+of 
+cardiovascular disease,” Glob. Transitions Proc., vol. 3, no. 1, pp. 
+127–130, 2022. 
+[76] 
+G. N. Ahmad, S. Ullah, A. Algethami, H. Fatima, and S. M. H. 
+Akhter, “Comparative study of optimum medical diagnosis of 
+human heart disease using machine learning technique with and 
+without sequential feature selection,” ieee access, vol. 10, pp. 
+23808–23828, 2022. 
+ 
+ 
+546
+Authorized licensed use limited to: Somaiya University. Downloaded on February 11,2026 at 05:49:11 UTC from IEEE Xplore.  Restrictions apply. 

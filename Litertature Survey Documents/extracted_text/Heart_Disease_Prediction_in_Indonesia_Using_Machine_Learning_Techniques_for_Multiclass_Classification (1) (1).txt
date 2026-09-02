@@ -1,0 +1,737 @@
+979-8-3315-3297-0/25/$31.00 ©2025 IEEE 
+Heart Disease Prediction in Indonesia Using 
+Machine Learning Techniques for Multiclass 
+Classification 
+ 
+ 
+Syarifah Diana Permai  
+Statistics Department, School of 
+Computer Science 
+Bina Nusantara University 
+Jakarta, Indonesia 11480 
+syarifah.permai@binus.ac.id 
+Muhammad Farras Fadhilah 
+Computer Science Department, School 
+of Computer Science 
+Bina Nusantara University 
+Jakarta, Indoensia 11480 
+muhammad.fadhilah002@binus.ac.id 
+Austin Ordell Salomo 
+Computer Science Department, School 
+of Computer Science 
+Bina Nusantara University 
+Jakarta, Indoensia 11480 
+austin.salomo@binus.ac.id 
+Ryan Bukhari 
+Computer Science Department, School 
+of Computer Science 
+Bina Nusantara University 
+Jakarta, Indoensia 11480 
+ryan.bukhari@binus.ac.id
+Fauzan Hafizh Zulfikar 
+Computer Science Department, School 
+of Computer Science 
+Bina Nusantara University 
+Jakarta, Indoensia 11480 
+fauzan.zulfikar@binus.ac.id 
+Muhammad Fadlan Hidayat 
+Computer Science Department, School 
+of Computer Science 
+Bina Nusantara University 
+Jakarta, Indoensia 11480 
+muhammad.hidayat@binus.edu  
+ 
+Abstract—This research concentrates on utilizing multiclass 
+classification methodology for heart disease prediction. 
+Specifically, this paper explores the utilization of Support 
+Vector Machine (SVM) and Multi-Layer Perceptron (MLP) 
+classifiers to classify various cardiac conditions. This research is 
+used to get the best results in predicting heart disease that has a 
+classification of more than two categories using machine 
+learning methods. The main goal is to contribute insights to 
+medical diagnostics by explaining the effectiveness of SVM and 
+MLP in improving the accuracy of heart disease prediction 
+models in various classes using several factors that influence 
+heart disease. The data used in this research has missing values, 
+therefore in this research, several methods were used to 
+overcome missing values. Determining the best model is done by 
+comparing precision, recall, and accuracy values. The best 
+model in this research is the SVM model because it has the 
+highest accuracy, precision, and recall. It is hoped that this 
+research can provide knowledge to optimize its application in 
+the identification and classification of heart disease to make it 
+more efficient. 
+Keywords—heart disease, multiclass, SVM, MLP Classifier, 
+classification 
+I. INTRODUCTION 
+Heart disease is still one of the biggest global health issues 
+and causes of mortality. In low- and middle-income nations, 
+such as Indonesia, the most populous nation in Southeast 
+Asia and home to the fourth biggest population in the world, 
+the number keeps rising. Cardiovascular disease (CVD) is 
+one of the leading causes of premature mortality in the area, 
+encompassing stroke and coronary heart disease (CHD). 
+Growing life expectancy, urbanization, demographic shifts, 
+epidemiological transition, and the high prevalence of CVD 
+risk factors are all contributing reasons to the rise in CVD 
+incidence and risk factors in emerging nations like Indonesia 
+[1]. Heart failure-related fatalities are becoming more 
+commonplace daily. 32 percent of all fatalities worldwide in 
+2019 were attributable to cardiovascular illnesses, which 
+claimed 17.9 million lives, according to a WHO report. Heart 
+attacks and strokes accounted for 85% of these fatalities. The 
+cause of this is that individuals do not know why they have 
+coronary heart disease [2].  
+Coronary heart disease can be caused by a variety of 
+causes, including high blood pressure, smoking, diabetes, 
+high cholesterol, and other conditions. Smoking is growing 
+more and more frequent among young people and the elderly. 
+Smoking raises blood stress and constricts the coronary 
+heart's arteries, which results in irregular heartbeats. 
+Numerous problems are caused by high blood pressure. It 
+also causes the lower-left coronary heart chamber to thicken, 
+increasing the risk of coronary heart failure. These two 
+effects drive the coronary heart to pump blood to the body 
+harder [3]. To classify diseases, healthcare analytics which is 
+now 
+frequently 
+using 
+restricted 
+machine 
+learning 
+applications or conventional statistical approaches. But these 
+methods might not be as accurate and effective as they could 
+be, which would need researching more sophisticated 
+methods [4].  
+The research of a human disease prediction model based 
+on the Random Forest algorithm has been proposed [5]. The 
+model is expected to be able to predict possible diseases 
+based on the symptoms entered by the user. The model itself 
+used Random Forest, Long-Short Term Memory (LSTM), 
+and Support Vector Machine (SVM) algorithm and a dataset 
+from Kaggle in order to train the data. The result of this 
+proposed model managed to produce a 97% accuracy in 
+predicting possible diseases compared to older models [5]. 
+The fields of disease populations, disease status, immune 
+response, and health emergencies have all advanced 
+significantly as a result of recent advances in artificial 
+intelligence (AI) and machine learning (ML) technologies. 
+Though there is still doubt about the usefulness of ML-based 
+techniques in practice and how to interpret their findings, 
+their use in healthcare settings is growing quickly [6].  
+2025 5th International Conference on Innovative Research in Applied Science, Engineering and Technology (IRASET) | 979-8-3315-3297-0/25/$31.00 ©2025 IEEE | DOI: 10.1109/IRASET64571.2025.11007969
+Authorized licensed use limited to: Somaiya University. Downloaded on February 11,2026 at 05:46:31 UTC from IEEE Xplore.  Restrictions apply. 
+In the pursuit of enhancing the accuracy of heart disease 
+prediction, this study explores the implementation of 
+multiclass classification techniques. As heart diseases 
+manifest in various forms, accurate classification is imperative 
+for effective medical decision-making. Traditional binary 
+classification models often fall short of addressing the 
+nuanced complexity of multiclass scenarios. Hence, the focus 
+on multiclass classification aims to overcome these limitations 
+and provide a more comprehensive framework for predicting 
+a spectrum of heart-related ailments. This paper investigates 
+the application of two powerful machine learning classifiers: 
+Support Vector Machine (SVM) and Multi-Layer Perceptron 
+(MLP). The objective is to find the best method to 
+systematically categorize diverse types of heart conditions, 
+enabling a nuanced understanding of the intricate patterns and 
+relationships within heart disease data. 
+In this research, classification modeling will be carried out 
+on heart disease patients using a multiclass classification 
+approach, considering that heart disease conditions can be 
+categorized into several levels of severity, such as normal, 
+mild (Level 1), moderate (Level 2), and severe (Level 3). Two 
+supervised learning methods, namely Support Vector 
+Machine (SVM) and Multilayer Perceptron (MLP), were 
+chosen because each has advantages in handling complex and 
+nonlinear data classification. The analysis will focus on 
+comparing the performance of the two algorithms. Evaluation 
+of model performance will be carried out using various 
+metrics that are suitable for multiclass classification, such as 
+accuracy, precision, recall, and F1-score. Thus, this research 
+is expected to contribute to the development of decision 
+support systems in the health sector, especially in data-based 
+early diagnosis of heart disease. 
+II. RELATED WORK 
+Multiclass classification for heart disease was also 
+conducted by Hasan, Jasim and Hashim. The study used data 
+from Ibn Al-Bitar Hospital Cardia Surgery and Baghdad 
+Medical City, the results showed that prediction using the 
+MLP method was better than SVM [7]. Heart disease 
+research using data from the Cleveland database was also 
+conducted 
+for 
+binary 
+classification 
+and 
+multiclass 
+classification. The results showed differences between the 
+two cases, for binary classification it is better to use SVM, 
+while for multiclass classification it is better to use MLP [8]. 
+Boukhatem, Youssef, and Nassif compared the MLP, SVM, 
+RF, and NB methods for heart disease classification. The 
+results showed that the SVM model was better than other 
+models [9]. While Laveniya and Harun used binary 
+classification for heart disease and the results showed that the 
+MLP method was better than various other machine learning 
+methods [10]. 
+III. SUPPORT VECTOR MACHINE 
+One of the supervised learning methods that can be used 
+for classification and regression is the Support Vector 
+Machine (SVM). The concept of SVM is to maximize the 
+geometric margin to minimize the empirical classification 
+error. Thus, another term for the SVM is the Maximum 
+Margin Classifier. The basis of SVM is structural risk 
+minimization (SRM). SVM creates a maximal separating 
+hyperplane by mapping the input vector to a higher 
+dimensional space. Two parallel hyperplanes are constructed 
+on either side of the hyperplane that splits the data. The 
+separating hyperplane is the one that maximizes the distance 
+between the two parallel hyperplanes. The more margin 
+between these parallel hyperplanes, the better the 
+generalization error of the classifier [11]. 
+SVM has been widely implemented in Health Data 
+Analysis. One of them is applied to the automatic 
+classification of microarray gene expression profiles. 
+Theoretically, SVM can examine gene expression profiles 
+obtained from tumor samples [12]. 
+Class classification problems were primarily supported by 
+vector machines, however as computer, network, and 
+database technologies advanced quickly and became more 
+sophisticated, making it possible to classify and manage vast 
+amounts of information, class classification problems were 
+unable to keep up with societal demands. The multi-class 
+classification issue is extended to use this strategy. The two 
+categories of multi-class classification problems in the 
+current treatment methods are as follows: To solve multi-
+class classification issues, first construct a sequence of 
+second-class classification problems in some manner. The 
+final class classification problem is based on two multi-class 
+SVM classification methods, in essence. Secondly, create a 
+single multi-class support vector machine (SVM) and use it 
+to solve the multi-class classification problem [13]. Equation 
+(1) below is used to process each class simultaneously in 
+multiclass classification. Thereafter, utilize equation (2) to 
+make a conclusion [14]. 
+	
+
+ ∑
+ℎ
+ℎ
+
+
++  ∑
+∑
+
+
+
+
+ 
+(1) 
+ 
+ = 	
+ !" + #$% 
+(2) 
+Where y is the number of classes, r is the number of 
+samples, sv is the slack variable, and b is the bias. Every pair 
+of classes receives the application of every classifier. The 
+class with the highest number of votes determines the final 
+classification. There are many types of kernel functions in 
+SVM. The kernel function is used to take input data and shape 
+it into an appropriate form. The following are frequently used 
+kernel functions. 
+A. Linear Function 
+A linear kernel, also referred to as a soft margin, may 
+accept one or more data misclassifications while still 
+attempting to identify a straight-line hyperplane. Even though 
+the linear kernel can tolerate some errors, it nevertheless 
+searches for a line that maximizes margins and minimizes 
+misclassification. The degree of misclassification tolerance 
+set has a significant impact on the hyperplane's accuracy. The 
+tolerance in Sklearn is referred to as C. The margin is smaller 
+and misclassification tolerance is lower with greater values of 
+C. Equation (3) is a linear kernel function. 
+ 
+&!, (" = . ( + * 
+(3) 
+Authorized licensed use limited to: Somaiya University. Downloaded on February 11,2026 at 05:46:31 UTC from IEEE Xplore.  Restrictions apply. 
+B. Polynomial Function 
+A polynomial kernel is required when data cannot be 
+divided into distinct categories by lines. Nonlinear decision 
+boundaries may be produced using polynomial kernels. A 
+polynomial kernel generates a new feature by applying a 
+polynomial combination of the existing features. The 
+polynomial kernel function is written in Equation (4). 
+ 
+&!, (" = !+. ( + *",,  - 0 
+(4) 
+C. Radial Basis Function 
+A Radial basis function (RBF) kernels are used on highly 
+unevenly distributed data. Two parameters—C and gamma—
+for highly uneven data require a radial basis function (RBF) 
+kernel. Two parameters—C and gamma—must be taken into 
+account when training a dataset with the RBF kernel. The 
+training data classification error decreases when the C 
+parameter is larger, because it indicates the magnitude of 
+errors that must be avoided in the classification process. The 
+gamma parameter is the magnitude of the impact of one 
+training data sample. As a result, the distance from the data 
+points to be calculated increases as the gamma value decreases 
+[15]. 
+ 
+&!, (" = / 01+2| 1 (|2
+4 , + - 0 
+(5) 
+D. Sigmoid Function 
+A Sigmoid function is applied to non-linear classification 
+issues. The sigmoid kernel is used to transform the input data 
+into a higher-dimensional space [16].  The following is the 
+sigmoid function equation. 
+ 
+&, 56% = 7ℎ !+, 6 + 9" 
+(6) 
+Based on the kernel function above. Fig. 1 is an example 
+of a kernel function implemented on Iris data [17]. 
+ 
+Fig. 1. Kernel Functions in SVM 
+IV. MULTILAYER PERCEPTRON (MLP) CLASSIFIER 
+One of the main focuses of neural network research is 
+choosing the appropriate neural network architecture to 
+address a certain issue. One or more hidden layers make up 
+the multilayer perceptron (MLP). The convergence of MLP 
+training methods is significantly influenced by the number of 
+neurons in the hidden layers and the initial weights [18]. The 
+Feed Forward Neural Network (FFNN) architecture is one 
+type of artificial neural network. The FFNN architecture is 
+used by the MLP Classifier. This classifier learns to categorize 
+with a multilayer perceptron using backpropagation. The input 
+layer, hidden layer, and output layer are the three layers that 
+make up the MLP Classifier [19]. Both the input layer and the 
+hidden layer have several nodes. The number of nodes in the 
+input layer is an independent variable. On the other hand, the 
+hidden layer could have one or more layers and nodes [20]. 
+Processing from the input layer to the hidden layer and then to 
+the output layer is called forward propagation. Then the 
+activation function value is propagated to the next layer. The 
+next layer can be another hidden layer or an output layer. MLP 
+is trained from training data through processing which is 
+called backpropagation. This process can be described as a 
+way to improve errors [21]. Fig. 2 shows the architecture of 
+FFNN. Meanwhile, the general model of MLP is written in 
+equation (7) [22]. 
+ 
+5 = :!; + #" 
+(7) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Fig. 2. The Architecture of Neural Network 
+An artificial neuron's activation range is determined by its 
+activation function. This is applied to the total of the neuron's 
+weighted input data. Non-linearity is a characteristic of an 
+activation function. The linear products between the weights 
+and the input values would be the only operations involved in 
+calculating the output of a multilayer perceptron if an 
+activation function wasn't used [23]. 
+V. DATA AND METHODS 
+The data used in this paper was obtained from one of the 
+hospitals in Indonesia. The samples in this research were 
+patients at the hospital, whether patients suffered from heart 
+disease or not. The number of samples in this research was 
+9756. However, the data in this research contained many 
+missing values. There are dependent and independent 
+variables used in this research. Table 1 shows the independent 
+variables and Table 2 shows the levels of dependent variable. 
+There are two methods that can be used to carry out 
+multiclass classification, namely SVM and MLP [24]. The 
+stages of this research are as follows. First, perform Pre-
+Processing on the data to overcome missing values. In this 
+research, there are two ways to do this, namely filling in 
+empty data with median values and deleting empty data. 
+Second, carry out analysis using SVM on data that has no 
+missing values using four kernel functions. Third, carry out 
+analysis using MLP on data that has no missing values using 
+three activation functions. Fourth, compare the SVM and 
+MLP models to get the best model using accuracy, precision 
+and recall values. 
+Authorized licensed use limited to: Somaiya University. Downloaded on February 11,2026 at 05:46:31 UTC from IEEE Xplore.  Restrictions apply. 
+TABLE I.  
+INDEPENDENT VARIABLES 
+Description 
+Code 
+Age of the patient 
+Age 
+Glucose 
+GLU 
+Cholesterol 
+CHOL 
+2-hour glucose is a test to determine blood 
+sugar levels after 2 hours of eating. 
+GLU2 
+Triglycerides 
+TRIG 
+High-density lipoprotein (HDL) cholesterol 
+HDL 
+Urea 
+UREA 
+Creatine kinase 
+CREA 
+Urinalysis 
+UA 
+The total protein  
+TP 
+Albumin  
+ALB 
+Globulins 
+GLOB 
+Total bilirubin 
+TBIL 
+Bilirubin  
+DBIL 
+Serum glutamic oxaloacetic transaminase 
+SGOT 
+Gender of the patient (Female or Male) 
+Gender 
+ 
+TABLE II.  
+LEVELS OF DEPENDENT VARIABLE 
+Status Levels 
+Description 
+Normal 
+Do not suffer from heart disease 
+Level 1 
+Level I heart disease sufferers without any activity 
+limitations. Daily physical activity does not cause 
+fatigue, palpitations, shortness of breath, and chest 
+pain. 
+Level 2 
+Level II heart disease sufferers with slight 
+limitations during moderate-intensity activities 
+(such as climbing stairs). Complaints disappear with 
+rest. 
+Level 3 
+Level III heart disease sufferers with clearly visible 
+limitations during light-intensity activities (such as 
+walking a few meters). Complaints will decrease 
+with rest. 
+ 
+VI. DATA PRE-PROCESSING 
+Before carrying out classification analysis on heart disease 
+patient data, pre-processing is first carried out. This is 
+because the data in this research has many missing values. 
+Then handling missing data must be done first. There are 
+several variables that have missing values. In this research, 
+variables that have missing values are imputed using the 
+Median value for the numerical variables. This is because 
+there are outliers in these variables, then the imputation uses 
+the Median value. Numerical variables that were imputed 
+using median values included Total Protein, Albumin, 
+Globulins, Total Bilirubin, Bilirubin, and Serum Glutamic 
+Oxaloacetic Transaminase. Meanwhile, categorical variables 
+that have missing values are imputed using the category that 
+has the most frequency. The imputed categorical variables 
+include Glucose, Cholesterol, Triglycerides, High-density 
+lipoprotein (HDL) cholesterol, and Urea. After that, the data 
+is divided into training and testing data with a ratio of 80% 
+training data and 20% testing data.  
+VII. RESULTS AND DISCUSSION 
+Data visualization on the Heart Disease Status variable is 
+presented in Figure 3. This analysis is used to determine the 
+frequency of each category in the dependent variable. Based 
+on Figure 3, it can be concluded that the Normal category is 
+the most dominant category, indicating that the majority of 
+individuals do not have heart disease. While, Level 2 and 
+Level 3, as severe categories, have the smallest number, 
+indicating that high severity only occurs in a small number of 
+individuals. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Fig. 3. The Bar Chart for the Heart Disease Variable 
+Figure 4 is a boxplot of total protein at each level of heart 
+disease. Based on Figure 4, it can be concluded that there are 
+outliers at each level of heart disease. Outliers are found at 
+values that are smaller than the lower limit or values that are 
+greater than the upper limit. This shows that the total protein 
+in each category of heart disease varies greatly. The same 
+thing happens to all numeric variables in this research. 
+ 
+Fig. 4. The Boxplot of Total Protein for Each Heart Disease Class 
+Authorized licensed use limited to: Somaiya University. Downloaded on February 11,2026 at 05:46:31 UTC from IEEE Xplore.  Restrictions apply. 
+Furthermore, in this reseach two methods are used in data 
+modeling. After imputation is carried out on the missing 
+values, modeling is then carried out to predict the level of 
+heart disease in patients. First, using the SVM method. In this 
+method, data is trained using several kernel functions and to 
+obtain the best model in the SVM method, hyperparameter 
+tuning is carried out on the SVM model. Hyperparameter 
+tuning is done by finding the optimal c value and comparing 
+several different kernel functions. Four commonly used 
+kernel functions are linear, polynomial, radial basis function, 
+and sigmoid. Each The best value for each kernel parameter 
+is c = 1.5 for the Linear kernel, c = 15 and gamma 'scale' for 
+Polynomial, c = 5 and gamma 'auto' for Radial Basis 
+Function, and c = 3 and gamma 'auto' for Sigmoid. The 
+comparison results, based on their macro averages are stated 
+below. 
+TABLE III.  
+SVM MODEL 
+Kernel Function 
+Precision 
+Recall 
+Accuracy 
+Linear 
+0.98 
+0.97 
+0.98 
+Polynomial 
+0.98 
+0.97 
+0.98 
+Radial Basis Function 
+0.99 
+0.98 
+0.98 
+Sigmoid 
+0.96 
+0.93 
+0.94 
+ 
+The next method is training the data using MLP. Note that 
+data for the Logistic activation function is not stated as the 
+results for both test data and training data were very low, and 
+as such not used. The results for comparison, based on tuning 
+parameters in the MLP Classifier method are stated below. 
+TABLE IV.  
+MLP CLASSIFIER MODEL 
+Activation 
+Function 
+Hidden 
+Layer 
+Precision 
+Recall 
+Accuracy 
+ReLu 
+62, 30 
+0.90 
+0.94 
+0.93 
+Identity 
+61 
+0.97 
+0.93 
+0.97 
+Tanh 
+61 
+0.95 
+0.87 
+0.93 
+ 
+The comparison of SVM and MLP Classifier model was 
+carry out to get the best model. Table V is the result of the 
+comparison between SVM and MLP Classifier. The accuracy, 
+precision, and recall scores in Table VI demonstrate the high 
+prediction capabilities of both the SVM and MLP Classifier. 
+It can be concluded in this case that SVM with the radial basis 
+kernel is the optimal approach by comparing the accuracy, 
+recall, and precision numbers included in Table VI since this 
+approach yields the best accuracy, precision, and recall 
+numbers when compared to other methods. 
+TABLE V.  
+COMPARISON OF SVM AND MLP CLASSIFIER  
+Method 
+Precision 
+Recall 
+Accuracy 
+SVM 
+0.99 
+0.98 
+0.98 
+MLP Classifier 
+0.97 
+0.93 
+0.97 
+ 
+VIII. CONCLUSION 
+By carrying out data training experiments on each method 
+and using different kernels, the reseach was able to give an 
+approximate case on the performances of using both support 
+vector machine and multi-layer perceptron classifiers to 
+classify specific traits in heart disease patients to each level of 
+the disease, which in turn can be a reference for future patient 
+diagnosis. Each method used has shown great numbers and is 
+an indicator that any of the methods might in fact be used for 
+disease predictions in general, not just for heart disease. In this 
+case in particular, the research finds that using SVM classifier 
+with the radial basis function kernel has a higher accuracy than 
+other methods.  
+It is advised to conduct further experimentations with 
+different datasets to further understand the differences in using 
+each of the methods used in the study against datasets with 
+different traits. The parameter tuning is done mostly manually 
+and might be prone to missing smaller parameters with better 
+statistics and as such a more algorithmic solution is advised.  
+Better methods in data pre-processing is also advised as to find 
+out deeper connection between missing values in data and 
+prediction accuracy. 
+In the case of heart disease classification, there is an 
+imbalance in the amount of data in each class. Further research 
+should apply techniques such as SMOTE, class weighting, or 
+cost-sensitive learning to improve model performance, 
+especially in minority classes. In addition, in the modeling 
+analysis to obtain the best model, the combination of Support 
+Vector Machine (SVM) and Multilayer Perceptron (MLP) 
+shows potential in improving classification accuracy 
+compared to the single use of each method. Further 
+researchers are advised to explore hybrid model architectures. 
+Data Availability Statement 
+The data used in this study are not publicly available due 
+to ethical, legal, and commercial restrictions. The dataset 
+consists of historical patient data related to cancer conditions 
+from a hospital in Indonesia. As such, the data cannot be made 
+available for public access due to privacy concerns and 
+institutional policies regarding the protection of sensitive 
+medical information. 
+Credit Authorship Contribution Statement 
+Syarifah Diana Permai: Conceptualization, Supervision, 
+Methodology, Writing - Review & Editing. Austin Ordell 
+Salomo: Methodology, Formal analysis. Fauzan Hafizh 
+Zulfikar: Data Curation, Visualization. Muhammad Farras 
+Fadhilah: Writing - Original Draft. Ryan Bukhari: 
+Methodology, 
+Formal 
+analysis. 
+Muhammad 
+Fadlan 
+Hidayat: Writing - Review & Editing, Supervision. 
+REFERENCES 
+[1] 
+D. S. Arsyad et al., “Very High Risk of Recurrent Cardiovascular 
+Events in Indonesian Patients with Established Coronary Heart 
+Disease,” Journal of Asian Pacific Society of Cardiology, vol. 2, Aug. 
+2023, doi: 10.15420/JAPSC.2023.04. 
+[2] 
+D. Chicco and G. Jurman, “Machine learning can predict survival of 
+patients with heart failure from serum creatinine and ejection fraction 
+alone,” BMC Med Inform Decis Mak, vol. 20, no. 1, Feb. 2020, doi: 
+10.1186/s12911-020-1023-5. 
+[3] 
+N. Sabri Elmitwally, “Heart Disease Prediction Using Machine 
+Learning Method.”, 2023. 
+[4] 
+A. L. Paul, “Improving Healthcare Analytics: A Multiclass 
+Supervised Learning Method for Classifying Diseases.”, Jan. 2024. 
+Authorized licensed use limited to: Somaiya University. Downloaded on February 11,2026 at 05:46:31 UTC from IEEE Xplore.  Restrictions apply. 
+[5] 
+K. Gaurav, A. Kumar, P. Singh, A. Kumari, M. Kasar, and T. 
+Suryawanshi, “Human Disease Prediction using Machine Learning 
+Techniques and Real-life Parameters,” International Journal of 
+Engineering, Transactions B: Applications, vol. 36, no. 6, pp. 1092–
+1098, Jun. 2023, doi: 10.5829/ije.2023.36.06c.07. 
+[6] 
+H. Habehh and S. Gohel, “Machine Learning in Healthcare,” Curr 
+Genomics, vol. 22, no. 4, pp. 291–300, Jul. 2021, doi: 
+10.2174/1389202922666210705124359. 
+[7] 
+T. T. Hasan, M. H. Jasim and I. A. Hashim, "Heart Disease Diagnosis 
+System based on Multi-Layer Perceptron neural network and Support 
+Vector Machine," International Journal of Current Engineering and 
+Technology, pp. 1842 - 1853, 2017. 
+[8] 
+M. Nahiduzzaman, M. J. Nayeem, M. T. Ahmed and M. S. U. Zaman, 
+"Prediction of Heart Disease Using Multi-Layer Perceptron Neural 
+Network and Support Vector Machine," in 2019 4th International 
+Conference 
+on 
+Electrical 
+Information 
+and 
+Communication 
+Technology (EICT), Khulna, Bangladesh, 2019, pp. 1-6, 2019. 
+[9] 
+C. Boukhatem, H. Y. Youssef and A. B. Nassif, "Heart Disease 
+Prediction Using Machine Learning," in 2022 Advances in Science 
+and Engineering Technology International Conferences (ASET), 
+Dubai, United Arab Emirates, 2022. 
+[10] Laveniya and N. H. Harun, "Enhancing Heart Disease Classification: 
+Performance Evaluation of the Machine Learning Model," 
+EMERGING ADVANCES IN INTEGRATED TECHNOLOGY, vol. 
+5, no. 1, pp. 52 - 58, 2024. 
+[11] D. Srivastava, L. Bhambhu, and D. K. Srivastava, “Data classification 
+using support vector machine,” 2010. [Online]. Available: 
+www.jatit.org 
+[12] W. S. Noble, “What is a support vector machine?,” 2006. [Online]. 
+Available: http://www.nature.com/naturebiotechnology 
+[13] N. Huda Ovirianti, M. Zarlis, and H. Mawengkang, “Support Vector 
+Machine Using A Classification Algorithm,” Jurnal dan Penelitian 
+Teknik Informatika, vol. 7, no. 3, 2022, doi: 10.33395/sinkron.v7i3. 
+[14] A. Dixit, “Ensemble Classifier Based Multiclass Vegetation 
+Classification System”, doi: 10.21917/ijivp.2019.0295. 
+[15] A. F. Rochim, K. Widyaningrum, and D. Eridani, “Comparison of 
+Kernels Function between of Linear, Radial Base and Polynomial of 
+Support Vector Machine Method Towards COVID-19 Sentiment 
+Analysis.” 
+[16] P. K. Intan, “Comparison of Kernel Function on Support Vector 
+Machine in Classification of Childbirth,” Jurnal Matematika 
+“MANTIK,” vol. 5, no. 2, pp. 90–99, Oct. 2019, doi: 
+10.15642/mantik.2019.5.2.90-99. 
+[17] O. Veranyurt, “Usage of Artificial Intelligence in DOS/DDOS Attack 
+Detection,” 
+2019. 
+[Online]. 
+Available: 
+https://www.researchgate.net/publication/344356879 
+[18] T. Elansari, M. Ouanan, and H. Bourray, “Modeling of Multilayer 
+Perceptron Neural Network Hyperparameter Optimization and 
+Training.” [Online]. Available: https://doi.org/ 
+[19] R. Haroon Ajaz, L. Hussain, A. Jammu, and K. Muzaffarabad, “Seed 
+Classification using Machine Learning Techniques,” 2015. [Online]. 
+Available: www.jmest.org 
+[20] S. B. Ummapure and S. M. Hanchinal, “Multi Features based Fruit 
+Classification Using different Classifiers”, doi: 10.51201/12503. 
+[21] S. Sen, D. Sugiarto, and A. Rochman, “Komparasi Metode Multilayer 
+Perceptron (MLP) dan Long Short Term Memory (LSTM) dalam 
+Peramalan Harga Beras,” ULTIMATICS, vol. XII, no. 1, p. 35, 2020. 
+[22] “Multi-Layer Perceptron Learning in Tensorflow - GeeksforGeeks.” 
+Accessed: 
+Mar. 
+11, 
+2024. 
+[Online]. 
+Available: 
+https://www.geeksforgeeks.org/multi-layer-perceptron-learning-in-
+tensorflow/ 
+[23] “Activation Functions in Deep Learning: Sigmoid, tanh, ReLU - KI 
+Tutorials.” Accessed: Mar. 11, 2024. [Online]. Available: 
+https://artemoppermann.com/activation-functions-in-deep-learning-
+sigmoid-tanh-relu/ 
+[24] S.D. Permai, N.T.M. Sagala, A.Y. Zakiyyah, H. Tanty, J. Harefa, 
+“Multiclass Classification for Air Quality in Jakarta Using Support 
+Vector Machine and Multi-Layer Perceptron Classifier”, IEEE 
+Explore, 2022, pp. 198-202. 
+  
+ 
+ 
+ 
+ 
+Authorized licensed use limited to: Somaiya University. Downloaded on February 11,2026 at 05:46:31 UTC from IEEE Xplore.  Restrictions apply. 

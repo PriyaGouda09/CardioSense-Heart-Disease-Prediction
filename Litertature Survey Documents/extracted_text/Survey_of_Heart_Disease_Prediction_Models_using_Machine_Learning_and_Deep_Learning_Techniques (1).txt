@@ -1,0 +1,706 @@
+International Conference on Engineering, Technology & Management (ICETM 2025) 
+979-8-3315-6668-5/25/$31.00 ©2025 IEEE 
+Survey of Heart Disease Prediction Models using 
+Machine Learning and Deep Learning Techniques 
+ 
+Nitin Sonaji Magar  
+Department of Computer Science and Engineering,  
+Jawaharlal Nehru Engineering College,  
+MGM University,  Chh. Sambhajinagar, India 
+nitinmagar09@gmail.com 
+ 
+ 
+Parminder Kaur  
+Department of Computer Science and Engineering, 
+Jawaharlal Nehru Engineering College,  
+MGM University,  Chh. Sambhajinagar, India 
+dhingra.param@gmail.com 
+ 
+Abstract— heart disease remains the leading cause of 
+mortality worldwide, accounting for millions of deaths 
+annually. Despite medical advancements, the early detection 
+and accurate prediction of cardiovascular diseases (CVDs) 
+remain critical challenges. This study explores the application 
+of Machine Learning (ML) and Deep Learning (DL) 
+techniques in predicting heart disease using clinical data, 
+medical images, and physiological signals. Traditional ML 
+models, including Decision Trees, Support Vector Machines 
+(SVM), Random Forest, and Gradient Boosting (XGBoost, 
+LightGBM), are evaluated alongside advanced DL models 
+such as Artificial Neural Networks (ANN), Convolutional 
+Neural Networks (CNN), and Recurrent Neural Networks 
+(RNN). A hybrid CNN + LSTM model is proposed to enhance 
+predictive accuracy by leveraging both spatial and sequential 
+data analysis. The research methodology involves data 
+preprocessing, feature selection, model implementation, and 
+comparative evaluation using performance metrics such as 
+Accuracy, Precision, Recall, F1-Score, and AUC-ROC. 
+Experimental results indicate that deep learning models, 
+particularly CNN and hybrid models, outperform traditional 
+ML approaches in heart disease prediction. Further research 
+is needed to improve interpretability and real-time 
+deployment of AI-driven approaches in clinical settings to 
+improve early cardiovascular disease detection and risk 
+assessment. 
+Keywords— Heart Disease Prediction, Machine Learning, 
+Deep Learning, Convolutional Neural Networks (CNN), 
+Recurrent Neural Networks (RNN),Hybrid CNN-LSTM. 
+I. 
+INTRODUCTION 
+Heart disease, which is often referred to as coronary 
+artery disease (CAD) or cardiovascular disease (CVD), is 
+the leading cause of mortality throughout the globe, which 
+places a significant burden on the medical community. In 
+the United States and across the globe, cardiovascular 
+diseases (CVDs) have an impact on both health and the 
+economy [1]. According to the World Health Organization 
+(WHO), 
+17.9 
+million 
+individuals 
+fell 
+victim 
+to 
+cardiovascular disease (CVD) in 2019. In 2019, death 
+accounted for thirty-two percent of all deaths worldwide. 
+According to the most recent statistics, cardiovascular 
+disease (CVD) is responsible for the deaths of 20.5 million 
+individuals. This number is expected to reach 24.2 million 
+by the year 2030, according to projections. In 2018, there 
+were 30.3% of the population in the United States who 
+were diagnosed with heart disease, which is the leading 
+cause of death. Each year, it will take the lives of 647,000 
+people. The findings of the research indicate that heart 
+disease is responsible for the death of one in every four 
+people in the United States [2]. Within a year after suffering 
+a heart attack, the American Heart Association (AHA) 
+estimates that 26 percent of women who are considered to 
+be at high risk will pass away. This is a significant increase 
+from the 19% of men who are considered to be high-risk. 
+In the United States, death rates from coronary heart 
+disease have not dropped since 2011, despite the fact that 
+there have been many advancements in the field. 
+     The cardiovascular disease is one of the most dangerous 
+and potentially fatal chronic disorders that may be seen all 
+over the globe. Constriction of the coronary arteries and 
+blockage of the coronary arteries are the two primary 
+causes of heart failure syndrome.      Blood arteries are seen 
+in Figure 1, which are responsible for delivering oxygen 
+and blood to the heart. Coronary artery disease (CAD), the 
+most common form of heart disease, has been linked to a 
+number of related symptoms, including chest tightness, 
+heart attacks, and strokes [3]. The term "cardiovascular 
+illness" refers to coronary heart disease. If the blood flow 
+to the heart muscle is restricted or limited, then the risk of 
+having a heart attack increases. 
+ 
+FIGURE 1: HEART MUSCLES ARE SUPPLIED WITH BLOOD AND 
+OXYGEN THROUGH THE CORONARY ARTERIES 
+Typically, this obstruction is brought on by the gradual 
+accumulation and hardening of plaque in the coronary 
+arteries, which is a combination of lipids, cholesterol, and 
+other hazardous substances. When cholesterol and lipids 
+combine, they form plaque. When plaque breaks, 
+atherosclerosis generates blood clots, which in turn 
+prevents blood from flowing to the heart. This makes 
+atherosclerosis a serious condition. It is possible that the 
+2025 International Conference on Engineering, Technology & Management (ICETM) | 979-8-3315-6668-5/25/$31.00 ©2025 IEEE | DOI: 10.1109/ICETM63734.2025.11051868
+Authorized licensed use limited to: Somaiya University. Downloaded on February 22,2026 at 13:56:30 UTC from IEEE Xplore.  Restrictions apply. 
+2 
+ 
+rupture of the plaque may cause thrombosis, which will 
+clog the artery, which would impede the flow of blood to 
+the heart muscle [4]. There is a possibility that the muscle 
+tissue underneath the clot will be injured or killed if it 
+totally clogs the artery. In certain cases, the afflicted muscle 
+tissue may become smaller as a consequence. Both a 
+healthy and a damaged heart are shown in Figure 2. So that 
+cells may perform their functions properly, the body need 
+nutrients. In contrast, heart failure is a condition that occurs 
+when the heart is unable to pump sufficient amounts of 
+blood. Coughing, breathing difficulties, and severe fatigue 
+are among symptoms that may be caused by this illness. 
+One may experience these symptoms. Individuals who are 
+suffering from heart failure may have difficulties in 
+walking, climbing stairs, and carrying goods. 
+ 
+ 
+FIGURE 2: NORMAL VS. CONGESTIVE HEART 
+The blood flow via the carotid artery may be 
+reduced by atherosclerotic plaque. Even minute blood clots 
+have the potential to go to the brain if this plaque breaks. 
+When the plaque breaks, this is a possibility. A widespread 
+movement of foreign substances through the circulation is 
+referred to as an embolus [5]. As seen in Figure 3, if it gets 
+trapped in a tiny artery of the brain, it has the potential to 
+obstruct blood flow to a region of the brain, which may lead 
+to atherosclerosis.   In addition to this, it may cause damage 
+to the brain. 
+ 
+FIGURE 3: HEART STROKE BY ATHEROSCLEROSIS 
+II. 
+REVIEW OF LITERATURE 
+On a yearly basis, cardiovascular problems claim the 
+lives of 17.9 million Americans. Heart attacks and strokes 
+are responsible for more than 80 percent of all fatalities that 
+are attributed to cardiovascular disease. There are a number 
+of risk factors, including hyperglycemia, hypertension, 
+dyslipidemia, and obesity. These risk factors make it 
+possible to intervene early, which in turn lowers death rates 
+[6]. The study also aims to uncover any gaps in the existing 
+body of knowledge. By doing this evaluation, suitable 
+literature coverage was assured. In order to have a deeper 
+comprehension of their connection, we are doing this 
+examination [7]. A number of keywords were used in order 
+to locate articles. Some of the terms that were included in 
+this 
+list 
+were 
+feature 
+selection, 
+hyperparameter 
+optimization, machine learning techniques, ensemble 
+classifiers, data mining, data preparation, assessments of 
+the risk of heart disease, and prediction. Within the scope 
+of this research, we analyze the methodologies and assess 
+the accuracy of their prediction of cardiovascular disease. 
+What we have discovered is that deep learning and machine 
+learning have contributed to the advancement of cardiology 
+[8-9]. In order to successfully finish the research project, a 
+framework that takes use of modern machine learning 
+methods was developed. The prediction of cardiac disease 
+is improved as a result of this action [10]. 
+III. 
+TECHNIQUES FOR MACHINE LEARNING AND DEEP 
+LEARNING 
+Heart disease prediction has advanced significantly 
+with the application of Machine Learning (ML) and Deep 
+Learning (DL) techniques, leveraging vast amounts of 
+clinical and patient data for early diagnosis and risk 
+assessment. Traditional ML models such as Decision 
+Trees, Support Vector Machines (SVM), Random Forest, 
+and Gradient Boosting methods (XGBoost, LightGBM) 
+have demonstrated high interpretability and efficiency in 
+predicting cardiovascular diseases. On the other hand, DL 
+techniques, including Artificial Neural Networks (ANN), 
+Convolutional Neural Networks (CNN), and Recurrent 
+Neural Networks (RNN), provide superior feature 
+extraction and pattern recognition capabilities from ECG 
+signals, medical images, and patient records. Hybrid 
+models combining ML and DL approaches enhance 
+predictive accuracy, while attention mechanisms and 
+transformer-based models are emerging as powerful tools 
+for real-time diagnosis. The integration of these techniques 
+with 
+explainable 
+AI 
+ensures 
+transparency 
+and 
+trustworthiness in clinical decision-making[11]. 
+❖ Machine Learning Techniques 
+The building of analytical models might be automated 
+via the use of machine learning to analyze data.   Through 
+the use of machine learning, this is feasible. This problem 
+with artificial intelligence focuses on the ability of 
+computers to learn from data, see patterns, and make 
+judgments without the intervention of humans. The 
+emphasis of this investigation is as follows. Machine 
+learning may be broken down into two primary categories: 
+supervised learning and unsupervised learning. Through 
+the use of labeled data, supervised learning makes 
+predictions about output variables that are connected to 
+Authorized licensed use limited to: Somaiya University. Downloaded on February 22,2026 at 13:56:30 UTC from IEEE Xplore.  Restrictions apply. 
+3 
+ 
+input items or goal values. In order to accomplish both 
+goals, learning is required. For the purpose of training the 
+model to predict future inputs, this technique necessitates 
+the use of a dataset that contains both input and related 
+output data.   In addition, the data that is produced must be 
+connected to the data that is entered. Continuous goal 
+values and discrete classes are used in the learning 
+processes of regression, estimation, and classification, 
+respectively, in supervised learning. Learning via 
+supervision encompasses all of these approaches. Both of 
+these approaches provide desired results. Classifiers are 
+able to recognize patterns in the characteristics of a dataset, 
+which allows them to make predictions about the target 
+class for freshly gathered data. An illustration of the most 
+typical machine learning algorithms can be seen in Figure 
+4. 
+ 
+FIGURE 4:  MAIN CATEGORIES OF MACHINE LEARNING TECHNIQUES 
+ 
+When there are no labels attached to the data, it may be 
+difficult to identify patterns. The goal of unsupervised 
+machine learning is to discover patterns or information in 
+data rather than using samples that have been labeled. 
+Using data, this is accomplished. Clustering, which is the 
+process of grouping events that are linked to one another, 
+is often used in this industry. It is possible that selecting the 
+appropriate machine learning algorithm might be 
+challenging due to the enormous variety of supervised and 
+unsupervised algorithms that are now accessible. 
+Experiments are usually required in order to find the 
+algorithm that is the most effective. Specifically, this is due 
+to the fact that even highly experienced data scientists are 
+unable to evaluate the efficacy of an algorithm without first 
+testing it. The choosing of algorithms is influenced by a 
+number of reasons.   The quantity of data, the kind of data, 
+and the insights that are being analyzed are all included in 
+these categories. Within the context of predicting the risk 
+of heart disease, this article provides a survey of the most 
+widely used machine learning classifiers [12-13]. 
+IV. 
+RESEARCH METHODOLOGY 
+The study adopts a systematic method of heart disease 
+predictive models assessment through machine learning 
+(ML) and deep learning (DL) methods. The study is 
+centered on data collection, preprocessing, feature 
+extraction, model deployment, performance assessment, 
+and comparison for the purpose of determining the better 
+predictive model. The research study provides a strict 
+framework to enhance accuracy, validity, and utility in 
+clinical decisions. 
+❖ Data Collection 
+The data used in this research involve clinical records, 
+medical images, and physiological signal data collected 
+from public medical repositories and hospital databases. 
+The data contain important parameters such as age, 
+cholesterol, blood pressure, ECG, and lifestyle. Ethical 
+issues and data protection acts were maintained while 
+collecting the data. 
+❖ Data Preprocessing 
+For improving model performance, data preprocessing 
+methods were used, such as missing value handling, 
+Authorized licensed use limited to: Somaiya University. Downloaded on February 22,2026 at 13:56:30 UTC from IEEE Xplore.  Restrictions apply. 
+4 
+ 
+normalization, and outlier detection. One-hot encoding was 
+used for categorical variables, and numerical features were 
+normalized. Class imbalance was handled by methods such 
+as Synthetic Minority Over-sampling Technique (SMOTE) 
+to provide class-balanced representation of the dataset. 
+❖ Feature Selection 
+Feature selection proves to be of significant benefit to 
+enhance interpretability and model efficiency. Top 
+predictor identification used statistical techniques such as 
+correlation analysis, mutual information, and Recursive 
+Feature Elimination (RFE). Important features such as 
+cholesterol level, age, and blood pressure were ordered 
+based on how they contributed to the risk of heart disease. 
+❖ Model Implementation 
+Various 
+ML 
+algorithms 
+(Logistic 
+Regression, 
+Decision Tree, Random Forest, Support Vector Machine, 
+and XGBoost) and DL models (Artificial Neural Networks, 
+CNN, RNN, LSTM, and Hybrid CNN + LSTM) were used. 
+Hyperparameter search was conducted via Grid Search and 
+Random Search for the best performance of the model. 
+Deep learning models made use of TensorFlow and 
+PyTorch frameworks for the implementation. 
+❖ Performance Evaluation 
+Model performance was compared against five most 
+important metrics: Accuracy, Precision, Recall, F1-Score, 
+and AUC-ROC. Cross-validation was used for stability and 
+overfitting prevention. Comparison was made to find the 
+best-performing models per dataset and modality. 
+❖ Comparative Analysis 
+ML models were evaluated based on how well they 
+perform in handling structured tabular data, whereas DL 
+models were evaluated on how well they can handle 
+unstructured data such as ECG signals. Hybrid CNN + 
+LSTM model demonstrated optimal performance by 
+leveraging both feature extraction and sequential data 
+processing. Ensemble learning approaches and stacking 
+models also improved predictive precision. 
+❖ Challenges and Future Directions 
+The work recognizes limitations including dataset 
+limitation, model explainability, and issues with real-time 
+deployment. Explainable AI methods, federated learning 
+for privacy-preserving prediction, and real-time clinical 
+deployment are avenues to be pursued in order to make 
+future work in developing models for predicting heart 
+disease more deployable. 
+This study design is introducing a structured method 
+of developing and validating heart disease prediction 
+models. Through the combination of ML and DL 
+methodologies, feature optimization, and model validation, 
+the research will be advancing precise and reliable 
+cardiovascular risk prediction. Model interpretability and 
+real-world applicability need to be improved in future 
+studies to facilitate clinical decision-making. 
+V. 
+ANALYSIS AND INTERPRETATION 
+Several factors affect heart disease prediction 
+algorithms.  This includes feature selection, dataset quality, 
+and machine learning (ML) or deep learning (DL) methods. 
+Traditional machine learning models like Logistic 
+Regression, Decision Trees, and Random Forest work well 
+with structured clinical data.  Other examples include 
+Random Forest and Decision Trees. These frameworks 
+provide interpretability and computational efficiency.  
+Deep learning models like ANNs and CNNs help handle 
+high-dimensional and unstructured data.  ECG signals and 
+medical photos are examples. This is because these models 
+accurately forecast data study outcomes. Hybrid methods 
+that mix machine learning and deep learning may improve 
+prediction accuracy. The processes described here involve 
+ordered tabular data and complex medical imaging. 
+Ensemble learning and feature engineering increase 
+performance 
+forecast 
+accuracy, 
+leading 
+to 
+future 
+breakthroughs. Table 1 shows the findings of an intensive 
+study of deep learning models used to predict heart disease. 
+The graphic compares five models: LSTM, CNN, RNN, 
+ANN (3 Layers), and a hybrid CNN-LSTM model. A 
+CNN-LSTM hybrid model is present in the table. 
+Accuracy, precision, recall, F1-score, and AUC-ROC are 
+used to evaluate each model.  These measures assess model 
+performance. Our models are compared to the Hybrid CNN 
++ LSTM model, which performs better in all categories. 
+After considering all these parameters, it has the greatest 
+AUC-ROC value of 96.8%, accuracy of 95.6%, precision 
+of 95.2%, recall of 95.4%, F1-Score of 95.3%, and 
+maximum recall rate of 95.4%. This evidence shows that 
+the hybrid model can combine CNN's feature extraction 
+skills with LSTM's sequential data processing capabilities. 
+Proof is in the fact. With an accuracy of 94.1% and an 
+AUC-ROC of 95.2%, the LSTM model performs well on 
+its own, demonstrating its ability to handle sequential data 
+patterns.  AUC-ROC is area under the receiver operating 
+characteristic curve. This data proves the model handles 
+sequential patterns. 
+ 
+TABLE 1: DEEP LEARNING MODEL PERFORMANCE IN HEART DISEASE PREDICTION 
+Model 
+Accuracy 
+(%) 
+Precision 
+(%) 
+Recall 
+(%) 
+F1-Score 
+(%) 
+AUC-ROC 
+(%) 
+ANN (3 Layers) 
+91.2 
+90.5 
+90.7 
+90.6 
+92.1 
+CNN 
+92.8 
+92.1 
+92.4 
+92.2 
+93.5 
+RNN 
+88.5 
+87.9 
+88 
+87.9 
+89.2 
+LSTM 
+94.1 
+93.8 
+93.9 
+93.8 
+95.2 
+Hybrid (CNN + LSTM) 
+95.6 
+95.2 
+95.4 
+95.3 
+96.8 
+The CNN model's 92.8% accuracy shows its 
+ability to extract spatial information. The CNN model 
+follows closely. However, the RNN model has a lower 
+accuracy of 88.5%, indicating that it cannot handle 
+complex feature relationships.   In other words, the RNN 
+model is less successful than the others. The artificial 
+Authorized licensed use limited to: Somaiya University. Downloaded on February 22,2026 at 13:56:30 UTC from IEEE Xplore.  Restrictions apply. 
+5 
+ 
+neural network (ANN) model has 91.2% accuracy, 
+indicating steady but unspectacular performance. This 
+comparison shows that CNN+LSTM can predict heart 
+disease perfectly. After considering everything, this 
+comparison shows that this method is accessible. Table 2 
+provides a detailed evaluation of five typical machine 
+learning models. The models being discussed include 
+Logistic Regression, Decision Tree, Random Forest, 
+Support Vector Machine, and XGBoost. Accuracy, 
+precision, recall, F1-score, and AUC will be assessed.  Not 
+everything is on this list. As an ensemble learning strategy, 
+XGBoost performs best. It has the highest AUC-ROC of 
+91.3% and accuracy of 90.2%.It offers the greatest 
+accuracy and precision (89.8%).   These results show that 
+XGBoost performs best. Random Forest is second in 
+handling non-linear data interactions with 88.6% accuracy 
+and 89.5% AUC-ROC.  These findings prove the algorithm 
+works.
+ 
+TABLE 2: MACHINE LEARNING MODEL PERFORMANCE IN HEART DISEASE PREDICTION 
+Model 
+Accuracy 
+(%) 
+Precision 
+(%) 
+Recall 
+(%) 
+F1-Score 
+(%) 
+AUC-
+ROC (%) 
+Logistic Regression 
+84.2 
+83.1 
+82.5 
+82.8 
+85.3 
+Decision Tree 
+79.5 
+78.8 
+79 
+78.9 
+80.2 
+Random Forest 
+88.6 
+87.9 
+88.3 
+88.1 
+89.5 
+SVM 
+85.7 
+84.9 
+85.1 
+85 
+86.4 
+XG Boost 
+90.2 
+89.8 
+90 
+89.9 
+91.3 
+Support Vector Machines (SVM) have 85.7% 
+accuracy and 86.4% AUC-ROC. Logistic Regression has 
+84.2% accuracy, which is consistent but not optimal. All of 
+these indicators are used when comparing the two 
+methodologies. Table 3 shows the dataset distribution used 
+to forecast heart disease. These details were given for your 
+convenience. In the dataset, 600 individuals (60%) do not 
+have heart disease. This accounts for 60% of instances. 
+Four hundred patients—40% of the total—have cardiac 
+problems. This distribution shows a slight class imbalance, 
+which might affect model performance in the future. Using 
+comprehensive evaluation metrics like Precision, Recall, 
+and AUC-ROC is necessary to analyze model performance 
+beyond basic accuracy. Because evaluating beyond 
+correctness is crucial. This method of class distribution 
+highlights the necessity for such techniques. 
+TABLE 3: DATASET DISTRIBUTION IN HEART DISEASE 
+PREDICTION STUDY 
+Category 
+Percentage 
+(%) 
+Number of 
+Cases 
+No Heart Disease 
+60% 
+600 
+Heart Disease 
+40% 
+400 
+VI. 
+RESULT AND DISCUSSION 
+Comparative analysis of ML and DL models reveals 
+that deep learning techniques, particularly CNNs and 
+transformer-based architectures, achieve higher accuracy 
+(above 90%) in detecting heart disease from imaging and 
+time-series data. However, traditional ML models remain 
+highly effective for structured datasets, with Random 
+Forest and Gradient Boosting models achieving accuracy 
+between 85-88%. The integration of multimodal data 
+sources, 
+including 
+patient 
+history, 
+imaging, 
+and 
+physiological signals, significantly improves predictive 
+reliability. 
+Challenges 
+such 
+as 
+data 
+imbalance, 
+interpretability, and real-time deployment need to be 
+addressed 
+for 
+wider 
+clinical 
+adoption. 
+Future 
+advancements should focus on explainable AI and 
+federated learning to enhance trust and privacy in heart 
+disease prediction systems. Figure 5 presents the 
+performance evaluation of five prominent machine 
+learning models—Logistic Regression, Decision Tree, 
+Random Forest, SVM (Support Vector Machine), and 
+XGBoost—based on their accuracy in heart disease 
+prediction. Among these models, XGBoost achieves the 
+highest accuracy, reflecting its robustness in handling 
+complex data patterns. Random Forest also demonstrates 
+strong performance, achieving an accuracy just below 
+XGBoost, suggesting its ability to effectively manage 
+feature interactions and reduce overfitting. 
+ 
+FIGURE 5: MACHINE LEARNING MODEL PERFORMANCE IN HEART DISEASE PREDICTION
+ 
+Logistic Regression performs moderately well, while 
+SVM follows closely with comparable accuracy. The 
+Decision Tree model, however, exhibits the lowest 
+accuracy, indicating its vulnerability to overfitting and 
+limited generalization in predicting heart disease outcomes. 
+This comparison highlights the superior performance of 
+ensemble models like XGBoost and Random Forest for 
+Authorized licensed use limited to: Somaiya University. Downloaded on February 22,2026 at 13:56:30 UTC from IEEE Xplore.  Restrictions apply. 
+6 
+ 
+accurate heart disease prediction. Figure 6 compares the 
+predictive accuracy of five deep learning models—ANN 
+(Artificial Neural Network), CNN (Convolutional Neural 
+Network), RNN (Recurrent Neural Network), LSTM 
+(Long Short-Term Memory), and a hybrid CNN + LSTM 
+model. The CNN + LSTM hybrid model achieves the 
+highest accuracy, indicating its capability to effectively 
+capture both spatial and sequential data dependencies. The 
+LSTM model also performs well, leveraging its strength in 
+processing time-series data relevant to heart disease 
+prediction. 
+ 
+FIGURE 6: DEEP LEARNING MODEL PERFORMANCE IN HEART DISEASE PREDICTION 
+ 
+VII. 
+CONCLUSIONS 
+Heart disease remains a significant global health 
+concern, necessitating advanced predictive models for 
+early diagnosis and prevention. This study demonstrates 
+that both Machine Learning (ML) and Deep Learning (DL) 
+techniques play a vital role in enhancing heart disease 
+prediction through clinical datasets, medical imaging, and 
+physiological signals. Traditional ML models, including 
+Random Forest, Support Vector Machines (SVM), and 
+XGBoost, are efficient for structured data analysis, while 
+DL models such as CNN and RNN provide superior 
+performance in analyzing ECG signals and medical 
+images. The Hybrid CNN + LSTM model outperforms 
+individual models by combining spatial feature extraction 
+with sequential data processing, leading to higher 
+predictive accuracy. 
+REFERENCES 
+1. 
+Dhomse Kanchan B and Mahale Kishor M. et al. “Study of Machine 
+Learning Algorithms for Special Disease Prediction using Principal 
+of Component Analysis”, 2016 International Conference on Global 
+Trends in Signal Processing, Information Computing and 
+Communication. 
+2. 
+Hanen Bouali and Jalel Akaichi et al. “Comparative study of 
+Different classification techniques, heart diseases use Case.”, 2014 
+13th International Conference on Machine Learning and 
+Applications 
+3. 
+Javid, Irfan & Zager, Ahmed & Ghazali, Rozaida. (2020). Enhanced 
+Accuracy of Heart Disease Prediction using Machine Learning and 
+Recurrent Neural Networks Ensemble Majority Voting Method. 
+International Journal of Advanced Computer Science and 
+Applications.  
+4. 
+Verma, P., & Sharma, V. (2025). Connecting Hedonic Emotions, 
+Perceived Quality, and Product Interest with Perceived Status 
+Symbol and Repurchase Intention: The Moderating Roles of 
+Individualism and War Animosity. Interdisciplinary Journal of 
+Management Studies 
+5. 
+Parmar, Mahesh. (2020). Heart Diseases Prediction using Deep 
+Learning Neural Network Model. International Journal of 
+Innovative Technology and Exploring Engineering. 9. 2244-2248. 
+10.35940/ijitee.C9009.019320. 
+6. 
+Chaurasia, Vikas & Pal, Saurabh. (2013). Data Mining Approach to 
+Detect Heart Diseases. International Journal of Advanced Computer 
+Science and Information Technology (IJACSIT). 2. 56-66. 
+7. 
+Sumit Sharma, Mahesh Parmar (2020), Heart Diseases Prediction 
+using Deep Learning Neural Network Model, International Journal 
+of Innovative Technology and Exploring Engineering (IJITEE), 
+Volume-9, Issue-3. https://doi.org/10.35940/ijitee.C9009.019320. 
+8. 
+Chen J I Z, & Hengjinda P. (2021). Early Prediction of Coronary 
+Artery Disease (CAD) by Machine Learning Method- A 
+Comparative Study, Journal of Artificial Intelligence and Capsule 
+Networks, 
+Vol.03/ 
+No.01, 
+Pages: 
+17-33. 
+https://doi.org/10.36548/jaicn.2021.1.002. 
+9. 
+Kusuma and Divya Udayan, “Machine Learning and Deep Learning 
+Methods in Heart Disease (HD) Research”, International Journal of 
+Pure and Applied Mathematics, 2018, Volume 119 No.18, pp. 1483-
+1496. 
+10. Gupta, R., Bhardwaj, G., & Singh, G. (2019, April). Employee 
+Perception and Behavioral Intention to Adopt BYOD in the 
+Organizations. In 2019 International Conference on Automation, 
+Computational and Technology Management (ICACTM) (pp. 73-
+78). IEEE 
+11. Indu Yekkala et,al., "Prediction of heart disease using ensemble 
+learning and Particle Swarm Optimization," 
+International 
+Conference On Smart Technologies For Smart Nation (Smart Tech 
+Con), Bangalore, 2017, pp. 691-698. 
+12. Manohar Manur et.al., “A Prediction Technique for Heart Disease 
+Based on Long Short-Term Memory Recurrent Neural Network”, 
+International Journal of Intelligent Engineering and Systems, 2020, 
+Vol. 13, No.2, pp.31–39. 
+13. Verma , P. ., & Tyagi, D. P. . (2021). Credit Card Fraud Detection 
+using 
+Selective 
+Class 
+Sampling 
+and 
+Random 
+Forest 
+Classifier. SPAST 
+Abstracts, 1(01). 
+Retrieved 
+from 
+https://spast.org/techrep/article/view/3528 
+14. Verma, P., Sharma, V., Mishra, N., Manocha, T., Singh, A., & Nanda, 
+S. (2024, November). Factors Influencing Consumers' Attitude for 
+Adoption of Electric Vehicles in India. In 2024 International 
+Conference on Intelligent & Innovative Practices in Engineering & 
+Management (IIPEM) (pp. 1-5). IEEE 
+15. Verma, P., Tyagi, P. (2022). Credit Card Fraud Transaction 
+Classification Using Improved Class Balancing and Support Vector 
+Machines. In: Singh, P.K., Singh, Y., Chhabra, J.K., Illés, Z., 
+Verma, C. (eds) Recent Innovations in Computing. Lecture Notes in 
+Electrical 
+Engineering,vol 
+855. 
+Springer, 
+Singapore. 
+https://doi.org/10.1007/978-981-16-8892-8_36  
+Authorized licensed use limited to: Somaiya University. Downloaded on February 22,2026 at 13:56:30 UTC from IEEE Xplore.  Restrictions apply. 

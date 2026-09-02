@@ -1,0 +1,901 @@
+AI-based Predictive Model for Binary and 
+Multiclass Heart Disease Classification in IoMT 
+ 
+Cheruvugattu Ushasri 
+Department of Computer Applications 
+Vignan's Foundation for Science, 
+Technology & Research (Deemed to be 
+University), Guntur, Andhra Pradesh, 
+India. 
+ushasrich161@gmail.com 
+ 
+ 
+Dr. Gayatri Ketepalli 
+Department of Computer Science and 
+Engineering,Vignan's Foundation for 
+Science, Technology & Research 
+(Deemed to be University), Guntur,  
+Andhra Pradesh, India 
+gayathri.k2@gmail.com  
+Abstract: Cardiovascular disease continues to be a 
+predominant cause of death globally, highlighting the necessity 
+for effective and proactive diagnostic measures. This research 
+presents an AI-driven predictive model connected with the 
+Internet of Medical Things (IoMT) for binary and multiclass 
+classification of cardiac disorders. The framework initiates with 
+meticulous data preprocessing to address absent values and 
+standardize features. A deep learning model is developed for 
+precise categorization, and the system is enhanced to facilitate 
+real-time health monitoring with IoMT-enabled devices. The 
+efficacy of the proposed model is assessed utilizing critical 
+metrics including accuracy, precision, recall, and latency. 
+Experimental findings illustrate the model's efficacy in 
+identifying cardiac problems and its capability for real-time, 
+remote diagnosis. Proposed future additions aim to optimize 
+deep learning performance, implement the system on edge 
+devices, and facilitate real-time alerting systems. 
+Keywords—Heart Disease Prediction, Binary Classification, 
+Multiclass Classification, Internet of Medical Things (IoMT), 
+Deep Learning, Real-Time Monitoring, Health Informatics 
+I. 
+INTRODUCTION 
+Cardiovascular disease is a primary cause of morbidity and 
+mortality globally, imposing a significant strain on healthcare 
+systems. The World Health Organization reports that 
+cardiovascular diseases (CVD) account for roughly 32% of 
+global mortality, with prevalence rising in conjunction with 
+age, lifestyle factors, and comorbidities including diabetes and 
+hypertension [1]. Heart illness presents in multiple forms, 
+such as coronary artery disease, arrhythmias, and heart failure, 
+frequently necessitating intricate clinical management and 
+substantial healthcare expenditures. The prognosis for 
+individuals with heart illness is often unfavorable; research 
+suggests that over fifty percent of those diagnosed with heart 
+failure may not survive beyond five years from their initial 
+diagnosis. Thus, effective and prompt intervention techniques 
+are essential for decreasing mortality rates linked to cardiac 
+disease [3]. 
+The prompt identification of cardiovascular illness is 
+crucial, however it is beset with difficulties. Conventional 
+diagnostic techniques, including electrocardiograms (ECGs) 
+and stress tests, may fail to detect transient cardiac 
+irregularities because of their sporadic nature [4]. Moreover, 
+patients may not identify the initial warning signals of heart 
+disease, resulting in postponed presentations in clinical 
+environments [5]. Ongoing surveillance of vital signs, 
+including heart rate and rhythm, can enable prompt 
+intervention; yet, attaining real-time analysis presents a 
+considerable technical challenge [6]. Contemporary methods 
+frequently fail to incorporate advanced monitoring technology 
+that provide thorough patient management, particularly in 
+remote or resource-constrained environments [7]. 
+Recent breakthroughs in Artificial Intelligence (AI) and 
+the Internet of Medical Things (IoMT) provide promising 
+answers for the issues associated with heart disease 
+monitoring and prediction. Artificial intelligence systems, 
+especially those employing machine learning, have been 
+shown to enhance diagnostic precision and decision-making 
+support in healthcare environments [1]. Through the analysis 
+of extensive datasets, AI can discern patterns that may not be 
+readily apparent to healthcare providers, hence improving the 
+detection rates of various cardiac diseases [8]. The 
+incorporation of IoMT equipment, including wearable sensors 
+and mobile ECG monitors, facilitates continuous data 
+collection and prompt analysis [9]. The integration of AI with 
+IoMT enables proactive healthcare and has the potential to 
+revolutionize patient management strategies, resulting in 
+enhanced results for individuals with heart disease [10][11]. 
+This project seeks to create an AI-driven predictive model 
+specifically designed for the classification of cardiac disorders 
+in both binary and multiclass contexts. The main objectives 
+are: (1) utilizing sophisticated machine learning algorithms to 
+accurately classify heart diseases; (2) amalgamating diverse 
+patient data to improve predictive precision; and (3) 
+implementing the model within an IoMT framework that 
+enables real-time monitoring and intervention. This research 
+contributes to the creation of a robust predictive model and 
+establishes a complete method that integrates AI and IoMT 
+technologies to effectively control heart disease. 
+The subsequent sections of this work are structured as 
+follows: Section II examines pertinent literature on heart 
+disease prediction utilizing artificial intelligence and Internet 
+of Medical Things frameworks. Section III delineates the 
+suggested technique, encompassing data preparation, model 
+architecture for binary and multiclass classification, and 
+integration with IoMT for real-time health monitoring. 
+Section IV examines the outcomes derived from performance 
+indicators like accuracy, precision, recall, and latency. 
+Ultimately, Section V finishes the study by presenting major 
+findings and delineating prospective improvements, including 
+deep learning optimization, edge deployment, and real-time 
+alerting. 
+II. 
+LITERATURE REVIEW 
+Artificial 
+Intelligence 
+(AI) 
+models 
+have 
+gained 
+prominence in predicting cardiac disease, utilizing diverse 
+machine learning methodologies to enhance diagnostic 
+precision. A study by Rashid et al. examined the 
+implementation of machine learning techniques, achieving 
+Proceedings of the 5th International Conference on Ubiquitous Computing and Intelligent Information Systems (ICUIS-2025)
+IEEE Xplore Part Number: CFP25UG3-ART; ISBN: 979-8-3315-5284-8
+979-8-3315-5284-8/25/$31.00 ©2025 IEEE
+1410
+2025 5th International Conference on Ubiquitous Computing and Intelligent Information Systems (ICUIS) | 979-8-3315-5284-8/25/$31.00 ©2025 IEEE | DOI: 10.1109/ICUIS67429.2025.11380471
+Authorized licensed use limited to: Somaiya University. Downloaded on February 22,2026 at 13:28:30 UTC from IEEE Xplore.  Restrictions apply. 
+approximately 83% accuracy with a modified differential 
+evolution algorithm emphasizing feature optimization, 
+whereas an alternative deep learning model in a different 
+context reached 95% accuracy in predicting heart disease [12]. 
+In a similar vein, a study by Wiharto et al. emphasized the 
+efficacy of multiclass Support Vector Machines (SVMs) in 
+identifying 
+coronary 
+heart 
+disease, 
+highlighting 
+the 
+algorithms' potential for proficient classification tasks [13]. 
+The analysis of these predictive models demonstrates a 
+thorough investigation into the effectiveness of AI in 
+improving early identification of heart disease. 
+Heart disease classification can generally be conducted 
+through 
+two 
+methodologies: 
+binary 
+and 
+multiclass 
+classification. The binary method categorizes situations into 
+two groups, typically indicating the presence or absence of the 
+disease 
+[14]. 
+Conversely, 
+multiclass 
+classification 
+accommodates multiple unique classes, hence encompassing 
+a broader spectrum of cardiac illnesses [13]. Research 
+indicates that transforming multiclass problems into binary 
+classifiers might enhance the classification process, as 
+highlighted by numerous writers supporting techniques such 
+as One-vs-All (OvA) or One-vs-One (OvO) strategies [15], 
+[16]. 
+For 
+instance, 
+the 
+investigation 
+of 
+multiclass 
+classification by numerous research illustrates the benefits of 
+less complexity in some diagnostic contexts [17]. Moreover, 
+literature highlights the advantages of multiclass classifiers 
+that surpass binary classifiers by including a wider range of 
+situations [18]. 
+The Internet of Medical Things (IoMT) is transforming 
+healthcare monitoring through continuous data collecting and 
+real-time analytics, especially for chronic illnesses such as 
+heart disease. IoMT equipment, including wearable sensors, 
+provide continuous monitoring of patients' cardiovascular 
+metrics, enhancing response times to potential incidents such 
+as heart attacks [19]. Recent work demonstrates effective 
+integrations of AI methodologies with IoMT for cardiac 
+disease prediction systems, wherein increased data accuracy 
+is directly associated with superior patient outcomes [19]. 
+Research examining the interaction between IoMT and AI 
+models indicates that these applications can facilitate more 
+agile healthcare systems, enabling providers to promptly 
+respond to data-driven insights [20]. 
+Notwithstanding the evident benefits of AI and IoMT 
+solutions in predicting heart disease, current research is 
+accompanied by intrinsic constraints. Numerous models 
+experience overfitting as a consequence of their complexity, 
+leading to worse performance on unfamiliar data [20]. The 
+diversity in input data quality might affect the reliability of 
+predictions, as indicated by the results of predictive analyses 
+where feature selection strategies failed to properly mitigate 
+underlying biases in the training datasets [12][21]. 
+Furthermore, there is no agreement on the ideal design for 
+classifier efficacy in both binary and multiclass settings, 
+indicating that further investigation into specialized training 
+methodologies to improve generalization is necessary 
+[13][22]. This signifies an urgent requirement for standardized 
+methodology and rigorous validation protocols in future 
+studies to guarantee that results are universally applicable and 
+therapeutically significant. 
+Artificial Intelligence (AI) is crucial for the early detection 
+and predictive analysis of cardiac disease by examining 
+physiological signals, patient history, and medical data from 
+Internet of Medical Things (IoMT) devices [23], [24]. Recent 
+advancements have concentrated on creating prediction 
+models capable of managing both binary (presence or 
+absence) and multiclass (types or severity) classification tasks 
+with high precision through supervised machine learning 
+techniques [25]–[27]. Datasets like UCI Heart Disease and 
+Cleveland have been extensively utilized to train models such 
+as Random Forest, SVM, and XGBoost, demonstrating strong 
+performance in clinical risk stratification [28], [29]. 
+Integration with IoMT frameworks guarantees real-time 
+data acquisition and remote surveillance, enabling proactive 
+healthcare decisions and alleviating the workload on clinical 
+personnel [30], [31]. Deep learning techniques, including 
+Convolutional Neural Networks (CNNs) and Long Short-
+Term Memory (LSTM) networks, have been utilized to 
+identify temporal patterns and spatial correlations in patient 
+data for enhanced predictions [32], [33]. Furthermore, Natural 
+Language Processing (NLP) is being investigated to derive 
+significant insights from unstructured clinical notes and 
+patient-generated data [34]. 
+Hybrid and ensemble approaches that amalgamate many 
+classifiers or use feature selection algorithms, such as PCA 
+and mutual information, have demonstrated significant 
+performance improvements [35]–[37]. Explainable AI (XAI) 
+methodologies such as SHAP and LIME are progressively 
+integrated to enhance the interpretability and reliability of AI 
+models in clinical decision-making [38], [39]. The security 
+and privacy of sensitive patient data continue to pose 
+significant issues in IoMT-based systems, prompting the 
+exploration of approaches such as blockchain, encryption, and 
+federated learning to assure adherence to medical data rules. 
+[40]–[43] 
+III. 
+METHODOLOGY 
+The approach that was used to construct the AI-based 
+predictive model for binary and multiclass cardiac disease 
+categorization and its integration into an Internet of Medical 
+Things (IoMT) framework for real-time health monitoring is 
+detailed in this part. 
+A. Data Collection and Preprocessing 
+1) Source of Dataset(s): 
+The work makes use of open-source heart illness datasets, 
+such as the UCI Machine Learning Repository's Cleveland 
+Heart illness dataset and other aggregated datasets that contain 
+various variables related to cardiovascular diseases. Both 
+binary (illness presence or absence) and multiclass (disease 
+severity levels) classification tasks can be accomplished with 
+the labeled samples provided by these datasets. 
+2) Data Cleaning and Normalization: 
+Raw datasets frequently contain redundant, noisy, or 
+incorrectly formed entries. A preprocessing pipeline was 
+established to eliminate duplicate entries, filter outliers by z-
+score analysis, and standardize feature formats. Continuous 
+numerical variables, including cholesterol levels, blood 
+pressure, and maximal heart rate, were standardized by Min-
+Max scaling to standardize them into a 0–1 range, so ensuring 
+consistency among input characteristics. 
+3) Handling of Missing or Inconsistent Values: 
+Missing values in essential characteristics were resolved 
+by domain-specific imputation techniques. Numerical fields 
+were imputed utilizing median or mean values based on 
+distribution, whereas categorical variables were populated 
+using the mode. Samples exhibiting above 30% missing 
+Proceedings of the 5th International Conference on Ubiquitous Computing and Intelligent Information Systems (ICUIS-2025)
+IEEE Xplore Part Number: CFP25UG3-ART; ISBN: 979-8-3315-5284-8
+979-8-3315-5284-8/25/$31.00 ©2025 IEEE
+1411
+Authorized licensed use limited to: Somaiya University. Downloaded on February 22,2026 at 13:28:30 UTC from IEEE Xplore.  Restrictions apply. 
+values were eliminated to maintain data integrity. Inconsistent 
+data entries, such as negative values for resting blood pressure, 
+were eliminated or rectified. 
+B. Model Architecture 
+1) Description of Models Used: 
+The proposed approach utilizes a deep learning 
+architecture grounded in a Multi-Layer Perceptron (MLP) due 
+to its simplicity and efficacy in medical classification tasks. 
+The model has input, hidden, and output layers, utilizing 
+ReLU activation in the hidden layers and suitable output 
+functions (sigmoid or softmax) according to the categorization 
+type. 
+2) Design for Binary Classification: 
+A binary classification model was developed with a single 
+output neuron and sigmoid activation to distinguish between 
+healthy individuals and those affected by heart disease. The 
+loss function utilized was Binary Cross-Entropy, while the 
+optimizer chosen for convergence was Adam. The network 
+was calibrated to optimize precision and recall because of the 
+medical significance of false negatives. 
+3) Design for Multiclass Classification: 
+Several neurons representing various degrees of heart 
+disease severity (e.g., no disease, mild, moderate, severe) were 
+present in the output layer of the multiclass configuration. The 
+output layer utilizes Categorical Cross-Entropy loss and 
+Softmax activation. Class labels were transformed into one-
+hot vectors by the process of label encoding. 
+4) Training and Validation Strategy: 
+Part of the dataset was reserved for training purposes, 
+while the other half was used for validation and testing. All 
+strata were evenly represented in the final tally thanks to 
+stratified sampling. Additionally, the model's generalizability 
+was assessed using k-fold cross-validation (k=5). We 
+monitored performance metrics throughout epochs to make 
+sure we were neither overfitting or underfitting. When 
+validation loss occurred, we stopped the process early. 
+ 
+Fig. 1. System architecture of the proposed AI-IoMT-based heart disease 
+prediction framework 
+Figure 1 shows the suggested framework for predicting 
+cardiac problems using AI and the IoMT. This framework is 
+structured like a tiered architecture. Through the use of 
+lightweight communication protocols, real-time physiological 
+data is transferred to the cloud. Once there, it is subjected to 
+preprocessing and categorization using a deep learning model. 
+Visual dashboards and real-time alerts are made possible by 
+relaying the prediction results to end-users via an application 
+layer. Recent developments in AI-driven remote healthcare 
+systems are in line with this design, which allows for 
+continuous monitoring and rapid interventions.  
+C. IoMT Integration 
+1) Framework for Real-Time Data Collection: 
+The suggested model is designed to work with an IoMT 
+architecture that includes wearable sensors that can take 
+readings of vital signs including oxygen saturation, heart rate, 
+blood pressure, and electrocardiogram (ECG) in order to 
+allow for continuous monitoring in real time. Smart 
+wearables, such as fitness bands or chest straps, incorporate 
+these sensors, which constantly send physiological signals. 
+2) Communication 
+Protocols 
+and 
+Cloud-Based 
+Processing: 
+Lightweight and dependable communication protocols 
+like MQTT or Bluetooth Low Energy (BLE) allow for energy-
+efficient, low-latency data transmission from sensors to the 
+cloud infrastructure. Data is received, preprocessed, and the 
+trained AI model is invoked for real-time classification on the 
+cloud side by a secure processing layer. 
+3) System Architecture for Continuous Monitoring: 
+The complete architecture follows a layered design: 
+• 
+The Device Layer consists of Internet of Medical 
+Things (IoMT) wearables that collect data. The Edge 
+Layer is an optional intermediate gateway that does 
+light analytics and buffering. 
+• 
+The AI models and categorization tasks are hosted by 
+the cloud layer. 
+• 
+Dashboards and mobile applications offer real-time 
+notifications to both patients and doctors at the 
+application layer. 
+The continuous data flow enables proactive detection of 
+heart anomalies, reducing the need for manual intervention 
+and supporting timely medical responses. 
+*************************************************
+Algorithm 1: AI-IoMT-Based Heart Disease Prediction                     
+************************************************* 
+Input: Raw physiological data from wearable IoMT devices 
+(e.g., heart rate, blood pressure, ECG), Pre-trained AI 
+classification model 
+Output: Binary or multiclass classification of heart disease, 
+Real-time alerts and visualizations 
+Step 1: Data Acquisition 
+Acquire real-time physiological signals from wearable 
+IoMT devices. 
+Step 2: Data Transmission 
+Transmit the data securely to the cloud server using 
+communication protocols (e.g., MQTT/BLE). 
+Step 3: Data Preprocessing 
+a. Remove noise and artifacts from sensor data 
+b. Normalize feature values (e.g., Min-Max scaling) 
+c. Handle missing values via imputation 
+Step 4: Feature Vector Construction 
+Construct a structured input vector from preprocessed data 
+compatible with the AI model. 
+Step 5: Model Inference 
+Proceedings of the 5th International Conference on Ubiquitous Computing and Intelligent Information Systems (ICUIS-2025)
+IEEE Xplore Part Number: CFP25UG3-ART; ISBN: 979-8-3315-5284-8
+979-8-3315-5284-8/25/$31.00 ©2025 IEEE
+1412
+Authorized licensed use limited to: Somaiya University. Downloaded on February 22,2026 at 13:28:30 UTC from IEEE Xplore.  Restrictions apply. 
+Feed the feature vector into the AI model to predict heart 
+disease status: 
+• 
+For binary classification: output ∈{ Healthy, 
+Diseased } 
+• 
+For multiclass classification: output ∈ (No 
+Disease, Mild, Moderate, Severe) 
+Step 6: Decision and Alerting 
+If disease is detected, trigger an alert message to healthcare 
+provider or user. 
+Step 7: Visualization and Logging 
+Display results on a real-time dashboard 
+Log data for historical tracking and further analysis. 
+End of Algorithm 
+************************************************* 
+The suggested AI-IoMT framework for cardiac disease 
+prediction is illustrated in Figure 2, which details the 
+algorithmic flow. The process begins with collecting 
+physiological data in real-time from wearable devices and 
+continues with preparing the data, inferring models, and 
+making decisions. In addition to providing end-users with 
+timely notifications and visual updates, the algorithm is built 
+to enable jobs involving binary and multiclass categorization. 
+The clinical relevance and responsiveness of remote cardiac 
+monitoring applications are both enhanced by this organized 
+method. 
+IV. RESULTS AND DISCUSSION 
+Here, we detail the experimental results of testing the 
+suggested AI-based prediction model for binary and 
+multiclass cardiac illness classification, as well as its 
+incorporation into an IoMT framework for continuous health 
+care tracking. We used industry-standard categorization 
+measures and indicators of system-level responsiveness to 
+review the model's performance. 
+A. Evaluation Metrics 
+Five critical performance metrics latency, accuracy, 
+precision, recall, and F1-score were used to assess the model. 
+In contrast to accuracy, which evaluates the model's general 
+correctness, precision and recall zero in on the model's 
+capacity to accurately identify ill patients. By measuring the 
+ratio of false positives to false negatives, the F1-score offers a 
+balanced measure of accuracy and recall. To evaluate real-
+time responsiveness in an IoMT context, latency the time it 
+takes to get from data input to result output is essential. 
+The results obtained by the binary classification model 
+were as follows: 94.6% accuracy, 93.2% precision, 95.8% 
+recall, and 94.5 F1-score. With class-wise F1-scores 
+demonstrating consistent performance across all illness 
+severity levels, the multiclass model achieved a slightly lower 
+accuracy of 91.3%. 
+B. Confusion Matrices for Binary and Multiclass Models 
+The results of the classification could be better understood 
+visually with the use of confusion matrices. There was 
+excellent diagnostic performance in the binary model, as the 
+number of correct predictions (both positive and negative) 
+greatly exceeded the number of incorrect predictions. As 
+anticipated given the overlap in symptoms and feature 
+distributions, the multiclass confusion matrix revealed a small 
+amount of misclassification between moderate and severe 
+cases. Despite this, the model was able to keep all categories' 
+prediction rates at a clinically acceptable level. 
+C. Comparison with Existing Methods 
+Support Vector Machines (SVMs), Decision Trees, and k-
+Nearest Neighbors (k-NNs) were some of the more 
+conventional machine learning techniques measured against 
+the suggested model. Using every metric for evaluation, it 
+fared better than these models. For instance, k-NN exhibited 
+inadequate scalability in multiclass situations, and the SVM 
+model only managed 86.2% accuracy in binary classification. 
+When used in conjunction with the IoMT pipeline, the deep 
+learning-based MLP model suggested here showed much 
+better generalization. 
+D. Analysis of IoMT Latency and Real-Time 
+Responsiveness 
+With an average end-to-end latency of 2.3 seconds, we can 
+confidently say that this system meets all the requirements for 
+use in real-time health monitoring. Lightweight model 
+inference on cloud infrastructure and efficient communication 
+protocols like MQTT are responsible for this reduced latency. 
+The system proved to be resilient for continuous patient 
+monitoring, as the latency remained below 3.1 seconds even 
+when subjected to simulated network congestion. 
+E. Challenges Faced and Mitigation Strategies 
+Several challenges were encountered during development 
+and deployment: 
+• 
+Training was impacted by data quality issues caused 
+by incomplete or noisy sensor readings. Strict 
+preprocessing 
+and 
+imputation 
+methods 
+were 
+employed to resolve this. 
+• 
+Disparity in Class Distribution: The severity levels in 
+the multiclass dataset were not evenly distributed. In 
+order to ensure that the training samples were evenly 
+distributed, data augmentation and class weighting 
+methods were utilized. 
+• 
+Limited Resources: The capacity of IoMT edge 
+devices to process data was low. This was reduced 
+by deploying the model to a cloud server and 
+handling lightweight preprocessing at the edge. 
+• 
+Latency 
+Variations: 
+Reaction 
+Times 
+Were 
+Influenced by Uncertainty in the Network. 
+Communication protocol optimization and edge 
+buffer methods mitigated this to a minimum. 
+TABLE I.  
+ PERFORMANCE COMPARISON OF PROPOSED MODEL VS. 
+BASELINE METHODS 
+Model 
+Accuracy 
+(%) 
+Precision 
+(%) 
+Recall 
+(%) 
+F1-
+Score 
+(%) 
+Latency 
+(s) 
+Proposed MLP (Binary) 
+94.6 
+93.2 
+95.8 94.5 
+2.3 
+Proposed MLP (Multiclass) 
+91.3 
+89.1 
+90.5 89.7 
+2.8 
+SVM (Binary) 
+86.2 
+85.4 
+84.7 85.0 
+3.6 
+Decision Tree (Multiclass) 
+83.7 
+81.2 
+80.5 80.8 
+3.3 
+k-NN (Binary) 
+79.5 
+77.8 
+78.3 78.0 
+4.1 
+ 
+Table 1 shows that in both the binary and multiclass 
+scenarios, the suggested MLP model based on deep learning 
+performs better than more conventional classifiers like SVM, 
+Decision Trees, and k-NN. With little latency, it is ideal for 
+real-time applications and achieves the best accuracy (94.6% 
+for binary and 91.3% for multiclass). Importantly, it achieves 
+a good balance between memory and precision, leading to a 
+Proceedings of the 5th International Conference on Ubiquitous Computing and Intelligent Information Systems (ICUIS-2025)
+IEEE Xplore Part Number: CFP25UG3-ART; ISBN: 979-8-3315-5284-8
+979-8-3315-5284-8/25/$31.00 ©2025 IEEE
+1413
+Authorized licensed use limited to: Somaiya University. Downloaded on February 22,2026 at 13:28:30 UTC from IEEE Xplore.  Restrictions apply. 
+higher F1-score on both tasks. This is very important for 
+reducing diagnostic errors in clinical settings. 
+V. 
+CONCLUSION 
+This research introduced a model for classifying heart 
+diseases using artificial intelligence (AI). The model was 
+linked into an IoMT framework to allow for real-time 
+monitoring and early diagnosis. On benchmark datasets, the 
+model showed great recall, accuracy, and precision; it also 
+works with multiclass classification tasks. The suggested 
+system facilitates proactive cardiac care by acquiring health 
+data continuously, analysing it quickly, and notifying users in 
+real-time through the use of wearable sensors and fast cloud 
+communication 
+protocols. 
+In 
+particular, 
+the 
+model 
+outperforms conventional machine learning methods in terms 
+of classification accuracy and system latency, according to the 
+experimental findings. By incorporating IoMT, the system 
+becomes more applicable to real-life healthcare environments, 
+enabling automated, scalable, and remote patient monitoring. 
+To enhance clinical decision-making and patient outcomes, 
+future work will centre on optimizing the deep learning 
+architecture for edge device deployment, implementing 
+patient history-based tailored modelling, and incorporating 
+real-time feedback mechanisms. 
+References 
+[1] G. Simegn, W. Gebeyehu, & M. Degu, "Computer-aided decision 
+support system for diagnosis of heart diseases", Research Reports in 
+Clinical 
+Cardiology, 
+vol. 
+Volume 
+13, 
+p. 
+39-54, 
+2022. 
+https://doi.org/10.2147/rrcc.s366380 
+[2] L. Ali, A. Niamat, J. Khan, N. Golilarz, X. Xiong, A. Nooret al., "An 
+optimized stacked support vector machines based expert system for the 
+effective prediction of heart failure", Ieee Access, vol. 7, p. 54007-
+54014, 2019. https://doi.org/10.1109/access.2019.2909969 
+[3] Y. Khourdifi and M. Bahaj, "Heart disease prediction and classification 
+using machine learning algorithms optimized by particle swarm 
+optimization and ant colony optimization", International Journal of 
+Intelligent Engineering and Systems, vol. 12, no. 1, p. 242-252, 2019. 
+https://doi.org/10.22266/ijies2019.0228.24 
+[4] G. Mitacchione, L. Bontempi, & A. Curnis, "Clinical approach to 
+cardiac pauses in congenital central hypoventilation syndrome", 
+Pediatric 
+Pulmonology, 
+vol. 
+54, 
+no. 
+2, 
+2018. 
+https://doi.org/10.1002/ppul.24189 
+[5] I. Kaminecki, R. Verma, J. Brunetto, & L. Rivera, "Delayed diagnosis 
+of acute rheumatic fever in a patient with multiple emergency 
+department visits", Case Reports in Pediatrics, vol. 2018, p. 1-4, 2018. 
+https://doi.org/10.1155/2018/9467131 
+[6] G. Peters, R. Peelen, V. Gilissen, M. Koning, W. Harten, & C. Doggen, 
+"Detecting patient deterioration early using continuous heart rate and 
+respiratory rate measurements in hospitalized covid-19 patients", 
+Journal 
+of 
+Medical 
+Systems, 
+vol. 
+47, 
+no. 
+1, 
+2023. 
+https://doi.org/10.1007/s10916-022-01898-w 
+[7] H. Hu, H. Huang, M. Li, X. Gao, L. Yin, R. Qiet al., "A wearable 
+cardiac ultrasound imager", Nature, vol. 613, no. 7945, p. 667-675, 
+2023. https://doi.org/10.1038/s41586-022-05498-z 
+[8] Q. Xu, "Application of artificial intelligence in heart diseases: a 
+bibliometrics review based on citespace analysis", Academic Journal 
+of Medicine & Health Sciences, vol. 4, no. 12, 2023. 
+https://doi.org/10.25236/ajmhs.2023.041202 
+[9] E. Cepeda, D. Peluffo-Ordóñez, P. Rosero-Montalvo, M. Becerra, A. 
+Umaquinga-Criollo, & L. Ramírez-Cando, "Heart rate detection using 
+a piezoelectric ceramic sensor: preliminary results", Bionatura, vol. 7, 
+no. 3, p. 1-8, 2022. https://doi.org/10.21931/rb/2022.07.03.30 
+[10] Y. Muhammad, M. Tahir, M. Hayat, & K. Chong, "Early and accurate 
+detection and diagnosis of heart disease using intelligent computational 
+model", 
+Scientific 
+Reports, 
+vol. 
+10, 
+no. 
+1, 
+2020. 
+https://doi.org/10.1038/s41598-020-76635-9 
+[11] J. Nagaraj and A. A, "An exhaustive study on deep neural network-
+based prediction of heart diseases and its interpretations", The Open 
+Biomedical 
+Engineering 
+Journal, 
+vol. 
+17, 
+no. 
+1, 
+2023. 
+https://doi.org/10.2174/18741207-v16-e221031-2022-ht27-3589-16 
+[12] J. Rashid, S. Kanwal, J. Kim, M. Nisar, U. Naseem, & A. Hussain, 
+"Heart disease diagnosis using the brute force algorithm and machine 
+learning techniques", Computers Materials & Continua, vol. 72, no. 2, 
+p. 3195-3211, 2022. https://doi.org/10.32604/cmc.2022.026064 
+[13] W. Wiharto, H. usnanto, & H. Herianto, "Performance analysis of 
+multiclass support vector machine classification for diagnosis of 
+coronary heart diseases", International Journal on Computational 
+Science & Applications, vol. 5, no. 5, p. 27-37, 2015. 
+https://doi.org/10.5121/ijcsa.2015.5503 
+[14] R. Pradini, M. Anshori, M. Haris, B. Marilia, & T. Geraldo, "Prediction 
+model for diagnosing heart disease using classification algorithm", J. 
+of World Future Medicine, Health and Nursing, vol. 1, no. 2, p. 125-
+133, 2023. https://doi.org/10.55849/health.v1i2.347 
+[15] G. Lan, Z. Gao, L. Tong, & T. Liu, "Class binarization to 
+neuroevolution for multiclass classification", Neural Computing and 
+Applications, 
+vol. 
+34, 
+no. 
+22, 
+p. 
+19845-19862, 
+2022. 
+https://doi.org/10.1007/s00521-022-07525-6 
+[16] S. Du, M. Zhang, P. Chen, H. Sun, W. Chen, & Y. Shao, "A multiclass 
+nonparallel parametric-margin support vector machine", Information, 
+vol. 12, no. 12, p. 515, 2021. https://doi.org/10.3390/info12120515 
+[17] X. Yao, M. Abtahi, D. Le, B. Ebrahimi, A. DADZIE, M. Rahimiet al., 
+"Differential artery–vein analysis improves octa classification of 
+diabetic 
+retinopathy",, 
+2024. 
+https://doi.org/10.1364/opticaopen.25222430 
+[18] S. Toraman, T. Alakuş, & İ. Türkoğlu, "Convolutional capsnet: a novel 
+artificial neural network approach to detect covid-19 disease from x-
+ray images using capsule networks", Chaos Solitons & Fractals, vol. 
+140, p. 110122, 2020. https://doi.org/10.1016/j.chaos.2020.110122 
+[19] M. Devarajan, A. Yallamelli, R. Yalla, V. Mamidala, T. Ganesan, & 
+A. Sambas, "An enhanced iomt and blockchain‐based heart disease 
+monitoring system using bs ‐tha and oa‐cnn", Transactions on 
+Emerging Telecommunications Technologies, vol. 36, no. 2, 2025. 
+https://doi.org/10.1002/ett.70055 
+[20] U. Purwar, S. Gupta, V. Gautam, & S. Maurya, "A comparative 
+analytics of svm dt nb classifier for heart disease prediction in ml 
+algorithms", International Research Journal of Modernization in 
+Engineering 
+Technology 
+and 
+Science, 
+2023. 
+https://doi.org/10.56726/irjmets39195 
+[21] T. Gadekallu and N. Khare, "An efficient system for heart disease 
+prediction using hybrid ofbat with rule-based fuzzy logic model", 
+Journal of Circuits Systems and Computers, vol. 26, no. 04, p. 
+1750061, 2016. https://doi.org/10.1142/s021812661750061x 
+[22] B. Li and C. Vogel, "Improving multiclass text classification with 
+error-correcting output coding and sub-class partitions",, p. 4-15, 2010. 
+https://doi.org/10.1007/978-3-642-13059-5_4 
+[23] Moraboena, S., Ketepalli, G., Ragam, P. (2020). A deep learning 
+approach to network intrusion detection using deep autoencoder. 
+Revue d'Intelligence Artificielle, Vol. 34, No. 4, pp. 457-463. 
+https://doi.org/10.18280/ria.340410 
+[24] M. Srikanth Yadav. and R. Kalpana., "Data Preprocessing for Intrusion 
+Detection System Using Encoding and Normalization Approaches," 
+2019 11th International Conference on Advanced Computing 
+(ICoAC), 
+Chennai, 
+India, 
+2019, 
+pp. 
+265-269, 
+doi: 
+10.1109/ICoAC48765.2019.246851 
+[25] Bhuyan, H.K., Ravi, V. & Yadav, M.S. Multi-objective optimization-
+based privacy in data mining. Cluster Comput 25, 4275–4287 (2022). 
+https://doi.org/10.1007/s10586-022-03667-3 
+[26] Veeranjaneyulu Naralasetti, Reshmi Khadherbhi Shaik, Gayatri 
+Katepalli, Jyostna Devi Bodapati, “Deep Learning Models for 
+Pneumonia Identification and Classification Based on X-Ray Images”, 
+Traitement du Signal Vol. 38, No. 3, June 2021, pp. 903-909. 
+[27] G. Ketepalli and P. Bulla, "Data Preparation and Pre-processing of 
+Intrusion Detection Datasets using Machine Learning," 2023 
+International Conference on Inventive Computation Technologies 
+(ICICT), 
+Lalitpur, 
+Nepal, 
+2023, 
+pp. 
+257-262, 
+doi: 
+10.1109/ICICT57646.2023.10134025. 
+[28] Srikanth Yadav M., R. Kalpana, Recurrent nonsymmetric deep auto 
+encoder 
+approach 
+for 
+network 
+intrusion 
+detection 
+system, 
+Measurement: Sensors, Volume 24, 2022, 100527, ISSN 2665-9174, 
+https://doi.org/10.1016/j.measen.2022.100527 
+[29] M., Srikanth Yadav, and Kalpana R. "A Survey on Network Intrusion 
+Detection Using Deep Generative Networks for Cyber-Physical 
+Proceedings of the 5th International Conference on Ubiquitous Computing and Intelligent Information Systems (ICUIS-2025)
+IEEE Xplore Part Number: CFP25UG3-ART; ISBN: 979-8-3315-5284-8
+979-8-3315-5284-8/25/$31.00 ©2025 IEEE
+1414
+Authorized licensed use limited to: Somaiya University. Downloaded on February 22,2026 at 13:28:30 UTC from IEEE Xplore.  Restrictions apply. 
+Systems." Artificial Intelligence Paradigms for Smart Cyber-Physical 
+Systems, edited by Ashish Kumar Luhach and Atilla Elçi, IGI Global, 
+2021, pp. 137-159. https://doi.org/10.4018/978-1-7998-5101-1.ch007 
+[30] Saheb, M.C.P., Yadav, M.S., Babu, S., Pujari, J.J., Maddala, J.B. 
+(2023). A Review of DDoS Evaluation Dataset: CICDDoS2019 
+Dataset. In: Szymanski, J.R., Chanda, C.K., Mondal, P.K., Khan, K.A. 
+(eds) Energy Systems, Drives and Automations. ESDA 2021. Lecture 
+Notes in Electrical Engineering, vol 1057. Springer, Singapore. 
+https://doi.org/10.1007/978-981-99-3691-5_34 
+[31] G. Ketepalli, S. Tata, S. Vaheed and Y. M. Srikanth, "Anomaly 
+Detection in Credit Card Transactions using Deep Learning 
+Techniques," 2022 7th International Conference on Communication 
+and Electronics Systems (ICCES), Coimbatore, India, 2022, pp. 1207-
+1214, doi: 10.1109/ICCES54183.2022.9835921. 
+[32] D. Yaswanth, S. Sai Manoj, M. Srikanth Yadav and E. Deepak 
+Chowdary, "Plant Leaf Disease Detection Using Transfer Learning 
+Approach," 2024 IEEE International Students' Conference on 
+Electrical, Electronics and Computer Science (SCEECS), Bhopal, 
+India, 2024, pp. 1-6, doi: 10.1109/SCEECS61402.2024.10482053. 
+[33] "K. Sujatha, K. Gayatri, M. S. Yadav, N. C. Sekhara Rao and B. S. 
+Rao, ""Customized Deep CNN for Foliar Disease Prediction Based on 
+Features Extracted from Apple Tree Leaves Images,"" 2022 
+International 
+Interdisciplinary 
+Humanitarian 
+Conference 
+for 
+Sustainability (IIHC), Bengaluru, India, 2022, pp. 193-197, doi: 
+10.1109/IIHC55949.2022.10060555.  
+[34] Gayatri Ketepalli, Premamayudu Bulla, “Review on Generative deep 
+models and datasets for Intrusion detection Systems”, Revue 
+d'Intelligence Artificielle, Vol. 34, No.2, April 2020, PP-215-226, 
+ISSN: 1958-5748. https://doi.org/10.18280/ria.340213 
+[35] Gayatri Ketepalli and P. Bulla, "Feature Extraction using LSTM 
+Autoencoder in Network Intrusion Detection System," 2022 7th 
+International Conference on Communication and Electronics Systems 
+(ICCES), 
+2022, 
+pp. 
+744-749, 
+doi: 
+10.1109/ICCES54183.2022.9835788  
+[36] Srikanth Yadav, M., Kalpana, R. (2022). Effective Dimensionality 
+Reduction Techniques for Network Intrusion Detection Systems Based 
+on Deep Learning. In: Jacob, I.J., Kolandapalayam Shanmugam, S., 
+Bestak, R. (eds) Data Intelligence and Cognitive Informatics. 
+Algorithms 
+for 
+Intelligent 
+Systems. 
+Springer, 
+Singapore. 
+https://doi.org/10.1007/978-981-16-6460-1_39 
+[37] Gayatri, K., Premamayudu, B., Yadav, M.S. (2021). A Two-Level 
+Hybrid Intrusion Detection Learning Method. In: Bhattacharyya, D., 
+Thirupathi Rao, N. (eds) Machine Intelligence and Soft Computing. 
+Advances in Intelligent Systems and Computing, vol 1280. Springer, 
+Singapore. https://doi.org/10.1007/978-981-15-9516-5_21 
+[38] Yadav, M. Srikanth, K. Sushma, and K. Gayatri. "Enhanced Network 
+Intrusion Detection Using LSTM RNN." International Journal of 
+Advanced Science and Technology 29.5 (2020): 7210-7220. 
+[39] Patil, A., and S. Yada. "Performance analysis of anomaly detection of 
+KDD cup dataset in R environment." Int. J. Appl. Eng. Res. 13.6 
+(2018): 4576-4582. 
+[40] Eeday, S., S. Goteti, and S. P. Anne. "Experimental Investigation of 
+Thermal Properties of Borassus Flabellifer Reinforced Composites and 
+Effect of Addition of Fly Ash." International Journal of Engineering 
+Trends and Technology 15.8 (2014): 379-382 
+[41] Thakkar, Ankit, and Ritika Lohiya. "Attack classification using feature 
+selection techniques: a comparative study." Journal of Ambient 
+Intelligence and Humanized Computing 12, no. 1 (2021): 1249-1266.  
+[42] R. Padmaja and P. R. Challagundla, "Exploring A Two-Phase Deep 
+Learning Framework For Network Intrusion Detection," 2024 IEEE 
+International Students' Conference on Electrical, Electronics and 
+Computer Science (SCEECS), Bhopal, India, 2024, pp. 1-5, doi: 
+10.1109/SCEECS61402.2024.10482198.  
+[43] Revathi, M., and W. U. Rechu. "Cyber Attack Classifications Using 
+Supervised Learning Technique." In 2024 2nd International 
+Conference on Artificial Intelligence and Machine Learning 
+Applications Theme: Healthcare and Internet of Things (AIMLA), pp. 
+1-7. IEEE, 2024. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Proceedings of the 5th International Conference on Ubiquitous Computing and Intelligent Information Systems (ICUIS-2025)
+IEEE Xplore Part Number: CFP25UG3-ART; ISBN: 979-8-3315-5284-8
+979-8-3315-5284-8/25/$31.00 ©2025 IEEE
+1415
+Authorized licensed use limited to: Somaiya University. Downloaded on February 22,2026 at 13:28:30 UTC from IEEE Xplore.  Restrictions apply. 

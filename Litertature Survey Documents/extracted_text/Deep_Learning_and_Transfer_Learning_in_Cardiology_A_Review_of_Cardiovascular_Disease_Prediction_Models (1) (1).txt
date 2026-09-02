@@ -1,0 +1,1818 @@
+Received 14 November 2024, accepted 4 December 2024, date of publication 9 December 2024,
+date of current version 27 December 2024.
+Digital Object Identifier 10.1109/ACCESS.2024.3514093
+Deep Learning and Transfer Learning in
+Cardiology: A Review of Cardiovascular Disease
+Prediction Models
+G. SUNILKUMAR
+AND P. KUMARESAN
+School of Computer Science Engineering and Information Systems (SCORE), Vellore Institute of Technology, Vellore 632014, India
+Corresponding author: P. Kumaresan (pkumaresan@vit.ac.in)
+This work was supported by Vellore Institute of Technology.
+ABSTRACT Cardiovascular disorders are the primary cause of death on a global scale. The World Health
+Organization report indicates that approximately 18 million people die from CVD each year. Major cardiac
+risks include arrhythmia and coronary artery disease, among others. Recent advancements in Artificial
+Intelligence play a pivotal role for life-saving interventions in CVD treatment. This survey examines the
+latest progress in Machine Learning, Deep Learning and Pre-trained transfer learning models for classifying
+and predicting CVD using a survey of 159 articles, including 36 image datasets, 41 signal data and
+52 clinical data from various sources. The survey investigates cardiac risk factors, cardiac dysfunction
+classification, various modalities and medical image processing techniques, performance metrics and hybrid
+techniques. Surveys on traditional neural networks such as Convolutional Neural Networks, Artificial Neural
+Networks, and Recurrent Neural Networks often achieve an accuracy rate of 70% to 95%. Leveraging
+pre-trained architectures such as ResNet, DenseNet, AlexNet, MobileNet, EfficientNet and GoogLeNet,
+transfer learning models consistently outperform other approaches frequently achieving accuracy levels
+greater than 96%. Researchers utilize various hybrid optimization algorithms to improve overall accuracy
+rate. The outcome of the survey supports a precise prognosis for patients with comorbidities. The survey
+findings indicate limitations in the incorporation of multimodal data for real-time risk assessment. The study
+results possess the capacity to bridge gaps in research on cardiovascular disease prediction, thereby assisting
+medical practitioners in early identification and subsequent prognosis.
+INDEX TERMS
+Cardiovascular disease, machine learning, deep CNN, transfer learning, optimization
+hybrid model.
+I. INTRODUCTION
+Cardio Vascular Disease (CVD) are the primary cause of
+death across worldwide and poses an ineluctable challenge
+for medical sectors Sajid et al. [1]. WHO predicts CVD
+deathrate will hike around 24 million people by 2030. The
+heart has a crucial role in the human body as it pumps and
+distributes blood to all the other parts of the body. Irregular
+heart function includes a range of heart and blood vessel
+disorders Boulares et al. [2]. Approximately 85% of heart
+disease-related fatalities are caused by myocardial infarctions
+The associate editor coordinating the review of this manuscript and
+approving it for publication was Juan Wang
+.
+that lead to heart attack, stroke, and fainting affecting the
+cardiovascular system Abubaker and Babayigit [3]. Early
+detection of CVD has the potential to save many lives Dami
+and Yahaghizadeh [4]. A non-invasive technology at a lower
+cost is better than invasive techniques, of which are costly
+and uncomfortable Jain et al. [5]. Due to limited healthcare
+infrastructure, developing countries face a significant chal-
+lenge to early diagnosis of CVD. Inadequate facilities, which
+include a lack of diagnostic equipment, insufficient staff, and
+geographical restrictions, make patients are unable to access
+essential healthcare treatments. Underdeveloped countries
+face higher cardiac risks due to malnutrition and contami-
+nated water. Machine learning (ML) and Deep learning (DL)
+VOLUME 12, 2024
+ 2024 The Authors. This work is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 License.
+For more information, see https://creativecommons.org/licenses/by-nc-nd/4.0/
+193365
+G. Sunilkumar, P. Kumaresan: DL and TL in Cardiology: A Review of Cardiovascular Disease Prediction Models
+can investigate massive amount of patient’s clinical data to
+provide personalized risk evaluation, optimize therapy plans,
+and assist in early diagnosis and prevention of cardiac risk.
+Traditional methods of diagnosing cardiac disorders
+include Electrocardiogram, Echocardiogram, Carotid ultra-
+sound, Coronary computed tomography angiography, Mag-
+netic resonance imaging and several types of clinical tests.
+These approaches face challenges such as invasiveness,
+exposure to radiation, high costs, and inconsistencies in inter-
+pretation.
+Traditional methods follow risk scores and methodologies
+that include Framingham Risk Score, American Heart Asso-
+ciation Atherosclerotic Cardiovascular Disease (ASCVD)
+Risk Calculator, Registre Gironi del Cor, Systematic Coro-
+nary Risk Evaluation, and the United Kingdom Prospective
+Diabetes Study, which limits static nature, limited variables,
+assumption of linear relationships, risk of bias, lack of exter-
+nal validation, inconsistent reporting standards, limited use
+of advanced Data. To address the limitations of traditional
+risk prediction models, researchers are employing advanced
+machine, Deep and Transfer learning methods. These con-
+temporary models examine large data sets to identify patterns,
+enhancing accuracy and precision in predicting cardiovascu-
+lar risk.
+Machine learning models are proposed for accurate classi-
+fication of heart sounds. However, its effectiveness has been
+limited by the small dataset, which may impact its reliability
+in real-world clinical settings. The performance can vary
+across different datasets. This highlights the importance of
+considering the limitations of machine learning algorithms,
+such as dataset dependency and interpretability, when apply-
+ing them to real-world clinical settings. Deep neural networks
+are proposed to learn complex feature structures from raw
+data, enhancing classification accuracy and the diagnosis
+of coronary artery disease (CAD) compared to traditional
+machine learning methods. Training deep learning models
+can be time-consuming, especially with large datasets and
+complex architectures. Deep learning models often require
+high-performance GPUs and substantial memory, along with
+the spatial and portability challenges of deep-learning com-
+puters, which can be considered limitations of deep learning.
+Transfer learning is a powerful method that can success-
+fully address these kinds of challenges. Transfer learning
+involves applying a pretrained model, usually trained on
+an extensive dataset, and adapting it for a new, associated
+task. Transfer learning model attains great accuracy while
+significantly reducing computational resource requirements.
+Transfer learning model offers a lightweight and efficient
+solution, enabling accurate arrhythmia detection on mobile
+devices. This promotes timely heart health monitoring and
+early diagnosis.
+This section provides a comprehensive overview of emerg-
+ing trends in CVD prediction, and the primary research
+questions are addressed below.
+Q1. What are the most prevalent identified risk factors for
+cardio vascular disorder prediction?
+Q2. How can machine, deep learning and, Transfer learn-
+ing techniques be applied to diagnose coronary artery disease
+(CAD) and peripheral arterial disease (PAD)?
+Q3. What types of data modalities and sources have been
+applied to investigate the prediction of cardiovascular disease
+in the healthcare field?
+Q4. How can we optimize the evaluation metrics to ensure
+the clinical reliability of ML, DL, and TL diagnostic meth-
+ods?
+Objectives
+• Perform surveys on deep transfer learning methods for
+diagnosing CAD, PAD, and CVD risk factors.
+• To investigate the effectiveness of medical image pro-
+cessing and software tools used to perform cardiovas-
+cular disease detection, with a specific focus on image
+segmentation, registration, and visualization techniques.
+• To perform survey on effectiveness of ML, DL, and
+TL in predicting cardiac risks and improving the early
+detection of cardiovascular diseases.
+• To compare the performance of ML, DL, and TL tech-
+niques in cardiac disease prediction and focusing on key
+performance metrics and their clinical implications.
+• To survey the efficacy of hybrid deep learning models
+that incorporate optimization techniques for predicting
+cardiovascular illness.
+A. CARDIOVASCULAR DISEASES: RISK FACTORS,
+DISORDERS AND DIAGNOSTIC APPROACHES
+The dysfunctions of the heart and blood arteries are known as
+cardiovascular diseases
+• Coronary Heart Disease caused by the accumulation of
+atheroma in the heart arteries.
+• Cerebrovascular Disease affects the brain’s blood ves-
+sels.
+• Peripheral Arterial Disease impairs the arteries in arms,
+legs, and other limbs.
+• Rheumatic Heart Disease damages heart valves and
+muscles due to rheumatic fever.
+• Congenital Heart Disease ailment which affects function
+of the heart from birth.
+• Deep Vein Thrombosis occurs formation of blood clots
+in deep veins.
+• Pulmonary Embolism blood clots travel to the lungs and
+blocks pulmonary artery.
+Fig. 1 provides various cardiovascular disorders, including
+coronary artery disease, deep vein thrombosis, peripheral
+arterial disease, rheumatic heart disease, cerebrovascular dis-
+eases, and congenital cardiac conditions.
+B. CORONARY ARTERY DISEASE
+Coronary artery disease (CAD), caused by plaque and triglyc-
+eride buildup in heart arteries, which restricts blood flow
+Trigka and Dritsas [6]. Chest discomfort is a common symp-
+tom of angina. While CAD often starts silently, stable angina
+occurs with exertion, and unstable angina can lead to heart
+193366
+VOLUME 12, 2024
+G. Sunilkumar, P. Kumaresan: DL and TL in Cardiology: A Review of Cardiovascular Disease Prediction Models
+FIGURE 1. Cardiovascular disorders and their classifications.
+attack Reeh et al. [7]. Acute myocardial infarction, caused by
+a blocked coronary artery, can result in sudden cardiac death
+Shao et al. [8]; Wong et al. [9].
+C. PERIPHERAL ARTERIAL DISEASE
+Peripheral artery disease (PAD) is caused by hardened arter-
+ies Al-Ramini et al. [10]. PAD is often underdiagnosed and
+undertreated, despite its risk for heart and brain problems
+Marso and Hiatt [11] PAD can be life-threatening, affecting
+blood flow to the head, neck, abdomen, and limbs Ara et al.
+[12].
+D. RISK FACTORS FOR CARDIOVASCULAR DISEASE
+1) HEART FAILURE
+Heart failure occurs when the heart fails to pump sufficient
+blood, causing signs such as shortness of breath, fatigue, and
+swelling Ponikowski et al. [13]. Cardiologists classify heart
+failure into diastolic and systolic types. Diastolic heart failure
+is indeed linked to ventricular wall thickening, which limits
+the heart’s diastolic function, and systolic cardiac failure is
+associated with ventricular dilatation and poor pumping func-
+tion Genet et al. [14]. Heart failure symptoms vary depending
+on which side of the heart is affected. Left-side failure affects
+blood flow to the brain and body, while right-side failure
+affects blood flow to the lungs (Jessup and Brozena [15];
+Lorell and Carabello [16]; Haddad et al. [17].
+2) STROKE
+A stroke is a severe brain ailment caused by interrupted blood
+flow to the Central Nervous System (CNS) Mir et al. [18].
+Strokes can be categorized into two types, including Ischemic
+stroke and hemorrhagic stroke. Cerebral ischemia is caused
+by blocked blood arteries (Fan et al. [19]; Perna and Temple
+[20]. Hemorrhagic strokes cause brain irritation due to blood
+vessel bleeds Perna and Temple [20]. Transient Ischemic
+Attacks (TIA) is a brief neurological problem caused by
+temporary blood flow blockage to the brain Stanciu et al. [21].
+3) HEART VALVE DISEASE
+Heart valve disease can affect one or more of the heart’s
+valves and disrupt blood flow by affecting the aortic, mitral,
+tricuspid, and pulmonary valves. Aortic valve is the last valve
+that oxygenated blood passes before leaving the heart. Mitral
+valve disease disrupts blood flow due to malfunctioning flaps
+between the left atrium, and tricuspid valve disease disrupts
+blood flow between the right atrium and ventricle Maeder et
+al. [22]; Turi [23]; Shah and Raney [24]. The pulmonary valve
+regulates blood circulation from the right heart to the lungs
+Naeije [25].
+4) HYPERTENSION
+Hypertension is a primary CVD risk factor that can cause
+damage to the heart, blood vessels, and organs. Primary
+hypertension is common, while secondary hypertension can
+be caused by underlying ailments, such as kidney disease and
+sleep apnea. White coat hypertension is induced by anxiety
+in the medical environment
+Schrader and Middeke [26].
+Resistant hypertension is difficult to control with medication,
+even with three different types of drugs, including a diuretic
+Calhoun et al. [27]. Isolated systolic hypertension is prevalent
+among the elderly population Amery et al. [28]. Masked
+hypertension is detected by ambulatory blood pressure mon-
+itoring, which is conducted outside of the clinical setting
+Pickering et al. [29].
+The article is organized into nine sections. Section II
+reviews existing research on CAD and PAD prediction, the
+latest imaging modalities, and classification techniques from
+various works in the literature. Section III focuses on cardiac
+risk prediction on medical images and analyzing software
+tools. Section IV discusses various utilized datasets and
+modeling techniques for cardiac risk prediction. Section V
+presents performance measures for assessing CVD risk fac-
+tors. Section VI compares the performance of ML, DL, and
+TL applications. Section VII investigated an enhanced hybrid
+model using DL with a general architecture for CVD risk
+prediction. The conducted survey is detailed in section VIII,
+while further enhancements are concluded in section IX.
+II. LITERATURE REVIEW
+The literature review examined various cardiac dysfunction
+classifications for predicting cardiovascular disease.
+A. CORONARY ARTERY DISEASE AND PERIPHERAL
+ARTERIAL DISEASE DIAGNOSIS USING DEEP LEARNING
+We have surveyed relevant healthcare literature in Machine
+Learning (ML), Deep Learning (DL) techniques to under-
+stand current diagnostic approaches for cardiovascular dis-
+ease such as angioplasty and Coronary Artery Bypass
+Grafting (CABG) plays a crucial role in reducing CVD occur-
+rences LeCun et al. [30].Modern imaging procedures such as
+Echocardiogram, Magnetic Resonance Imaging, Computed
+Tomography, Phonocardiogram, cardiac catheterization and
+chatbot systems can facilitate the early diagnosis of CVD and
+support physicians in deciding how to overcome the critical
+diseases Boulares et al. [2]; Abubaker and Babayigit [3].
+VOLUME 12, 2024
+193367
+G. Sunilkumar, P. Kumaresan: DL and TL in Cardiology: A Review of Cardiovascular Disease Prediction Models
+Arrhythmias, caused by abnormal electrical activity in the
+heart, can range from harmless to life-threatening. While
+most arrhythmias are not fatal, some, such as ventricu-
+lar fibrillation and flutter, may cause sudden heart attack
+and hemodynamic collapse Go et al. [31]. CAD narrows
+the heart’s arteries due to plaque accumulation, reducing
+blood flow to the heart muscle. Signs of CAD include an
+asymptomatic period with the presence of atherosclerotic
+lesions in the coronary arteries without symptoms Trigka
+and Dritsas [6]. Cardiologists classify heart failure into dias-
+tolic and systolic types Genet et al. [14]. Diastolic heart
+failure is linked to concentric hypertrophy, which impairs
+filling Grossman et al. [32]. Eccentric hypertrophy is linked
+to systolic cardiac failure and is seen as poor pump function
+Gerdes et al. [33]. A stroke is a severe CVD categorized as
+a catastrophic disease Mir et al. [18]. Stroke types include
+Ischemic Stroke, caused by cerebral blood artery thrombosis
+leads to brain ischemia, which is a major neurovascular cause
+of mortality and disability Fan et al. [19].
+PAD is a form of CVD that occurs due to atherosclerosis,
+leading to reduced blood flow to the arteries and tissues
+Al-Ramini et al. [10]. The pulmonary valve functions as a
+one-way valve to allow blood to travel from the right chamber
+of the heart to the lungs for oxygenation. Hypertension is
+the primary cause of CVD and is classified into various
+types based on factors like cause, severity, and circumstances.
+Primary hypertension leads to serious harm to the heart, blood
+vessels, and other organs by adulthood, with changes notice-
+able even in children. Secondary hypertension in children
+may be caused by congenital abnormalities of the kidney,
+heart, and other organs, which should be thoroughly assessed
+Schrader and Middeke [26]. Table 1 summarizes different
+heart-related disorders.
+III. CARDIOVASCULAR DISORDERS USING MEDICAL
+IMAGING
+Analyzing medical images to predict cardiovascular dis-
+ease holds significant importance in the healthcare field.
+This section investigates a hybrid deep learning approach to
+predict cardiovascular disease by leveraging medical image
+processing methods.
+A. MEDICAL IMAGE PROCESSING FOR CVD PREDICTION
+A Medical image processing system for the prediction of
+CVD is shown in Fig. 2. The process begins with the CVD
+image data source, which covers chest pain, obesity, fainting,
+shortness of breath, and fatigue. The CVD Scan report utilizes
+different imaging modalities, including MRI Soni et al. [46],
+PET Acharya et al. [47], along with cardiac stress tests.
+To diagnose CVD, different techniques are applied, includ-
+ing localization and segmentation. Localization identifies the
+area of interest in medical images, while segmentation clas-
+sifies images into different sections Ari et al. [48]. Once
+segmented, features or irregularities within these segmented
+regions can be identified.
+Feature extraction is a process that reduces data by con-
+verting original features into a smaller number of unique and
+useful features Dougherty [49]; Haq et al. [50]. Techniques
+such as relief, mRMR, LASSO and genetic algorithms can be
+used to select key features Masih et al. [51]. To enhance the
+data quality for early-stage coronary heart disease prediction,
+researchers have applied binning and z-score methods to
+address the inconsistencies of the acquired dataset.
+Kalykakis et al. [153] explores to enhance the identifi-
+cation and characterization of significant coronary steno-
+sis using Coronary Computed Tomography Angiography
+(CTCA). Hu et al. [154]. predicted a non-invasive technique
+for forecasting calcified plaques in coronary arteries using CT
+radiomics. The researchers analyzed radiomic features from
+perivascular fat CT images and integrated them with clinical
+risk factors to train and assess multiple machine learning
+models.
+Kolossváry et al. [155] analyzed radiomic images to
+identify napkin-ring sign (NRS) plaques, which are key
+indicators of major adverse cardiac events. Through the
+analysis of quantitative features derived from CT images,
+major variations were identified between NRS and non-
+NRS plaques, proving the superiority of radiomics over
+traditional approaches. Militello et al. [156] examined the
+potential of radiomic features from pericoronaric adipose
+tissue surrounding the anterior interventricular artery (IVA)
+in evaluating coronary artery illnesses, in contrast to relying
+only on clinical risk factors.
+B. MEDICAL IMAGING SOFTWARE TOOLS
+CMRtools are used for ventricular function and myocar-
+dial perfusion analysis software produced by cardiovascular
+imaging solutions. Another tool for MRI is SuiteHEART,
+developed by NeoSoft.CVI42 produced by circle cardiovas-
+cular imaging supports for both MRI and CT. iNtuition tool
+developed by Terarecon that handles MRI, CT and SPECT.
+Segment software from Medviso is suitable for investigating
+MRI, CT, and SPECT data. Syngo.via, provided by Siemens,
+useful for MRI, CT, and SPECT modalities. IntelliSpace Por-
+tal from Philips works with MRI, CT and echocardiography
+data. VevoLAB from Visualsonics is useful for echo analysis.
+QLAB and TOMTEC, both produced by Philips, are also
+echocardiography tools Martin-Isla et al. [152].
+The DL-based application can analyze and predict CVD
+using processed medical images and extracted features
+Acharya et al. [47]. The CNN model is used for ventricu-
+lar arrhythmia classification and segmentation and provides
+information about shapes, volumes, and damaged regions of
+organs Tarroni et al. [52]. Localization and detection tech-
+niques are used to identify tiny lesions and localize specific
+objects within the medical image Ari et al. [48]. Arif et al.
+[53] used detection and localization techniques in myocardial
+infraction detection. The image registration technique is used
+to align object locations across multiple images into a logical
+and well-organized system Redlarski et al. [54].
+193368
+VOLUME 12, 2024
+G. Sunilkumar, P. Kumaresan: DL and TL in Cardiology: A Review of Cardiovascular Disease Prediction Models
+TABLE 1. Cardiac dysfunction classification.
+IV. DATASET AND METHODS
+Machine learning, Deep learning, and Transfer Learning (TL)
+models have shown significant potential in predicting cardio-
+vascular risk. By analyzing vast datasets, these models can
+detect complex relationships, resulting in highly accurate and
+tailored predictive models for cardiovascular disease.
+A. DATASET DESCRIPTION
+Data quality and diversity significantly impact CVD detec-
+tion. This section analyzes the efficiency of several deep
+learning approaches on different datasets.
+Clinical datasets include Cleveland Haq et al. [50], Hun-
+garian, Z-Alizadeh Sani, and Framingham (Rubini et al.
+[55]; El Hamdaoui et al. [56]), provide valuable clin-
+ical information for CVD diagnosis. Physiological sig-
+nal datasets, including MIT-BIH Yıldırım et al. [57],
+PhysioNet PTB Safdarian et al. [58], and UCI repository
+Ramesh et al. [59], provide recordings of physiological sig-
+nals like ECG and PCG essential for analyzing heart
+function. Acharya et al. [47] used 2-second ECG segments
+to differentiate shockable and non-shockable arrhythmias
+from CUDB, VFDB (both 250 Hz), and MITDB (360 Hz)
+databases and publicly available datasets accessible through
+platforms from Kaggle Lakshmanarao et al. [60] and
+IEEE data port. Sound signal analysis for heart disease
+prediction often used data from various sources E-scope
+and sample waveforms from PCG data Ari et al. [48];
+Redlarski et al. [54].
+B. MODELING TECHNIQUES
+Preprocessing involves cleaning, modifying, combining, and
+minimizing original data to deal with issues like incomplete
+values, disturbances, and discrepancies. It plays a crucial role
+in creating an effective model for disease prognosis. Selecting
+relevant features is an essential part of the machine learning
+task as it enhances precision and decreases the computational
+resources needed for classification.
+Machine learning models are chosen for their simplic-
+ity, interpretability, and effectiveness with structured data.
+Deep learning models, such as CNNs and RNNs, are
+effective in handling complex patterns in unstructured data
+but require significant computational resources and large
+datasets.
+Transfer learning utilizes pre-trained models to improve
+performance and decrease training time, making it espe-
+cially beneficial for scenarios with limited data. These
+models together provide enhanced performance, efficiency,
+VOLUME 12, 2024
+193369
+G. Sunilkumar, P. Kumaresan: DL and TL in Cardiology: A Review of Cardiovascular Disease Prediction Models
+FIGURE 2. Evaluation of deep learning models in medical image processing for CVD prediction.
+and application across diverse tasks in comparison to other
+techniques.
+1) LOGISTIC REGRESSION
+Logistic regression (LR) shown in (1), which predicts CVD
+risk using clinical data and patient features Hossen [61].
+It estimates the probability of classifying input X into a
+particular group for binary and multi-class classification.
+P (x) =
+exp(β0 + β1X)
+1 + exp(β0 + β1X)
+(1)
+Here, β0 represents bias and β1 represents weight multiplied
+by input X.
+2) DECISION TREE
+The decision tree (DT) shown in Fig. 3 classifies patients
+into low, medium, and high-risk CVD groups using
+age, gender, and blood pressure as criteria Nikhar and
+Karandikar [62].
+FIGURE 3. Decision tree for predicting risk of cardiovascular disease.
+3) NAIVE BAYES
+Naïve Bayes (NB) is a bayesian classifier shown in (2)
+that performs classification tasks, including electronic health
+information, and identifies diseases Lakshmanarao et al. [60].
+P (c | x) = P (x | c) P(c)
+P(x)
+(2)
+P (x | c) – likelihood, P (c | x) – Posterior Probability, P(c) –
+class prior Probability, P(x) – predictor prior Probability.
+4) ARTIFICIAL NEURAL NETWORKS
+Artificial Neural Network (ANN) is often referred to as a neu-
+ral network. The ANN model is shown in the Fig. 4, and (3)
+Mienye et al. [63] developed a sparse autoencoder-enhanced
+ANN based model used to diagnosis heart diseases.
+FIGURE 4. Artificial neural network model for predicting the risk of
+atherosclerotic cardiovascular disease.
+193370
+VOLUME 12, 2024
+G. Sunilkumar, P. Kumaresan: DL and TL in Cardiology: A Review of Cardiovascular Disease Prediction Models
+Below function calculates output.
+yj
+Xk
+f =1
+ WijXi
+
+(3)
+where,
+yj shows output neuron, Xi is input neuron, Wij is the
+weight connecting Xi and yj,
+6 is sigmoidal function
+5) RANDOM FOREST
+Random forest (RF) is used to predict CVD based on clinical
+data, as seen in Fig. 5. The final CVD prediction is calculated
+by averaging the probability from all decision trees in the
+ensemble model. Yadav and Pal [64].
+FIGURE 5. Random Forest model for cardiovascular disease risk
+prediction.
+6) CONVOLUTIONAL NEURAL NETWORKS (CNN)
+CNNs are becoming an effective technique for the early and
+precise detection of CVD by examining medical images like
+ECGs, echocardiograms, and cardiac MRIs Gu et al. [65].
+Their functionality is represented in Fig. 6.
+a: FUZZY CONVOLUTIONAL NEURAL NETWORKS
+Wu et al. [157] The federated Epistasis Detection seg Neural
+Architecture Search (FedED-SegNAS) framework aims to
+enhance the accuracy and interpretability of epistasis detec-
+tion in genomic data while preserving privacy. By integrating
+fuzzy logic into CNNs, the model can better handle uncer-
+tainty and complexity in genetic data, leading to a deeper
+understanding of the relationships between genetic variants
+of single nucleotide polymorphisms and complex diseases.
+The CVD ratio is high in females when compared to males as
+per genetic disorder.
+7) K-NEAREST NEIGHBORS’ (KNN)
+The KNN approach for predicting cardiovascular disease
+based on clinical data involves calculating distance metrics
+between new patient data and all training cases, then iden-
+tifying the K nearest training samples using Euclidean or
+Manhattan distances Heo, J et al. (2020) [66].
+8) GRADIENT BOOSTING
+Gradient Boosting (GB) addresses regression and classifica-
+tion problems by constructing an ensemble of decision trees
+that iteratively improve prediction accuracy by correcting
+errors from previous trees Feng et al. [121].
+9) XGBOOST MODEL
+XGBoost, as shown in (4), was applied to the CVD dataset to
+enhance prediction accuracy. Trees within this model identify
+patterns in clinical variables through iterative training, aiming
+to minimize the cross-validation error metric Bhatt et al. [68].
+P (x) =
+exp(β0 + β1X)
+1 + exp(β0 + β1X)
+(4)
+10) GENETIC ALGORITHM
+Genetic algorithms (GAs) utilize natural selection to develop
+predicative systems for cardiac risk. GAs iteratively improve
+models through processes of selection, crossover, and muta-
+tion, similar to how genes change over generations. By com-
+bining GAs with neural networks, an iterative approach can
+attain an accuracy rate of 93.8% in identifying coronary artery
+disease, as proved by Than et al. [67]; Arabasadi et al. [69].
+11) MULTI-LAYER PERCEPTRON
+MLP, a type of Artificial Neural Network (ANN), processes
+data in a feed-forward manner. Layers are interconnected,
+with hidden layers using non-linear activation functions to
+extract features from the data. Based on the learned pat-
+terns from the training data, the network classifies ECG data
+as either high or low risk for cardiac disease Kumari and
+Kumar [70].
+12) TRANSFER LEARNING MODELS
+Transfer learning is an effective method applied to several
+cardiovascular disease prediction systems, as listed in the
+Table 2. Researchers can improve the accuracy and efficiency
+of models for predicting and forecasting cardiac diseases by
+using knowledge derived from pre-trained models.
+Predicting cardiac risk using neural networks has become
+a prominent method among researchers. Multi-Layer percep-
+tions and ANN are fundamental neural network architectures
+that process data in feedforward manner, analyzing static
+data points such as blood pressure and cholesterol lev-
+els. Recurrent neural networks are particularly well suited
+for investigating time-series data in ECG readings. Many
+state-of-the-art deep learning approaches have emerged, pro-
+viding enhanced feature extraction capabilities for heart risk,
+Yoo et al. [71].
+ResNet prevents gradient deterioration by using skip con-
+nections. Jahmunah et al. [72]. DenseNet stimulates dense
+connectivity between layers, promoting information flow.
+Dhar et al. [73] AlexNet marked significant breakthroughs
+in image and PCG signal classification, particularly in car-
+diac images. De Marco et al. [74] MobileNet is a compact,
+efficient image classification model that uses average pooling
+and is compatible with mobile and wearable devices.
+Wei et al. [75] The compound scaling approach of Effi-
+cientNet may enhance cardiac risk prediction by enhancing
+VOLUME 12, 2024
+193371
+G. Sunilkumar, P. Kumaresan: DL and TL in Cardiology: A Review of Cardiovascular Disease Prediction Models
+FIGURE 6. A fully connected CNN used for diagnosing cardiovascular disease.
+network complexity. Dou et al. [76] The inclusion of incep-
+tion modules in GoogLeNet makes it a comprehensive
+collection of neural network designs. Each architectural
+design has unique benefits for predicting cardiac disease,
+allowing researchers to investigate different methodologies
+and computing needs.
+V. PERFORMANCE MEASURES
+The assessment of deep learning models for cardiovascular
+prediction involves the use of performance metrics such as
+precision, accuracy, recall, specificity, and F1-score. These
+measures offer a comprehensive evaluation of the model’s
+capacity to accurately categorize individuals who are at
+risk of cardiovascular disease. The models and metrics are
+discussed in this section. During training, achieving high
+accuracy and minimal loss indicates the model’s ability
+to classify different stages of heart disease using samples
+from individuals with heart disease. The validation accuracy
+should closely approximate the training accuracy, which also
+avoids overfitting in CVD prediction. It analyzes in CVD
+prediction errors on the validation data. Which is desirable
+with minimal validity loss Abubaker and Babayigit [3].
+A. CONFUSION MATRIX
+The confusion matrix as shown in Fig. 7 provides an extensive
+evaluation of CVD prediction models. It visualizes actual
+versus predicted CVD status as positive or negative and helps
+in calculating accuracy, sensitivity, and specificity. El Ham-
+daoui et al. [58].
+B. ACCURACY
+The accuracy shown in (5) is to calculate the percentage of
+precise CVD risk predictions in the dataset. Abdar et al. [106].
+Accuracy =
+TP + TN
+TP + TN + FP + FN
+(5)
+where, TP-True positive; FP-False positive; TN-True nega-
+tive; FN-False-negative.
+C. PRECISION
+Precision shown in (6) represents a fraction of positive pre-
+dictions that indicate positive CVD risks. Abdulsalam et al.
+2023 [92]
+Precision =
+TP
+TP + FP
+(6)
+D. RECALL
+Recall illustrated in (7) is sensitivity, which refers the value
+of the individual with positive CVD risk. Recall is termed to
+the True Positive rate (TPR). Abubaker and Babayigit [3].
+Recall =
+TP
+TP + FN
+(7)
+E. F1-SCORE
+The F1-score, as defined in (8), is a weighted average of both
+recall and precision for our CVD risk diagnosis Abdar et al.
+[106].
+F1 Score = 2 ∗Precision ∗Recall
+Precision + Recall
+(8)
+F. AUC
+The Area under the Curve is a quantitative metric employed
+to assess the effectiveness of a binary classification model in
+predicting cardiovascular disease risk. Specifically, it mea-
+sures the model’s ability to differentiate between individuals
+with and without CVD risk by calculating the area under the
+ROC curve. This value ranges from 0 to 1. Zeleznik et al.
+[113].
+G. ROC
+The ROC curve illustrates the performance of the classifica-
+tion model in predicting CVD across various threshold values
+shown in (9) and (10). The graph depicts the correlation
+between the true positive rate and false positive rate across
+various threshold levels. true positive rate is also referred to
+193372
+VOLUME 12, 2024
+G. Sunilkumar, P. Kumaresan: DL and TL in Cardiology: A Review of Cardiovascular Disease Prediction Models
+TABLE 2. Leveraging deep transfer learning to enhance CVD risk assessment via medical imaging.
+as sensitivity or recall:0 Shin et al. [151].
+TPR = True Positives + False Negatives
+True Positives
+(9)
+FPR =
+False Positives
+False Positives + True Negatives
+(10)
+H. MEAN AVERAGE
+The arithmetic mean is a statistical measure of central ten-
+dency obtained by adding all the values in a dataset and
+then dividing by the total number of values, as illustrated in
+(11). This measure is not utilized for predicting cardiac risk
+because it only represents the average rather than capturing
+variability in risk factors. Rajesh and Dhuli [140].
+¯x =
+Pn
+i−1 xi
+n
+(11)
+where,
+xi Each dataset value is represented.
+Pn
+i−1 xi represents the dataset’s total value.
+n is the dataset’s total value count
+I. WEIGHTED AVERAGE
+The weighted average shown in (12) is a modified form of
+the arithmetic mean in which each data point is allocated
+a specific weight based on its relative significance. Model
+prioritizes the most crucial factors for a personalized and
+accurate prediction of your CVD risk. Ramesh et al. [59].
+Weighted Average =
+Pn
+i=1 wi.xi
+Pn
+i=1 wi
+(12)
+xi Each value in the dataset is represented individually.
+wi Signifies the weight allocated to individual data points.
+Pn
+i=1 wi represents the total of all weights
+FIGURE 7. Confusion Matrix for predicting the risk of cardiovascular
+disease.
+J. CORRELATION MATRIX
+A correlation matrix (13) is shown in a square matrix that
+shows the correlation coefficients between variables in a
+dataset. It shows the relationship between each variable and
+all other variables. Hassan et al. [36].
+VOLUME 12, 2024
+193373
+G. Sunilkumar, P. Kumaresan: DL and TL in Cardiology: A Review of Cardiovascular Disease Prediction Models
+The Pearson correlation coefficient formula calculates the
+correlation between A and B.
+rAB =
+Pn
+i=1 (ai −¯a)((bi −¯b)
+qPn
+i=1 (ai −¯a)2 Pn
+i=1 (bi −¯b)2)
+(13)
+where,
+ai and bi show specific values of variables A and B accord-
+ingly.
+¯a and ¯b shows the variables of means A and B.
+n number of observations.
+VI. PERFORMANCE COMPARISON OF DEEP LEARNING
+APPLICATIONS FOR CARDIOVASCULAR DISEASE
+PREDICTION
+We have surveyed towards ML, DL, and TL techniques for
+predicting the CVD risk. ML algorithms are used to train
+for finding data patterns in prediction, classification, and
+dimensionality reduction LeCun et al. [30]. ML supports
+researchers to developing high-quality diagnostic tools for
+healthcare data analysis. The following contributions are
+examined by researchers using ML and DL techniques for
+CVD prediction. Kanagarathinam et al. [77] developed a
+CVD risk prediction model using a CatBoost ML classifier
+for CVD classification. Ordikhani et al. [78] implemented
+a genetic algorithm to predict CVD risk using the Explain-
+able Persian Atherosclerotic CVD Risk Stratification based
+on the Isfahan Cohort Study of Iranian adults. Hasan and
+Bhattacharjee [79] proposed a method for classifying var-
+ious CVD using a multi-dimensional deep CNN network
+that utilizes a revised ECG signal to predict CVD risk.
+Xia et al. [80] proposed as novel approach for Atrial Fibril-
+lation (AF) detection. This technique utilizes the MIT-BIH
+with ECG intervals of 5 seconds, which also offers a rapid,
+accurate, and efficient tool for AF detection. Samuel et al.
+[81] developed a clinical decision support platform using a
+hybrid technique of Artificial Neural Networks and Fuzzy
+Analytic Hierarchy Process. Yildirim et al. [82] Proposed
+DNN model using 12-lead ECG signals to observe vari-
+ous rhythm classes from the cardiac arrhythmia. Paul and
+Karn [83] used scaled conjugate gradient backpropagation of
+the ANN approach to identify cardiac risk. Kuila et al. [84]
+detected cardiac arrhythmia using an ELM-CNN classifier
+of a 1D 12-layer neural network to minimize overfitting and
+improve the learning rate. Kong et al. [85] proposed tempo-
+ral regression network architecture to detect End-Diastole
+and End-Systole frames from MRI sequences to monitor
+cardiovascular function. Vinay et al. [86] proposed super-
+vised and unsupervised Recurrent Neural Network based
+Bidirectional Long Short-Term Memory machine learning
+algorithm, along with Generative Adversarial Networks for
+early and automatic detection of cardiovascular diseases
+using phonocardiogram signals, which are recordings of heart
+sounds. Chen et al. [87] developed a segmentation approach
+in neural networks to evaluate the structure and performance
+of the heart using cardiac MR images.
+The K-means clustering algorithm, along with its varia-
+tions such as Lloyd’s approach, is used to eliminate depen-
+dencies and enhance the quality of clusters Zhang et al. [42].
+Hinchcliff et al. [88] used unsupervised model-based cluster-
+ing to investigate the role of the heart in systemic sclerosis,
+whereas Verma et al. [89] applied clustering techniques
+for cardiac disease. ECG image categorization and CVD
+detection have been investigated using quantum deep learn-
+ing techniques such as Quanvolutional Neural Networks,
+quantum-behaved particle swarm optimization, and sup-
+port vector machines Prabhu et al. [90]; Elsedimy et al.
+[91]; Abdulsalam et al. [92] developed an ensemble quan-
+tum ML approach to detect cardiac risk. To enhance the
+explainability of the model’s results SHapley Additive exPla-
+nations framework calculates and visualizes the importance
+of each parameter in prediction. Bhatt et al. [68] proposed
+a real-time CVD prediction system using Federated Learn-
+ing (FL) and an ANN model, trained on real stroke case
+data. Yildirim et al. [82] proposed a 1D-CNN approach for
+fast arrhythmia classification using short ECG fragments
+(MIT-BIH data). Degirmenci et al. [93] developed a DL
+method using images derived from ECG signals to classify
+arrhythmias, including normal, PVC, LBBB, RBBB, and
+PB. Terrada et al. [94] investigated 835 clinical records of
+atherosclerosis patients from three data sources to design a
+medical diagnostic support system using ANN for improved
+CVD detection.
+Tarroni et al. [52] developed a hybrid decision forest
+method to analyze short-axis cardiac MR image stacks.
+Dutta et al. [95] proposed CNN architecture for correctly
+classifying 77% of CHD patients and 81.8% of non-CHD
+cases in the testing data. Overall, the model achieves 85.7%
+accuracy in classifying the NHANES dataset to predict
+coronary heart disease. Ahmed et al. [96] used various tech-
+niques such as K nearest neighbour, support vector machine,
+multinomial naïve bayes, and gaussian naïve bayes attains
+maximum of 67.2% accuracy in CVD prediction. Ensem-
+ble models like Gradient Boosting Classifier (GBC) with
+AdaBoost Classifier (ABC) and Random Forest with GBC
+achieved nearly 87% accuracy, while CatBoost attains maxi-
+mum of 87.93% accuracy. Chen et al. [97] performed cardiac
+MRI segmentation using CNN that attains a maximum accu-
+racy using an image dataset. Blanchard et al. [98] diagnosed
+cardiovascular event risks during sleep apnea using the CNN
+model. The result shows well in AUC of 0.82 and sensitivity
+of 0.89. Ahmad et al. [99] predicted CVD using the hybrid
+CNN+BiLSTM technique with maximum accuracy.
+Pan et al. [100] developed Enhanced Deep CNN for
+cloud-based heart disease diagnosis, achieving impressive
+performance metrics of 97.5% sensitivity, 93.5% accuracy,
+and 94.9% specificity. Ullah et al. [101] attained 97.3%-
+99.02% accuracy using 1D/2D CNNs for noisy ECG classifi-
+cation. Sarra et al. [102] developed an Enhanced-ANN model
+for cardiac detection attained 93.4% accuracy, 93.4% preci-
+sion, 93.3% recall, 93% F1-score on Cleveland dataset. Clin-
+ical datasets such as the Cleveland, Hungarian, Z-Alizadeh
+193374
+VOLUME 12, 2024
+G. Sunilkumar, P. Kumaresan: DL and TL in Cardiology: A Review of Cardiovascular Disease Prediction Models
+TABLE 3. Performance comparison for predicting cardiovascular disease.
+VOLUME 12, 2024
+193375
+G. Sunilkumar, P. Kumaresan: DL and TL in Cardiology: A Review of Cardiovascular Disease Prediction Models
+TABLE 3. (Continued.) Performance comparison for predicting cardiovascular disease.
+Sani Terrada et al. [94] and Framingham El Hamdaoui et al.
+[58] offer valuable clinical information for CVD diagnosis.
+Additionally, physiological signal datasets including MIT-
+BIH, PhysioNet PTB Safdarian et al. [58], Nagavelli et al.
+[103], and UCI repository Ramesh et al. [59], Subhadra and
+Vikas [104] provide recordings of physiological signals like
+193376
+VOLUME 12, 2024
+G. Sunilkumar, P. Kumaresan: DL and TL in Cardiology: A Review of Cardiovascular Disease Prediction Models
+TABLE 4. Optimized hybrid models for CVD risk prediction.
+ECG and PCG essential for analyzing heart function. Acharya
+et al. [47] used 2-second ECG intervals to differentiate shock-
+able and non-shockable arrhythmias from CUDB, VFDB and
+MITDB databases. Lakshmanarao et al. [60] used Kaggle
+and IEEE DataPort with clinical and ImageNet datasets.
+Sound signal analysis, S1 and S2 of different pathological
+heart sounds used for CVD prediction Redlarski et al. [54].
+Performance metrics of Machine Learning (ML) and Deep
+Learning (DL) models for CVD prediction are compared in
+this Table 3. It presents the benefits, limitations, and major
+discoveries of ML and DL techniques to predict CVD.
+VII. A STUDY ON ENHANCED HYBRID MODELS
+Cardiovascular disorders remain a leading global cause of
+mortality Oliveira et al. [128]. It is essential to create an
+enhanced hybrid deep learning model for precise prediction
+and early identification of cardiovascular disease Bhavekar
+and Goswami [126]. This model will merge the capabilities
+VOLUME 12, 2024
+193377
+G. Sunilkumar, P. Kumaresan: DL and TL in Cardiology: A Review of Cardiovascular Disease Prediction Models
+of deep learning algorithms with other advanced methods
+to enhance precision and effectiveness in diagnosing cardio-
+vascular disease. The enhanced hybrid deep learning model
+for cardiovascular disease will utilize convolutional neural
+networks Betancur et al. [112] and recurrent neural networks
+Lyu et al. [115] to extract pertinent features from medical data
+like electrocardiograms, echocardiograms, and patient char-
+acteristics. By integrating these diverse sources of data and
+utilizing cutting-edge deep learning techniques, the model
+will be capable of capturing intricate patterns and connec-
+tions that indicate cardiovascular disease. Table 4 provides a
+summary of the hybrid models incorporating optimization.
+Hybrid optimization approach for predicting CVD, as illus-
+trated in Fig 8. The initial step involves acquiring data
+from clinical and image records, including ECG, PCG, MRI,
+CT, SPECT, DPCT, angiogram, and OCT data from vari-
+ous heart disease repositories. Data preprocessing involves
+removing of inconsistencies using outlier detection tech-
+niques such as Z-score, binning, and generative processing
+methods. For feature selection and extraction, the process
+begins by extracting features from the data, followed by selec-
+tion of relevant features using techniques such as Minimum
+redundancy Maximum relevance (MrMr), relief, Particle
+Swarm Optimization (PSO) and Fast Correlation-Based Fil-
+tering (FCBF). Clustering K-means method clusters training
+instances for every class. A hybrid optimization approach
+combines bio-inspired algorithms such as the bat algorithm
+and spider monkey optimization to fine-tune the hyperpa-
+rameters of hybrid deep learning models, leading to more
+precise CVD prediction. In the final step, the performance
+of the proposed models is evaluated using various metrics,
+including accuracy, precision, sensitivity, specificity, receiver
+operating characteristic (ROC) curve, and F1-score.
+Metaheuristic algorithms such as Bat, Lion, Spider Mon-
+key, Harris Hawks, Grey Wolf, Cuttlefish, and Bird swarm
+Optimization approaches are used to extract, select, and clas-
+sify features to identify different types of CVD diseases.
+A few instances are identified in the works of Irshad et al.
+[141] improved the bat algorithm for cardiac beat feature
+extraction using microbat echolocation behaviour. Cuttlefish
+camouflage inspired the Cuttlefish Optimization Technique
+(COT), which improved COT for cardiac disease prediction
+with adaptive cross-layer stacked residual convolutional neu-
+ral networks Srinivas et al. [142].
+Wang and Wu [158] proposed the Ant Colony Opti-
+mization (ACO) algorithm is to improve the identification
+of Single Nucleotide Polymorphism (SNP) interactions in
+genomic data. This guarantees precise, effective, and privacy-
+conserving analysis. Genomic data can be used to predict
+CVD effectively.
+VIII. DISCUSSION
+This article conducts an extensive review of literature, encom-
+passing prominent articles on ML, DL, and TL approaches for
+diagnosing cardiac diseases. The aim of the study was to cat-
+egorize, evaluate, and explore various prognostic approaches
+FIGURE 8. Hybrid optimized deep learning technique for predicting CVD.
+utilized in CVD classification. The surveyed studies inves-
+tigated various types of CVD, including CAD, PAD, and
+risk factors such as heart failure, stroke, heart valve disease,
+and blood pressure. The literature explored CAD and PAD
+disease prediction and classification of cardiac dysfunction.
+As per the survey blood pressure is the major parameter
+for cardiac dysfunction. Additionally, we examined cardiac
+disorders using medical imaging and software applications
+such as CMRtools, suiteHEART, CVI42 and iNtuition tools
+that are useful for MRI and CT imaging. VevoLAB, QLAB,
+TOMTEC are well suitable for echocardiography. Further-
+more, iNtuition, Segment, Syngo. via are useful for SPECT
+analysis. From these options, CVI42 and iNtuition emerge as
+versatile solutions for managing diverse cardiovascular imag-
+ing data and analysis tasks. Our analysis involved a survey of
+diverse datasets, including clinical trials with patient demo-
+graphics and disease characteristics data from Cleveland,
+Framingham, and UCI repositories. Signal data comprised of
+193378
+VOLUME 12, 2024
+G. Sunilkumar, P. Kumaresan: DL and TL in Cardiology: A Review of Cardiovascular Disease Prediction Models
+ECG, PCG, and Heart rate data are obtained from MIT-BIH,
+PTB, while image data contained echocardiograms, CT, MRI,
+and coronary angiograms sourced from CADC and the UK
+Biobank. The researcher’s performed localization, segmenta-
+tion, detection, classification and registration on their works
+for cardiac medical imaging. A diverse range of modeling
+methodologies, including LR, DT, NB, ANN, RF, CNN,
+KNN, GB, XGBoost, GA, and MLP, was utilized to predict
+cardiac disorder. Among these, CNN models exhibited the
+best accuracy rate of greater than 95%.
+FIGURE 9. Accuracy of machine learning classifiers.
+FIGURE 10. Accuracy of deep learning classifiers.
+Furthermore, we explored the use of transfer learning mod-
+els across multiple studies for cardiac risk assessment. The
+models such as EfficientNet, DenseNet, ResNet, AlexNet,
+GoogLeNet and MobileNet, from these models EfficientNet
+proves an accuracy rate of greater than 96 %. We surveyed the
+effectiveness of cardiac disease prediction using a standard
+set of metrics, including accuracy, precision, recall, F1-score,
+correlation matrix, area under the ROC curve (AUC), ROC,
+mean average, weighted average, and confusion matrix.
+Finally, we analyzed advanced hybrid models such
+as RF+CNN, RF+AB, GA+RBF, NN+GA, MLP+NN,
+among these, RF+CNN achieves the accuracy rate greater
+than 100 %.
+FIGURE 11. Accuracy of transfer learning classifiers.
+FIGURE 12. Hybrid ML and DL classifiers with optimization techniques.
+The accuracy performance of various ML classifiers for
+cardiac illness detection is analyzed from Table 1, Table 2,
+Table 3 and Table 4. We observed that Random Forest,
+Adaboost, and K-Nearest Neighbor outperformed other ML
+classifiers, achieving accuracies of approximately 99.9%,
+98.6%, and 98%, respectively, as illustrated in Fig. 9.
+A comprehensive survey of Tables 1-4 reveals the per-
+formance of different DL classifiers in predicting CVD
+diagnosis. Artificial Neural Network and Convolutional Neu-
+ral Network were the top performers, achieving accuracies of
+approximately 99.9% and 99.45%, respectively, as shown in
+Fig. 10.
+EfficientNet, DenseNet, and GoogleNet were the best-
+performing TL classifiers in Table 2. Attained accuracies
+of approximately 99.54%, 98.9%, and 98.3%, respectively.
+These models demonstrated significant effectiveness for heart
+disease prediction, as illustrated in Fig. 11.
+We analyzed all surveyed hybrid models that include
+machine learning, deep learning, and optimization approaches
+as shown in Fig. 12. The ML, DL and, TL models show
+an accuracy rate of 90 to 100. These findings highlight the
+efficacy of hybrid methodologies for enhanced performance.
+VOLUME 12, 2024
+193379
+G. Sunilkumar, P. Kumaresan: DL and TL in Cardiology: A Review of Cardiovascular Disease Prediction Models
+TABLE 5. Comparative analysis of CVD classification using ML, DL, TL, and hybrid methodologies.
+193380
+VOLUME 12, 2024
+G. Sunilkumar, P. Kumaresan: DL and TL in Cardiology: A Review of Cardiovascular Disease Prediction Models
+TABLE 5. (Continued.) Comparative analysis of CVD classification using ML, DL, TL, and hybrid methodologies.
+The accuracy score of ML models varies between 92 to
+99.9. DL models’ accuracy score varies between 82 to 99.9.
+The accuracy score of TL models varies between 80 to 99.54.
+Hybrid models’ accuracy score varies between 79 to 100. RF,
+ANN, and EfficientNet outperforms the other models.
+The investigation shows that machine learning, deep
+learning, and hybrid optimization approaches have shown
+excellent efficacy in predicting cardiac disease. Random For-
+est and Artificial Neural Networks attained accuracies of
+around 99.9%, while the hybrid Random Forest and Con-
+volutional Neural Network model enhanced the accuracy
+to 100%. These findings highlight the efficacy of hybrid
+approaches for precise and efficient cardiac disease predic-
+tion. The contemporary transfer learning models are more
+effective than other models in predicting CVD.
+The comparative analysis for CVD classification is listed
+in Table 5.
+IX. CONCLUSION
+Cardiovascular disease poses a significant challenge for indi-
+viduals and governing bodies striving to eradicate it. The
+survey analyzed the gaps and obstacles in predicting CVD.
+Accurate prediction of CVD is crucial for taking proac-
+tive measures. Several machine learning, deep learning, and
+transfer learning models have been examined, along with
+an exploration of optimization techniques. The survey com-
+pared the performance metrics of the existing approaches for
+CVD prediction. The survey indicates that ML and DL mod-
+els achieve accuracy rates between 70% and 100%, where
+pre-trained transfer learning models show maximum valida-
+tion accuracy (99.9%), sensitivity (96%), specificity (99%),
+F1-Score (90%), precision (95%), and
+AUC (0.98). The study revealed that ML, DL, TL, and
+hybrid models integrating significantly enhance cardiovascu-
+lar disease prediction accuracy. Since traditional models face
+many challenges, such as high cost, invasiveness.
+Contemporary models provide a better solution in CVD
+predictions using clinical and imaging data. Deep transfer
+learning improves plaque identification and categorization,
+leading to better disease staging. The integration of AI and
+surgical robots will further assist traditional medicine.
+Furthermore, the survey can be extended to analyzing deep
+hybrid models incorporating bio-inspired optimization tech-
+niques to enhance the prediction accuracy. Future research
+in cardiovascular disease prediction should focus on expand-
+ing dataset diversity to enhance model generalizability, and
+improving interpretability will assist physicians in under-
+standing model decisions. Integrating real-time data from
+wearable devices may enhance the accuracy and prompt-
+ness of cardiovascular disease forecasts. Explainable AI,
+attention mechanisms, transformer models, knowledge dis-
+tillation, and digital twins are powerful AI techniques with
+significant potential in healthcare. Multimodal AI, integrating
+cardiac CT, cardiac magnetic resonance imaging (CMR),
+Genome-wide association studie (GWAS), and genomic AI,
+will further enhance the capabilities of AI in cardiac imaging,
+leading to more accurate diagnosis and personalized treat-
+ment plans.
+REFERENCES
+[1] M. R. Sajid, N. Muhammad, R. Zakaria, A. Shahbaz, S. A. C. Bukhari,
+S. Kadry, and A. Suresh, ‘‘Nonclinical features in predictive modeling
+of cardiovascular diseases: A machine learning approach,’’ Interdiscipl.
+Sci., Comput. Life Sci., vol. 13, no. 2, pp. 201–211, Mar. 2021, doi:
+10.1007/s12539-021-00423-w.
+[2] M. Boulares, T. Alafif, and A. Barnawi, ‘‘Transfer learning bench-
+mark for cardiovascular disease recognition,’’ IEEE Access, vol. 8,
+pp. 109475–109491, 2020, doi: 10.1109/ACCESS.2020.3002151.
+[3] M. B. Abubaker and B. Babayigit, ‘‘Detection of cardiovascular diseases
+in ECG images using machine learning and deep learning methods,’’
+IEEE Trans. Artif. Intell., vol. 4, no. 2, pp. 373–382, Apr. 2023, doi:
+10.1109/TAI.2022.3159505.
+[4] S. Dami and M. Yahaghizadeh, ‘‘Predicting cardiovascular events with
+deep learning approach in the context of the Internet of Things,’’ Neu-
+ral Comput. Appl., vol. 33, no. 13, pp. 7979–7996, Jul. 2021, doi:
+10.1007/s00521-020-05542-x.
+VOLUME 12, 2024
+193381
+G. Sunilkumar, P. Kumaresan: DL and TL in Cardiology: A Review of Cardiovascular Disease Prediction Models
+[5] A. Jain, S. Tiwari, and V. Sapra, ‘‘Two-phase heart disease diagnosis
+system using deep learning,’’ Int. J. Control Automat., vol. 12, no. 5,
+pp. 558–573, 2019.
+[6] M. Trigka and E. Dritsas, ‘‘Long-term coronary artery disease risk pre-
+diction with machine learning models,’’ Sensors, vol. 23, no. 3, p. 1193,
+Jan. 2023, doi: 10.3390/s23031193.
+[7] J. Reeh, C. B. Therming, M. Heitmann, S. Højberg, C. Sørum, J. Bech,
+D. Husum, H. Dominguez, T. Sehestedt, T. Hermann, K. W. Hansen,
+L. Simonsen, S. Galatius, and E. Prescott, ‘‘Prediction of obstructive
+coronary artery disease and prognosis in patients with suspected stable
+angina,’’ Eur. Heart J., vol. 40, no. 18, pp. 1426–1435, May 2019, doi:
+10.1093/eurheartj/ehy806.
+[8] C. Shao, J. Wang, J. Tian, and Y. D. Tang, ‘‘Coronary artery disease:
+From mechanism to clinical practice,’’ in Coronary Artery Disease:
+Therapeutics and Drug Discovery. Singapore: Springer, 2020, pp. 1–36,
+doi: 10.1007/978-981-15-2517-9_1.
+[9] C. X. Wong, A. Brown, D. H. Lau, S. S. Chugh, C. M. Albert,
+J. M. Kalman, and P. Sanders, ‘‘Epidemiology of sudden cardiac death:
+Global and regional perspectives,’’ Heart, Lung Circulat., vol. 28, no. 1,
+pp. 6–14, Jan. 2019, doi: 10.1016/j.hlc.2018.08.026.
+[10] A. Al-Ramini, M. Hassan, F. Fallahtafti, M. A. Takallou, H. Rahman,
+B. Qolomany, I. I. Pipinos, F. Alsaleem, and S. A. Myers, ‘‘Machine
+learning-based peripheral artery disease identification using laboratory-
+based gait data,’’ Sensors, vol. 22, no. 19, p. 7432, Sep. 2022, doi:
+10.3390/s22197432.
+[11] S. P. Marso and W. R. Hiatt, ‘‘Peripheral arterial disease in patients
+with diabetes,’’ J. Amer. College Cardiol., vol. 47, no. 5, pp. 921–929,
+Mar. 2006, doi: 10.1016/j.jacc.2005.09.065.
+[12] L. Ara, X. Luo, A. Sawchuk, and D. Rollins, ‘‘Automate the peripheral
+arterial disease prediction in lower extremity arterial Doppler study using
+machine learning and neural networks,’’ in Proc. 10th ACM Int. Conf.
+Bioinf., Comput. Biol. Health Inform., Sep. 2019, pp. 130–135, doi:
+10.1145/3307339.3342180.
+[13] P.
+Ponikowski,
+S.
+D.
+Anker,
+K.
+F.
+AlHabib,
+M.
+R.
+Cowie,
+T. L. Force, and S. Hu, ‘‘Heart failure: Preventing disease and death
+worldwide,’’ ESC Heart Failure, vol. 1, no. 1, pp. 4–25, Sep. 2014, doi:
+10.1002/ehf2.12005.
+[14] M. Genet, L. C. Lee, B. Baillargeon, J. M. Guccione, and E. Kuhl, ‘‘Mod-
+eling pathologies of diastolic and systolic heart failure,’’ Ann. Biomed.
+Eng., vol. 44, no. 1, pp. 112–127, Jan. 2016, doi: 10.1007/s10439-015-
+1351-2.
+[15] M. Jessup and S. Brozena, ‘‘Treatment of advanced heart failure,’’ Car-
+diol. Rev., vol. 8, no. 3, pp. 148–157, May 2000, doi: 10.1097/00045415-
+200008030-00005.
+[16] B. H. Lorell and B. A. Carabello, ‘‘Left ventricular hypertrophy:
+Pathogenesis, detection, and prognosis,’’ Circulation, vol. 102, no. 4,
+pp. 470–479, Jul. 2000, doi: 10.1161/01.cir.102.4.470.
+[17] F. Haddad, R. Doyle, D. J. Murphy, and S. A. Hunt, ‘‘Right ventricu-
+lar function in cardiovascular disease, Part II: Pathophysiology, clinical
+importance, and management of right ventricular failure,’’ Circulation,
+vol. 117, no. 13, pp. 1717–1731, Apr. 2008, doi: 10.1161/circulation-
+aha.107.653584.
+[18] M. A. Mir, R. S. Al-Baradie, and M. D. Alhussainawi, ‘‘Pathophysiology
+of strokes,’’ in Recent Advances in Stroke Therapeutics, 1st ed. Haup-
+pauge, NY, USA: Nova Science Publishers, 2014, pp. 25–80.
+[19] J. Fan, X. Li, X. Yu, Z. Liu, Y. Jiang, Y. Fang, M. Zong, C. Suo, Q.
+Man, and L. Xiong, ‘‘Global burden, risk factor analysis, and predic-
+tion study of ischemic stroke, 1990–2030,’’ Neurology, vol. 101, no. 2,
+pp. e137–e150, Jul. 2023, doi: 10.1212/WNL.0000000000207387.
+[20] R. Perna and J. Temple, ‘‘Rehabilitation outcomes: Ischemic versus
+hemorrhagic strokes,’’ Behavioural Neurol., vol. 2015, no. 1, 2015,
+Art. no. 891651, doi: 10.1155/2015/891651.
+[21] A. Stanciu, M. Banciu, A. Sadighi, K. A. Marshall, N. R. Holland,
+V. Abedi, and R. Zand, ‘‘A predictive analytics model for differenti-
+ating between transient ischemic attacks (TIA) and its mimics,’’ BMC
+Med. Informat. Decis. Making, vol. 20, no. 1, p. 112, Jun. 2020, doi:
+10.1186/s12911-020-01154-6.
+[22] M. T. Maeder, L. Weber, M. Buser, M. Gerhard, P. K. Haager, F. Maisano,
+and H. Rickli, ‘‘Pulmonary hypertension in aortic and mitral valve dis-
+ease,’’ Frontiers Cardiovascular Med., vol. 5, p. 40, May 2018, doi:
+10.3389/fcvm.2018.00040.
+[23] Z. G. Turi, ‘‘Mitral valve disease,’’ Circulation, vol. 109, no. 6, pp. e38–
+e41, Feb. 2004, doi: 10.1161/01.CIR.0000115202.33689.2C.
+[24] P. M. Shah and A. A. Raney, ‘‘Tricuspid valve disease,’’ Cur-
+rent Problems Cardiol., vol. 33, no. 2, pp. 47–84, Feb. 2008, doi:
+10.1016/j.cpcardiol.2007.10.004.
+[25] R. Naeije, ‘‘Physiology of the pulmonary circulation and the right heart,’’
+Current Hypertension Rep., vol. 15, no. 6, pp. 623–631, Dec. 2013, doi:
+10.1007/s11906-013-0396-6.
+[26] M. Middeke and J. Schrader, ‘‘Nocturnal blood pressure in normotensive
+subjects and those with white coat, primary, and secondary hyper-
+tension,’’ BMJ, vol. 308, no. 6929, pp. 630–632, Mar. 1994, doi:
+10.1136/bmj.308.6929.630.
+[27] D. A. Calhoun, D. Jones, S. Textor, D. C. Goff, T. P. Murphy,
+R. D. Toto, A. White, W. C. Cushman, W. White, D. Sica, K. Ferdinand,
+T. D. Giles, B. Falkner, and R. M. Carey, ‘‘Resistant hypertension:
+Diagnosis, evaluation, and treatment: A scientific statement from the
+American Heart Association professional education committee of the
+council for high blood pressure research,’’ Hypertension, vol. 51, no. 6,
+pp. 1403–1419, Jun. 2008, doi: 10.1161/hypertensionaha.108.189141.
+[28] A. Amery, R. Fagard, C. Guo, J. Staessen, and L. Thus, ‘‘Isolated
+systolic hypertension in the elderly: An epidemiologic review,’’ Amer.
+J. Med., vol. 90, no. 3, pp. S64–S70, Mar. 1991, doi: 10.1016/0002-
+9343(91)90441-y.
+[29] T. G. Pickering, K. Davidson, W. Gerin, and J. E. Schwartz, ‘‘Masked
+hypertension,’’ Hypertension, vol. 40, no. 6, pp. 795–796, Dec. 2002, doi:
+10.1161/01.hyp.0000038733.08436.98.
+[30] Y. LeCun, Y. Bengio, and G. Hinton, ‘‘Deep learning,’’ Nature, vol. 521,
+no. 7553, pp. 436–444, 2015.
+[31] A. S. Go, D. Mozaffarian, V. L. Roger, E. J. Benjamin, J. D. Berry,
+M. J. Blaha, and M. B. Turner, ‘‘Heart disease and stroke statistics–2014
+update: A report from the American Heart Association,’’ Circulation,
+vol. 129, no. 3, pp. e28–e292, 2014.
+[32] W. Grossman, D. Jones, and L. P. McLaurin, ‘‘Wall stress and patterns of
+hypertrophy in the human left ventricle,’’ J. Clin. Invest., vol. 56, no. 1,
+pp. 56–64, Jul. 1975, doi: 10.1172/jci108079.
+[33] A. M. Gerdes, S. E. Kellerman, J. A. Moore, K. E. Muffly,
+L. C. Clark, P. Y. Reaves, K. B. Malec, P. P. McKeown, and
+D. D. Schocken, ‘‘Structural remodeling of cardiac myocytes in patients
+with ischemic cardiomyopathy,’’ Circulation, vol. 86, no. 2, pp. 426–430,
+Aug. 1992, doi: 10.1161/01.cir.86.2.426.
+[34] A. Diker, E. Avci, E. Tanyildizi, and M. Gedikpinar, ‘‘A novel
+ECG
+signal
+classification
+method
+using
+DEA-ELM,’’
+Med.
+Hypotheses, vol. 136, Mar. 2020, Art. no. 109515, doi: 10.1016/j.mehy.
+2019.109515.
+[35] M. Hammad, A. M. Iliyasu, A. Subasi, E. S. L. Ho, and A. A. A. El-Latif,
+‘‘A multitier deep learning model for arrhythmia detection,’’ IEEE
+Trans. Instrum. Meas., vol. 70, pp. 1–9, 2021, doi: 10.1109/TIM.
+2020.3033072.
+[36] C. A. U. Hassan, J. Iqbal, R. Irfan, S. Hussain, A. D. Algarni,
+S. S. H. Bukhari, N. Alturki, and S. S. Ullah, ‘‘Effectively predicting
+the presence of coronary heart disease using machine learning clas-
+sifiers,’’ Sensors, vol. 22, no. 19, p. 7227, Sep. 2022, doi: 10.3390/
+s22197227.
+[37] A. Caliskan and M. E. Yuksel, ‘‘Classification of coronary artery disease
+data sets by using a deep neural network,’’ EuroBiotech J., vol. 1, no. 4,
+pp. 271–277, Oct. 2017, doi: 10.24190/issn2564-615x/2017/04.03.
+[38] J. J. Nirschl, A. Janowczyk, E. G. Peyster, R. Frank, K. B. Margulies,
+M. D. Feldman, and A. Madabhushi, ‘‘A deep-learning classifier identi-
+fies patients with clinical heart failure using whole-slide images of H&E
+tissue,’’ PLoS ONE, vol. 13, no. 4, Apr. 2018, Art. no. e0192726, doi:
+10.1371/journal.pone.0192726.
+[39] E. Choi, A. Schuetz, W. F. Stewart, and J. Sun, ‘‘Using recurrent neural
+network models for early detection of heart failure onset,’’ J. Amer.
+Med. Inform. Assoc., vol. 24, no. 2, pp. 361–370, Mar. 2017, doi:
+10.1093/jamia/ocw112.
+[40] G. S. Saragih, Z. Rustam, D. Aldila, R. Hidayat, R. E. Yunus, and
+J. Pandelaki, ‘‘Ischemic stroke classification using random forests based
+on feature extraction of convolutional neural networks,’’ Int. J. Adv.
+Sci., Eng. Inf. Technol., vol. 10, no. 5, pp. 2177–2182, Oct. 2020, doi:
+10.18517/ijaseit.10.5.13000.
+[41] J.-M. Choi, S.-Y. Seo, P.-J. Kim, Y.-S. Kim, S.-H. Lee, J.-H. Sohn,
+D.-K. Kim, J.-J. Lee, and C. Kim, ‘‘Prediction of hemorrhagic transforma-
+tion after ischemic stroke using machine learning,’’ J. Personalized Med.,
+vol. 11, no. 9, p. 863, Aug. 2021, doi: 10.3390/jpm11090863.
+193382
+VOLUME 12, 2024
+G. Sunilkumar, P. Kumaresan: DL and TL in Cardiology: A Review of Cardiovascular Disease Prediction Models
+[42] D. Zhang, Y. Li, C. A. Kalbaugh, L. Shi, J. Divers, S. Islam, and
+B. H. Annex, ‘‘Machine learning approach to predict in-hospital mortality
+in patients admitted for peripheral artery disease in the United States,’’
+J. Amer. Heart Assoc., vol. 11, no. 20, Oct. 2022, Art. no. e026987, doi:
+10.1161/JAHA.122.026987.
+[43] T. S. Roy, J. K. Roy, and N. Mandal, ‘‘Classifier identification using deep
+learning and machine learning algorithms for the detection of valvular
+heart diseases,’’ Biomed. Eng. Adv., vol. 3, Jun. 2022, Art. no. 100035,
+doi: 10.1016/j.bea.2022.100035.
+[44] M. Fang, Y. Chen, R. Xue, H. Wang, N. Chakraborty, T. Su, and Y. Dai,
+‘‘A hybrid machine learning approach for hypertension risk prediction,’’
+Neural Comput. Appl., vol. 35, no. 20, pp. 14487–14497, Jul. 2023, doi:
+10.1007/s00521-021-06060-0.
+[45] D. Yun, H.-L. Yang, S. G. Kim, K. Kim, D. K. Kim, K.-H. Oh,
+K. W. Joo, Y. S. Kim, and S. S. Han, ‘‘Real-time dual prediction of
+intradialytic hypotension and hypertension using an explainable deep
+learning model,’’ Sci. Rep., vol. 13, no. 1, p. 18054, Oct. 2023, doi:
+10.1038/s41598-023-45282-1.
+[46] J. Soni, U. Ansari, D. Sharma, and S. Soni, ‘‘Predictive data mining
+for medical diagnosis: An overview of heart disease prediction,’’ Int.
+J. Comput. Appl., vol. 17, no. 8, pp. 43–48, Mar. 2011, doi: 10.5120/2237-
+2860.
+[47] U. R. Acharya, H. Fujita, S. L. Oh, U. Raghavendra, J. H. Tan,
+M. Adam, A. Gertych, and Y. Hagiwara, ‘‘Automated identification
+of shockable and non-shockable life-threatening ventricular arrhyth-
+mias using convolutional neural network,’’ Future Gener. Comput. Syst.,
+vol. 79, pp. 952–959, Feb. 2018, doi: 10.1016/j.future.2017.08.039.
+[48] S. Ari, K. Hembram, and G. Saha, ‘‘Detection of cardiac abnormal-
+ity from PCG signal using LMS based least square SVM classifier,’’
+Expert Syst. Appl., vol. 37, no. 12, pp. 8019–8026, Dec. 2010, doi:
+10.1016/j.eswa.2010.05.088.
+[49] G. Dougherty, Pattern Recognition and Classification: An Introduction.
+New York, NY, USA: Springer, 2012.
+[50] A. U. Haq, J. P. Li, M. H. Memon, S. Nazir, and R. Sun, ‘‘A hybrid intelli-
+gent system framework for the prediction of heart disease using machine
+learning algorithms,’’ Mobile Inf. Syst., vol. 2018, no. 1, Dec. 2018,
+Art. no. 3860146, doi: 10.1155/2018/3860146.
+[51] N. Masih, H. Naz, and S. Ahuja, ‘‘Multilayer perceptron based deep
+neural network for early detection of coronary heart disease,’’ Health
+Technol., vol. 11, no. 1, pp. 127–138, Jan. 2021, doi: 10.1007/s12553-
+020-00509-3.
+[52] G. Tarroni, O. Oktay, W. Bai, A. Schuh, H. Suzuki, J. Passerat-Palmbach,
+A. de Marvao, D. P. O’Regan, S. Cook, B. Glocker, P. M. Matthews, and
+D. Rueckert, ‘‘Learning-based quality control for cardiac MR images,’’
+IEEE Trans. Med. Imag., vol. 38, no. 5, pp. 1127–1138, May 2019, doi:
+10.1109/TMI.2018.2878509.
+[53] M. Arif, I. A. Malagore, and F. A. Afsar, ‘‘Detection and localization of
+myocardial infarction using K-nearest neighbor classifier,’’ J. Med. Syst.,
+vol. 36, no. 1, pp. 279–289, Feb. 2012, doi: 10.1007/s10916-010-9474-3.
+[54] G. Redlarski, D. Gradolewski, and A. Palkowski, ‘‘A system for
+heart sounds classification,’’ PLoS ONE, vol. 9, no. 11, Nov. 2014,
+Art. no. e112673, doi: 10.1371/journal.pone.0112673.
+[55] P. E. Rubini, C. A. Subasini, A. V. Katharine, V. Kumaresan, S. G. Kumar,
+and T. M. Nithya, ‘‘A cardiovascular disease prediction using machine
+learning algorithms,’’ Ann. Romanian Soc. Cell Biol., vol. 25, no. 2,
+pp. 904–912, 2021.
+[56] H. El Hamdaoui, S. Boujraf, N. E. H. Chaoui, B. Alami, and M. Maaroufi,
+‘‘Improving heart disease prediction using random forest and adaboost
+algorithms,’’ Int. J. Online Biomed. Eng., vol. 17, no. 11, pp. 60–75, 2021,
+doi: 10.3991/ijoe.v17i11.24781.
+[57] Ö. Yildirim, P. Pławiak, R.-S. Tan, and U. R. Acharya, ‘‘Arrhythmia
+detection using deep convolutional neural network with long duration
+ECG signals,’’ Comput. Biol. Med., vol. 102, pp. 411–420, Nov. 2018,
+doi: 10.1016/j.compbiomed.2018.09.009.
+[58] N. Safdarian, N. J. Dabanloo, and G. Attarodi, ‘‘A new pattern recognition
+method for detection and localization of myocardial infarction using T-
+wave integral and total integral as extracted features from one cycle of
+ECG signal,’’ J. Biomed. Sci. Eng., vol. 7, no. 10, pp. 818–824, 2014,
+doi: 10.4236/jbise.2014.710081.
+[59] T. R. Ramesh, U. K. Lilhore, M. Poongodi, S. Simaiya, A. Kaur, and
+M. Hamdi, ‘‘Predictive analysis of heart diseases with machine learning
+approaches,’’ Malaysian J. Comput. Sci., vol. 2022, no. 1, pp. 132–148,
+2022.
+[60] A. Lakshmanarao, Y. Swathi, and P. S. S. Sundareswar, ‘‘Machine learn-
+ing techniques for heart disease prediction,’’ Forest, vol. 95, no. 99, p. 97,
+2019.
+[61] M. K. Hossen, ‘‘Heart disease prediction using machine learning tech-
+niques,’’ J. Appl. Technol. Innov., vol. 5, no. 3, pp. 146–154, 2022.
+[62] S. Nikhar and A. M. Karandikar, ‘‘Prediction of heart disease using
+machine learning algorithms,’’ Int. J. Adv. Eng., Manage. Sci., vol. 2,
+no. 6, 2016, Art. no. 239484.
+[63] I. D. Mienye, Y. Sun, and Z. Wang, ‘‘Improved sparse autoencoder
+based artificial neural network approach for prediction of heart dis-
+ease,’’ Informat. Med. Unlocked, vol. 18, Jan. 2020, Art. no. 100307, doi:
+10.1016/j.imu.2020.100307.
+[64] D. Yadav and S. Pal, ‘‘Prediction of heart disease using feature selec-
+tion and random forest ensemble method,’’ Int. J. Pharmaceutical Res.,
+vol. 12, no. 4, pp. 56–66, Jun. 2020.
+[65] J. Gu, Z. Wang, J. Kuen, L. Ma, A. Shahroudy, B. Shuai, T. Liu,
+X. Wang, G. Wang, J. Cai, and T. Chen, ‘‘Recent advances in con-
+volutional neural networks,’’ Pattern Recognit., vol. 77, pp. 354–377,
+May 2018, doi: 10.1016/j.patcog.2017.10.013.
+[66] J. Heo, J. J. Lee, S. Kwon, B. Kim, S. O. Hwang, and Y. R. Yoon,
+‘‘A novel method for detecting ST segment elevation myocardial infarc-
+tion on a 12-lead electrocardiogram with a three-dimensional display,’’
+Biomed. Signal Process. Control, vol. 56, Feb. 2020, Art. no. 101700, doi:
+10.1016/j.bspc.2019.101700.
+[67] M. P. Than, J. W. Pickering, Y. Sandoval, A. S. V. Shah, A. Tsanas,
+F. S. Apple, and S. Blankenberg, ‘‘Machine learning to predict the like-
+lihood of acute myocardial infarction,’’ Circulation, vol. 140, no. 11,
+pp. 899–909, Sep. 2019, doi: 10.1161/circulationaha.119.041980.
+[68] S. Mohan, C. Thirumalai, and G. Srivastava, ‘‘Effective heart disease
+prediction using hybrid machine learning techniques,’’ IEEE Access,
+vol. 7, pp. 81542–81554, 2019, doi: 10.1109/ACCESS.2019.2923707.
+[69] Z. Arabasadi, R. Alizadehsani, M. Roshanzamir, H. Moosaei, and
+A. A. Yarifard, ‘‘Computer aided decision making for heart disease
+detection using hybrid neural network-genetic algorithm,’’ Comput.
+Methods Programs Biomed., vol. 141, pp. 19–26, Apr. 2017, doi:
+10.1016/j.cmpb.2017.01.004.
+[70] V. S. R. Kumari and P. R. Kumar, ‘‘Cardiac arrhythmia prediction using
+improved multilayer perceptron neural network,’’ Int. J. Electron., Com-
+mun. Instrum. Eng. Res. Develop., vol. 3, no. 4, pp. 73–80, 2013.
+[71] H. Yoo, S. Han, and K. Chung, ‘‘Diagnosis support model of
+cardiomegaly
+based
+on
+CNN
+using
+ResNet
+and
+explainable
+feature map,’’ IEEE Access, vol. 9, pp. 55802–55813, 2021, doi:
+10.1109/ACCESS.2021.3068597.
+[72] V. Jahmunah, E. Y. K. Ng, R. S. Tan, S. L. Oh, and U. R. Acharya, ‘‘Uncer-
+tainty quantification in DenseNet model using myocardial infarction
+ECG signals,’’ Comput. Methods Programs Biomed., vol. 229, Feb. 2023,
+Art. no. 107308, doi: 10.1016/j.cmpb.2022.107308.
+[73] P. Dhar, S. Dutta, and V. Mukherjee, ‘‘Cross-wavelet assisted convolu-
+tion neural network (AlexNet) approach for phonocardiogram signals
+classification,’’ Biomed. Signal Process. Control, vol. 63, Jan. 2021,
+Art. no. 102142, doi: 10.1016/j.bspc.2020.102142.
+[74] F. De Marco, F. Ferrucci, M. Risi, and G. Tortora, ‘‘Classification
+of QRS complexes to detect premature ventricular contraction using
+machine learning techniques,’’ PLoS ONE, vol. 17, no. 8, Aug. 2022,
+Art. no. e0268555, doi: 10.1371/journal.pone.0268555.
+[75] T.-R. Wei, S. Lu, and Y. Yan, ‘‘Automated atrial fibrillation detection
+with ECG,’’ Bioengineering, vol. 9, no. 10, p. 523, Oct. 2022, doi:
+10.3390/bioengineering9100523.
+[76] S. Dou, S. Shao, C. Song, H. Shi, and H. Zhao, ‘‘Electrocardiogram signal
+classification algorithm based on the continuous wavelet transform and
+GoogleNet in an Internet of Things context,’’ J. Mech. Med. Biol., vol. 22,
+no. 9, 2022, Art. no. 2240049, doi: 10.1142/S0219519422400498.
+[77] K. Kanagarathinam, D. Sankaran, and R. Manikandan, ‘‘Machine
+learning-based risk prediction model for cardiovascular disease using a
+hybrid dataset,’’ Data Knowl. Eng., vol. 140, Jul. 2022, Art. no. 102042,
+doi: 10.1016/j.datak.2022.102042.
+[78] M. Ordikhani, M. Saniee Abadeh, C. Prugger, R. Hassannejad,
+N. Mohammadifard, and N. Sarrafzadegan, ‘‘An evolutionary machine
+learning algorithm for cardiovascular disease risk prediction,’’ PLoS
+ONE, vol. 17, no. 7, Jul. 2022, Art. no. e0271723, doi: 10.1371/jour-
+nal.pone.0271723.
+[79] N. I. Hasan and A. Bhattacharjee, ‘‘Deep learning approach to cardio-
+vascular disease classification employing modified ECG signal from
+empirical mode decomposition,’’ Biomed. Signal Process. Control,
+vol. 52, pp. 128–140, Jul. 2019, doi: 10.1016/j.bspc.2019.04.005.
+VOLUME 12, 2024
+193383
+G. Sunilkumar, P. Kumaresan: DL and TL in Cardiology: A Review of Cardiovascular Disease Prediction Models
+[80] Y. Xia, N. Wulan, K. Wang, and H. Zhang, ‘‘Detecting atrial fibrillation
+by deep convolutional neural networks,’’ Comput. Biol. Med., vol. 93,
+pp. 84–92, Feb. 2018, doi: 10.1016/j.compbiomed.2017.12.007.
+[81] O. W. Samuel, G. M. Asogbon, A. K. Sangaiah, P. Fang, and G. Li,
+‘‘An integrated decision support system based on ANN and fuzzy_AHP
+for heart failure risk prediction,’’ Expert Syst. Appl., vol. 68, pp. 163–172,
+Feb. 2017, doi: 10.1016/j.eswa.2016.10.020.
+[82] O. Yildirim, M. Talo, E. J. Ciaccio, R. S. Tan, and U. R. Acharya,
+‘‘Accurate deep neural network model to detect cardiac arrhythmia on
+more than 10,000 individual subject ECG records,’’ Comput. Meth-
+ods Programs Biomed., vol. 197, Dec. 2020, Art. no. 105740, doi:
+10.1016/j.cmpb.2020.105740.
+[83] B. Paul and B. Karn, ‘‘Heart disease prediction using scaled conjugate
+gradient backpropagation of artificial neural network,’’ Soft Comput.,
+vol. 27, no. 10, pp. 6687–6702, May 2023, doi: 10.1007/s00500-022-
+07649-w.
+[84] S. Kuila, N. Dhanda, and S. Joardar, ‘‘ECG signal classification to
+detect heart arrhythmia using ELM and CNN,’’ Multimedia Tools Appl.,
+vol. 82, no. 19, pp. 29857–29881, Aug. 2023, doi: 10.1007/s11042-
+022-14233-9.
+[85] B. Kong, Y. Zhan, M. Shin, T. Denny, and S. Zhang, ‘‘Recognizing
+end-diastole and end-systole frames via deep temporal regression net-
+work,’’ in Proc. 19th Int. Conf. Med. Image Comput. Comput.-Assist.
+Intervent. (MICCAI), vol. 19. Athens, Greece: Springer, Oct. 2016,
+pp. 264–272.
+[86] N. A. Vinay, K. N. Vidyasagar, S. Rohith, P. Dayananda, S. Supreeth, and
+S. H. Bharathi, ‘‘An RNN-Bi LSTM based multi decision GAN approach
+for the recognition of cardiovascular disease (CVD) from heart beat
+sound: A feature optimization process,’’ IEEE Access, vol. 12, pp. 65482–
+65502, 2024, doi: 10.1109/ACCESS.2024.3397574.
+[87] C. Chen, C. Qin, H. Qiu, G. Tarroni, J. Duan, W. Bai, and
+D. Rueckert, ‘‘Deep learning for cardiac image segmentation: A
+review,’’ Frontiers Cardiovascular Med., vol. 7, p. 25, Mar. 2020, doi:
+10.3389/fcvm.2020.00025.
+[88] M. E. Hinchcliff, T. M. Frech, T. A. Wood, C.-C. Huang, J. Lee,
+K. Aren, J. J. Ryan, B. Wilson, L. Beussink-Nelson, M. L. Whitfield,
+R. C. Deo, and S. J. Shah, ‘‘Machine learning of the cardiac phenome
+and skin transcriptome to categorize heart disease in systemic sclerosis,’’
+BioRxiv, 2017, Art. no. 213678, doi: 10.1101/213678.
+[89] L. Verma, S. Srivastava, and P. C. Negi, ‘‘A hybrid data mining model
+to predict coronary artery disease cases using non-invasive clinical data,’’
+J. Med. Syst., vol. 40, no. 7, p. 178, Jul. 2016, doi: 10.1007/s10916-016-
+0536-z.
+[90] S.
+Prabhu,
+S.
+Gupta,
+G.
+M.
+Prabhu,
+A.
+V.
+Dhanuka,
+and
+K.
+V.
+Bhat,
+‘‘QuCardio:
+Application
+of
+quantum
+machine
+learning for detection of cardiovascular diseases,’’ IEEE Access,
+vol.
+11,
+pp. 136122–136135,
+2023,
+doi:
+10.1109/ACCESS.2023.
+3338145.
+[91] E. I. Elsedimy, S. M. M. AboHashish, and F. Algarni, ‘‘New cardio-
+vascular disease prediction approach using support vector machine and
+quantum-behaved particle swarm optimization,’’ Multimedia Tools Appl.,
+vol. 83, no. 8, pp. 23901–23928, Aug. 2023, doi: 10.1007/s11042-023-
+16194-z.
+[92] G. Abdulsalam, S. Meshoul, and H. Shaiba, ‘‘Explainable heart dis-
+ease prediction using ensemble-quantum machine learning approach,’’
+Intell. Autom. Soft Comput., vol. 36, no. 1, pp. 761–779, 2023, doi:
+10.32604/iasc.2023.032262.
+[93] M. Degirmenci, M. A. Ozdemir, E. Izci, and A. Akan, ‘‘Arrhyth-
+mic heartbeat classification using 2D convolutional neural networks,’’
+IRBM, vol. 43, no. 5, pp. 422–433, 2022, doi: 10.1016/j.irbm.
+2021.04.002.
+[94] O. Terrada, B. Cherradi, A. Raihani, and O. Bouattane, ‘‘A novel medical
+diagnosis support system for predicting patients with atherosclerosis
+diseases,’’ Inform. Med. Unlocked, vol. 21, Jan. 2020, Art. no. 100483,
+doi: 10.1016/j.imu.2020.100483.
+[95] A. Dutta, T. Batabyal, M. Basu, and S. T. Acton, ‘‘An efficient
+convolutional neural network for coronary heart disease predic-
+tion,’’ Expert Syst. Appl., vol. 159, Nov. 2020, Art. no. 113408, doi:
+10.1016/j.eswa.2020.113408.
+[96] S. Ahmed, S. Shaikh, F. Ikram, M. Fayaz, H. S. Alwageed, F. Khan,
+and F. H. Jaskani, ‘‘Prediction of cardiovascular disease on self-
+augmented datasets of heart patients using multiple machine learning
+models,’’ J. Sensors, vol. 2022, no. 1, 2022, Art. no. 3730303, doi:
+10.1155/2022/3730303.
+[97] C. Chen, W. Bai, R. H. Davies, A. N. Bhuva, C. H. Manisty, J. B. Augusto,
+J. C. Moon, N. Aung, A. M. Lee, M. M. Sanghvi, K. Fung, J. M. Paiva,
+S. E. Petersen, E. Lukaschuk, S. K. Piechnik, S. Neubauer, and
+D. Rueckert, ‘‘Improving the generalizability of convolutional neural
+network-based segmentation on CMR images,’’ Frontiers Cardiovascular
+Med., vol. 7, p. 105, Jun. 2020, doi: 10.3389/fcvm.2020.00105.
+[98] M. Blanchard, M. Feuilloy, A. Sabil, C. Gervès-Pinquié, F. Gag-
+nadoux, and J.-M. Girault, ‘‘A deep survival learning approach for
+cardiovascular risk estimation in patients with sleep Apnea,’’ IEEE
+Access, vol. 10, pp. 133468–133478, 2022, doi: 10.1109/ACCESS.2022.
+3231743.
+[99] S. Ahmad, M. Z. Asghar, F. M. Alotaibi, and Y. D. Alotaibi, ‘‘Diag-
+nosis of cardiovascular disease using deep learning technique,’’ Soft
+Comput., vol. 27, no. 13, pp. 8971–8990, 2023, doi: 10.1007/s00500-
+022-07788-0.
+[100] Y. Pan, M. Fu, B. Cheng, X. Tao, and J. Guo, ‘‘Enhanced deep learn-
+ing assisted convolutional neural network for heart disease prediction
+on the Internet of Medical Things platform,’’ IEEE Access, vol. 8,
+pp. 189503–189512, 2020, doi: 10.1109/ACCESS.2020.3026214.
+[101] A. Ullah, S. U. Rehman, S. Tu, R. M. Mehmood, Fawad, and
+M. Ehatisham-ul-haq, ‘‘A hybrid deep CNN model for abnormal arrhyth-
+mia detection based on cardiac ECG signal,’’ Sensors, vol. 21, no. 3,
+p. 951, Feb. 2021, doi: 10.3390/s21030951.
+[102] R. R. Sarra, A. M. Dinar, and M. A. Mohammed, ‘‘Enhanced accuracy
+for heart disease prediction using artificial neural network,’’ Indonesian
+J. Elect. Eng. Comput. Sci., vol. 29, no. 1, pp. 375–383, 2022, doi:
+10.11591/ijeecs.v29.i1.pp375-383.
+[103] U. Nagavelli, D. Samanta, and P. Chakraborty, ‘‘Machine learn-
+ing technology-based heart disease detection models,’’ J. Healthcare
+Eng., vol. 2022, Feb. 2022, Art. no. 7351061, doi: 10.1155/2022/
+7351061.
+[104] K. Subhadra and B. Vikas, ‘‘Neural network based intelligent system for
+predicting heart disease,’’ Int. J. Innov. Technol. Exploring Eng., vol. 8,
+no. 5, pp. 484–487, 2019.
+[105] H. C. Looker, M. Colombo, F. Agakov, T. Zeller, L. Groop, and
+B. Thorand, ‘‘Protein biomarkers for the prediction of cardiovascular
+disease in type 2 diabetes,’’ Diabetologia, vol. 58, no. 6, pp. 1363–1371,
+Jun. 2015, doi: 10.1007/s00125-015-3535-6.
+[106] M. Abdar, W. Książek, U. R. Acharya, R.-S. Tan, V. Makarenkov, and
+P. Pławiak, ‘‘A new machine learning technique for an accurate
+diagnosis of coronary artery disease,’’ Comput. Methods Programs
+Biomed., vol. 179, Oct. 2019, Art. no. 104992, doi: 10.1016/j.cmpb.
+2019.104992.
+[107] V. D. A. Kumar, C. Swarup, I. Murugan, A. Kumar, K. U. Singh, and
+T. Singh, ‘‘Prediction of cardiovascular disease using machine learning
+technique—A modern approach,’’ Comput., Mater. Continua, vol. 71,
+no. 1, pp. 855–869, 2022, doi: 10.32604/cmc.2022.021582.
+[108] E.
+R.
+Pujadas,
+Z.
+Raisi-Estabragh,
+L.
+Szabo,
+C.
+McCracken,
+C. I. Morcillo, V. M. Campello, C. Martín-Isla, A. M. Atehortua,
+H. Vago, B. Merkely, P. Maurovich-Horvat, N. C. Harvey, S. Neubauer,
+S. E. Petersen, and K. Lekadir, ‘‘Prediction of incident cardiovascular
+events using machine learning and CMR radiomics,’’ Eur. Radiol.,
+vol. 33, no. 5, pp. 3488–3500, Dec. 2022, doi: 10.1007/s00330-022-
+09323-z.
+[109] K. Anetta, A. Horak, W. Wojakowski, K. Wita, and T. Jadczyk, ‘‘Deep
+learning analysis of Polish electronic health records for diagnosis pre-
+diction in patients with cardiovascular diseases,’’ J. Personalized Med.,
+vol. 12, no. 6, p. 869, May 2022, doi: 10.3390/jpm12060869.
+[110] Q. Zhang, D. Zhou, and X. Zeng, ‘‘HeartID: A multiresolution convolu-
+tional neural network for ECG-based biometric human identification in
+smart health applications,’’ IEEE Access, vol. 5, pp. 11805–11816, 2017,
+doi: 10.1109/ACCESS.2017.2707460.
+[111] M. Zreik, R. W. van Hamersvelt, J. M. Wolterink, T. Leiner,
+M. A. Viergever, and I. Išgum, ‘‘A recurrent CNN for automatic detection
+and classification of coronary artery plaque and stenosis in coronary CT
+angiography,’’ IEEE Trans. Med. Imag., vol. 38, no. 7, pp. 1588–1598,
+Jul. 2019, doi: 10.1109/TMI.2018.2883807.
+[112] J. Betancur, F. Commandeur, M. Motlagh, T. Sharir, A. J. Einstein,
+S. Bokhari, M. B. Fish, T. D. Ruddy, P. Kaufmann, A. J. Sinusas,
+E. J. Miller, T. M. Bateman, S. Dorbala, M. Di Carli, G. Germano,
+Y. Otaki, B. K. Tamarappoo, D. Dey, D. S. Berman, and P. J. Slomka,
+‘‘Deep learning for prediction of obstructive disease from fast myocar-
+dial perfusion SPECT,’’ JACC: Cardiovascular Imag., vol. 11, no. 11,
+pp. 1654–1663, Nov. 2018, doi: 10.1016/j.jcmg.2018.01.020.
+193384
+VOLUME 12, 2024
+G. Sunilkumar, P. Kumaresan: DL and TL in Cardiology: A Review of Cardiovascular Disease Prediction Models
+[113] R. Zeleznik, B. Foldyna, P. Eslami, J. Weiss, I. Alexander, J. Taron,
+C. Parmar, R. M. Alvi, and D. Banerji, ‘‘Deep convolutional neural
+networks to predict cardiovascular risk from computed tomography,’’
+Nature Commun., vol. 12, no. 1, p. 715, Jan. 2021, doi: 10.1038/s41467-
+021-20966-2.
+[114] H. Yang, Z. Li, and Z. Wang, ‘‘Prediction of atherosclerosis diseases
+using biosensor-assisted deep learning artificial neuron model,’’ Neu-
+ral Comput. Appl., vol. 33, no. 10, pp. 5257–5266, May 2021, doi:
+10.1007/s00521-020-05317-4.
+[115] Q. Lyu, H. Shan, Y. Xie, A. C. Kwan, Y. Otaki, K. Kuronuma, D. Li, and
+G. Wang, ‘‘Cine cardiac MRI motion artifact reduction using a recurrent
+neural network,’’ IEEE Trans. Med. Imag., vol. 40, no. 8, pp. 2170–2181,
+Aug. 2021, doi: 10.1109/TMI.2021.3073381.
+[116] M. U. Khan, S. Samer, M. D. Alshehri, N. K. Baloch, H. Khan,
+F. Hussain, S. W. Kim, and Y. B. Zikria, ‘‘Artificial neural network-
+based cardiovascular disease prediction using spectral features,’’
+Comput. Electr. Eng., vol. 101, Jul. 2022, Art. no. 108094, doi:
+10.1016/j.compeleceng.2022.108094.
+[117] P. Esmaeili, N. Roshanravan, S. Mousavi, S. Ghaffari, N. Mesri Alamdari,
+and M. Asghari-Jafarabadi, ‘‘Machine learning framework for atheroscle-
+rotic cardiovascular disease risk assessment,’’ J. Diabetes Metabolic
+Disorders, vol. 22, no. 1, pp. 423–430, Nov. 2022, doi: 10.1007/s40200-
+022-01160-7.
+[118] I. Mishra and S. Mohapatra, ‘‘An enhanced approach for analyzing
+the performance of heart stroke prediction with machine learning tech-
+niques,’’ Int. J. Inf. Technol., vol. 15, no. 6, pp. 3257–3270, Aug. 2023,
+doi: 10.1007/s41870-023-01321-8.
+[119] H. W. Lui and K. L. Chow, ‘‘Multiclass classification of myocardial
+infarction with convolutional and recurrent neural networks for portable
+ECG devices,’’ Inform. Med. Unlocked, vol. 13, pp. 26–33, Jan. 2018, doi:
+10.1016/j.imu.2018.08.002.
+[120] A. Rath, D. Mishra, G. Panda, and S. C. Satapathy, ‘‘Heart disease
+detection using deep learning methods from imbalanced ECG samples,’’
+Biomed. Signal Process. Control, vol. 68, Jul. 2021, Art. no. 102820, doi:
+10.1016/j.bspc.2021.102820.
+[121] Y. Feng, A. A. Leung, X. Lu, Z. Liang, H. Quan, and R. L. Walker,
+‘‘Personalized prediction of incident hospitalization for cardiovascular
+disease in patients with hypertension using machine learning,’’ BMC Med.
+Res. Methodol., vol. 22, no. 1, p. 325, Dec. 2022, doi: 10.1186/s12874-
+022-01814-3.
+[122] V. Srilakshmi, K. Anuradha, and C. Shoba Bindu, ‘‘Intelligent
+decision support system for cardiovascular risk prediction using
+hybrid loss deep joint segmentation and optimized deep learn-
+ing,’’ Adv. Eng. Softw., vol. 173, Nov. 2022, Art. no. 103198, doi:
+10.1016/j.advengsoft.2022.103198.
+[123] A. Almulihi, H. Saleh, A. M. Hussien, S. Mostafa, S. El-Sappagh,
+K. Alnowaiser, A. A. Ali, and M. Refaat Hassan, ‘‘Ensemble learning
+based on hybrid deep learning model for heart disease early prediction,’’
+Diagnostics, vol. 12, no. 12, p. 3215, Dec. 2022, doi: 10.3390/diagnos-
+tics12123215.
+[124] A. M. Johri, K. V. Singh, L. E. Mantella, L. Saba, A. Sharma,
+J. R. Laird, K. Utkarsh, I. M. Singh, S. Gupta, M. S. Kalra, and
+J. S. Suri, ‘‘Deep learning artificial intelligence framework for multi-
+class coronary artery disease prediction using combination of conven-
+tional risk factors, carotid ultrasound, and intraplaque neovasculariza-
+tion,’’ Comput. Biol. Med., vol. 150, Nov. 2022, Art. no. 106018, doi:
+10.1016/j.compbiomed.2022.106018.
+[125] Q. Li, A. Campan, A. Ren, and W. E. Eid, ‘‘Automating and
+improving cardiovascular disease prediction using machine learn-
+ing and EMR data features from a regional healthcare system,’’
+Int. J. Med. Informat., vol. 163, Jul. 2022, Art. no. 104786, doi:
+10.1016/j.ijmedinf.2022.104786.
+[126] G. S. Bhavekar and A. D. Goswami, ‘‘A hybrid model for heart disease
+prediction using recurrent neural network and long short term mem-
+ory,’’ Int. J. Inf. Technol., vol. 14, no. 4, pp. 1781–1789, Jun. 2022, doi:
+10.1007/s41870-022-00896-y.
+[127] H. M. Rai, K. Chatterjee, and S. Dashkevych, ‘‘The prediction of car-
+diac abnormality and enhancement in minority class accuracy from
+imbalanced ECG signals using modified deep neural network mod-
+els,’’ Comput. Biol. Med., vol. 150, Nov. 2022, Art. no. 106142, doi:
+10.1016/j.compbiomed.2022.106142.
+[128] B. A. S. Oliveira, G. Z. Castro, G. L. M. Ferreira, and F. G. Guimarães,
+‘‘CML-Cardio: A cascade machine learning model to predict cardiovas-
+cular disease risk as a primary prevention strategy,’’ Med. Biol. Eng.
+Comput., vol. 61, no. 6, pp. 1409–1425, Jun. 2023, doi: 10.1007/s11517-
+022-02757-z.
+[129] B. Liu, J. Liu, G. Wang, K. Huang, F. Li, Y. Zheng, Y. Luo,
+and F. Zhou, ‘‘A novel electrocardiogram parameterization algorithm
+and its application in myocardial infarction detection,’’ Comput. Biol.
+Med., vol. 61, pp. 178–184, Jun. 2015, doi: 10.1016/j.compbiomed.
+2014.08.010.
+[130] A. H. Gonsalves, F. Thabtah, R. M. A. Mohammad, and G. Singh,
+‘‘Prediction of coronary heart disease using machine learning: An experi-
+mental analysis,’’ in Proc. 3rd Int. Conf. Deep Learn. Technol., Jul. 2019,
+pp. 51–56, doi: 10.1145/3342999.3343015.
+[131] M. A. M. Abushariah, A. A. M. Alqudah, O. Y. Adwan, and
+R. M. M. Yousef, ‘‘Automatic heart disease diagnosis system based
+on artificial neural network (ANN) and adaptive neuro-fuzzy inference
+systems (ANFIS) approaches,’’ J. Softw. Eng. Appl., vol. 7, no. 12,
+pp. 1055–1064, 2014, doi: 10.4236/jsea.2014.712093.
+[132] P.
+Anbuselvan,
+‘‘Heart
+disease
+prediction
+using
+machine
+learning techniques,’’ Int. J. Eng. Technol., vol. 9, pp. 515–518,
+Jan. 2020.
+[133] B. P. Doppala, D. Bhattacharyya, M. Chakkravarthy, and T. H. Kim,
+‘‘A hybrid machine learning approach to identify coronary diseases
+using feature selection mechanism on heart disease dataset,’’ Distrib.
+Parallel Databases, vol. 41, pp. 1–20, Mar. 2021, doi: 10.1007/s10619-
+021-07329-y.
+[134] H. Wang, H. Shi, X. Chen, L. Zhao, Y. Huang, and C. Liu, ‘‘An improved
+convolutional neural network based approach for automated heartbeat
+classification,’’ J. Med. Syst., vol. 44, no. 2, p. 35, Dec. 2019, doi:
+10.1007/s10916-019-1511-2.
+[135] U. R. Acharya, S. L. Oh, Y. Hagiwara, J. H. Tan, M. Adam, A. Gertych,
+and R. S. Tan, ‘‘A deep convolutional neural network model to classify
+heartbeats,’’ Comput. Biol. Med., vol. 89, pp. 389–396, Oct. 2017, doi:
+10.1016/j.compbiomed.2017.08.022.
+[136] S.
+Chauhan,
+P.
+Wang,
+C.
+Sing
+Lim,
+and
+V.
+Anantharaman,
+‘‘A
+computer-aided
+MFCC-based
+HMM
+system
+for
+automatic
+auscultation,’’ Comput. Biol. Med., vol. 38, no. 2, pp. 221–233,
+Feb. 2008, doi: 10.1016/j.compbiomed.2007.10.006.
+[137] K. Amen, M. Zohdy, and M. Mahmoud, ‘‘Machine learning for mul-
+tiple stage heart disease prediction,’’ in Proc. 7th Int. Conf. Comput.
+Sci., Eng. Inf. Technol., Sep. 2020, pp. 205–223, doi: 10.5121/csit.
+2020.101118.
+[138] S. Sharma and M. Parmar, ‘‘Heart diseases prediction using deep learning
+neural network model,’’ Int. J. Innov. Technol. Exploring Eng., vol. 9,
+no. 3, pp. 2244–2248, 2020, doi: 10.35940/ijitee.C9009.019320.
+[139] L. Sun, Y. Lu, K. Yang, and S. Li, ‘‘ECG analysis using mul-
+tiple instance learning for myocardial infarction detection,’’ IEEE
+Trans. Biomed. Eng., vol. 59, no. 12, pp. 3348–3356, Dec. 2012, doi:
+10.1109/TBME.2012.2213597.
+[140] K. N. V. P. S. Rajesh and R. Dhuli, ‘‘Classification of imbalanced ECG
+beats using re-sampling techniques and AdaBoost ensemble classifier,’’
+Biomed. Signal Process. Control, vol. 41, pp. 242–254, Mar. 2018, doi:
+10.1016/j.bspc.2017.12.004.
+[141] R. R. Irshad, S. Hussain, I. Hussain, A. A. Alattab, A. Yousif,
+O. A. S. Alsaiari, and E. I. I. Ibrahim, ‘‘A novel artificial spider
+monkey based random forest hybrid framework for monitoring and
+predictive diagnoses of patients healthcare,’’ IEEE Access, vol. 11,
+pp. 77880–77894, 2023, doi: 10.1109/ACCESS.2023.3297957.
+[142] R. Srinivas, R. K. Bagadi, T. Rama Reddy, N. Praveen, and G. Aparan-
+jini, ‘‘An efficient hybrid optimization algorithm for detecting heart
+disease using adaptive stacked residual convolutional neural networks,’’
+Biomed. Signal Process. Control, vol. 87, Jan. 2024, Art. no. 105522, doi:
+10.1016/j.bspc.2023.105522.
+[143] S. Kiranyaz, T. Ince, and M. Gabbouj, ‘‘Real-time patient-specific
+ECG classification by 1-D convolutional neural networks,’’ IEEE
+Trans. Biomed. Eng., vol. 63, no. 3, pp. 664–675, Mar. 2016, doi:
+10.1109/TBME.2015.2468589.
+[144] A. Pal, R. Srivastva, and Y. N. Singh, ‘‘CardioNet: An efficient ECG
+arrhythmia classification system using transfer learning,’’ Big Data Res.,
+vol. 26, Nov. 2021, Art. no. 100271, doi: 10.1016/j.bdr.2021.100271.
+[145] N. Lessmann, B. van Ginneken, M. Zreik, P. A. de Jong, B. D. de Vos,
+M. A. Viergever, and I. Išgum, ‘‘Automatic calcium scoring in low-
+dose chest CT using deep neural networks with dilated convolutions,’’
+IEEE Trans. Med. Imag., vol. 37, no. 2, pp. 615–625, Feb. 2018, doi:
+10.1109/TMI.2017.2769839.
+[146] D. Wu, X. Wang, J. Bai, X. Xu, B. Ouyang, Y. Li, H. Zhang, Q.
+Song, K. Cao, and Y. Yin, ‘‘Automated anatomical labeling of coronary
+arteries via bidirectional tree LSTMs,’’ Int. J. Comput. Assist. Radiol.
+Surgery, vol. 14, no. 2, pp. 271–280, Feb. 2019, doi: 10.1007/s11548-
+018-1884-6.
+VOLUME 12, 2024
+193385
+G. Sunilkumar, P. Kumaresan: DL and TL in Cardiology: A Review of Cardiovascular Disease Prediction Models
+[147] S. Karimi-Bidhendi, A. Arafati, A. L. Cheng, Y. Wu, A. Kheradvar, and
+H. Jafarkhani, ‘‘Fully-automated deep-learning segmentation of pediatric
+cardiovascular magnetic resonance of patients with complex congenital
+heart diseases,’’ J. Cardiovascular Magn. Reson., vol. 22, no. 1, p. 80,
+2020, doi: 10.1186/s12968-020-00678-0.
+[148] J. H. Kim, S. Y. Seo, C. G. Song, and K. S. Kim, ‘‘Assessment of
+electrocardiogram rhythms by GoogLeNet deep neural network architec-
+ture,’’ J. Healthcare Eng., vol. 2019, Apr. 2019, Art. no. 2826901, doi:
+10.1155/2019/2826901.
+[149] Y. Zhang, J. Li, S. Wei, F. Zhou, and D. Li, ‘‘Heartbeats classi-
+fication using hybrid time-frequency analysis and transfer learning
+based on ResNet,’’ IEEE J. Biomed. Health Informat., vol. 25, no. 11,
+pp. 4175–4184, Nov. 2021, doi: 10.1109/JBHI.2021.3085318.
+[150] C. Zhao, W. Yao, M. Yi, C. Wan, and Y. Tian, ‘‘Arrhythmia classification
+algorithm based on a two-dimensional image and modified efficientnet,’’
+Comput. Intell. Neurosci., vol. 2022, no. 1, 2022, Art. no. 8683855.
+[151] S. Shin, M. Kang, G. Zhang, J. Jung, and Y. T. Kim, ‘‘Lightweight
+ensemble network for detecting heart disease using ECG signals,’’ Appl.
+Sci., vol. 12, no. 7, p. 3291, Mar. 2022, doi: 10.3390/app12073291.
+[152] C. Martin-Isla, V. M. Campello, C. Izquierdo, Z. Raisi-Estabragh,
+B. Baebler, and S. E. Petersen, ‘‘Image-based cardiac diagnosis with
+machine learning: A review,’’ Frontiers Cardiovascular Med., vol. 7, p. 1,
+Jan. 2020, doi: 10.3389/fcvm.2020.00001.
+[153] G. Kalykakis, F. V. Driest, D. Terentes, A. Broersen, P. Kafouris,
+T. Pitsariotis, N. A. Vlachochristou, A. Antonopoulos, G. Benetos,
+R. Liga, and D. Visvikis, ‘‘Radiomics-based analysis by machine learning
+techniques improves characterization of functionally significant coro-
+nary lesions,’’ Eur. Heart J., vol. 43, Oct. 2022, Art. no. ehac544, doi:
+10.1093/eurheartj/ehac544.216.
+[154] G.-Q. Hu, Y.-Q. Ge, X.-K. Hu, and W. Wei, ‘‘Predicting coronary artery
+calcified plaques using perivascular fat CT radiomics features and clinical
+risk factors,’’ BMC Med. Imag., vol. 22, no. 1, p. 134, Jul. 2022, doi:
+10.1186/s12880-022-00858-7.
+[155] M. Kolossváry, J. Karády, B. Szilveszter, P. Kitslaar, U. Hoffmann,
+B. Merkely, and P. Maurovich-Horvat, ‘‘Radiomic features are superior to
+conventional quantitative computed tomographic metrics to identify coro-
+nary plaques with napkin-ring sign,’’ Circulat., Cardiovascular Imag.,
+vol. 10, no. 12, Dec. 2017, Art. no. e006843, doi: 10.1161/CIRCIMAG-
+ING.117.006843.
+[156] C. Militello, F. Prinzi, G. Sollami, L. Rundo, L. La Grutta, and S. Vitabile,
+‘‘CT radiomic features and clinical biomarkers for predicting coronary
+artery disease,’’ Cognit. Comput., vol. 15, no. 1, pp. 238–253, Jan. 2023,
+doi: 10.1007/s12559-023-10118-7.
+[157] X. Wu, Y. T. Zhang, K. W. Lai, M. Z. Yang, G. L. Yang, and
+H. H. Wang, ‘‘A novel centralized federated deep fuzzy neural network
+with multi-objectives neural architecture search for epistatic detec-
+tion,’’ IEEE Trans. Fuzzy Syst., vol. 15, pp. 238–253, Feb. 2024, doi:
+10.1109/TFUZZ.2024.3369944.
+[158] H. Wang and X. Wu, ‘‘IPP: An intelligent privacy-preserving scheme
+for detecting interactions in genome association studies,’’ IEEE/ACM
+Trans. Comput. Biol. Bioinf., vol. 20, no. 1, pp. 455–464, Jan. 2023, doi:
+10.1109/TCBB.2022.3155774.
+G. SUNILKUMAR received the bachelor’s and
+master’s degrees in computer science and engi-
+neering from Anna University, India. He is cur-
+rently pursuing the Ph.D. degree in computer
+science with the School of Computer Science
+Engineering and Information Systems, VIT, Vel-
+lore. He was an Assistant Professor (CSE) with
+Ranipettai Engineering College, Shri Sitheswarar
+Engineering, and Annai Mira College of Engi-
+neering and Technology. He has published IEEE
+(ICETITE) Conference paper on cardio vascular disease prediction. He is
+also doing research on cardio vascular disease prediction by developing deep
+learning and transfer learning models.
+P. KUMARESAN is currently a Senior Assis-
+tant Professor with SCORE, Vellore Institute of
+Technology (VIT), Vellore, India. His passion lies
+in advanced deep learning and machine learning
+models in healthcare, agriculture, and supply chain
+analytics. His contributions include the publication
+of 35 peer-reviewed research articles in interna-
+tional journals and conferences. He has published
+authored book ‘‘Learn Python Quickly: Beginners
+Guide’’. He has also edited a book titled ‘‘Inno-
+vative Supply Chain Management through Digitalization and Artificial
+Intelligence’’ (Springer Nature). His patented innovation is the ‘‘IoT-Based
+Signature Robot.’’ He is a Lifetime Member of the Computer Society of
+India. He has been recognized with the Best Researcher Award from VIT,
+since 2014. He acted as the session chair and a reviewer for international
+conferences.
+193386
+VOLUME 12, 2024

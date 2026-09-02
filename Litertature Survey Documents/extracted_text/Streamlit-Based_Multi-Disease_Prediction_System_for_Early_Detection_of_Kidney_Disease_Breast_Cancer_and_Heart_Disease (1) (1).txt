@@ -1,0 +1,653 @@
+2025 IEEE International Conference on Contemporary Computing and Communications (InC4) 
+979-8-3315-2118-9/25/$31.00 ©2025 IEEE 
+Streamlit-Based Multi-Disease Prediction System 
+for Early Detection of Kidney Disease, Breast 
+Cancer, and Heart Disease 
+ 
+Kanmani. B 
+Dept. of Computer Science and 
+Engineering, 
+Sathyabama Institute of Science and 
+Technology 
+Chennai-600119, Tamil Nadu  
+kanmanibalasaravananstar@gmail.com 
+Gopika. G. S 
+Dept. of Computer Science and 
+Engineering, 
+Sathyabama Institute of Science and 
+Technology 
+Chennai-600119, Tamil Nadu  
+gopika.cse@sathyabama.ac.in 
+Sreekrishna. M 
+Dept. of Computer Science and 
+Engineering, 
+Sathyabama Institute of Science and 
+Technology 
+Chennai-600119, Tamil Nadu  
+sreekrishna.cse@sathyabama.ac.in 
+Abstract—The early detection and rapid identification of 
+life-threatening diseases play crucial roles in saving lives. 
+However, disparities in healthcare infrastructure and the 
+unequal distribution of medical resources often hinder timely 
+diagnosis, resulting in adverse outcomes. This study introduces 
+a Multi-Disease Prediction System, a user-friendly web 
+application developed with Streamlit, capable of predicting 
+kidney disease, breast cancer, and heart disease. Unlike 
+traditional AI models that focus on predicting a single disease, 
+our objective is to develop a unified platform using Streamlit 
+and 
+Machine 
+learning 
+to 
+predict 
+multiple 
+diseases 
+simultaneously. The system harnesses advanced machine 
+learning techniques, utilizing algorithms such as the Random 
+Forest, Gradient Boosting Classifier, XGBoost, K-Nearest 
+Neighbor, and Decision Tree classifier. For each disease, the 
+optimal algorithm was selected based on its performance, 
+yielding predictive accuracies of 99% for kidney disease 
+(Random Forest Classifier), 98% for breast cancer (XGBoost), 
+and 95% for heart disease (Random Forest Classifier). Users 
+can input health indicators and symptoms and receive 
+personalized risk insights. By offering an intuitive and 
+interactive platform for data-driven screening, this application 
+seeks to enhance early detection and encourage proactive 
+health management in diverse populations. These models are 
+designed to continuously improve through advancements in 
+machine learning, ensuring reliable and impactful health 
+predictions for broader accessibility and preventive care. 
+Additionally, future improvements, such as integrating more 
+diseases into the system, would further enhance its capabilities 
+and expand its impact on early disease detection. 
+Keywords—Disease 
+prediction, 
+Machine 
+learning, 
+Healthcare access, Heart Disease, Breast Cancer, Kidney 
+Disease, Healthcare Prediction. 
+I. INTRODUCTION  
+ 
+Global health faces substantial challenges from long-term 
+illnesses, such as kidney disease, breast cancer, and heart 
+disease. These chronic conditions significantly contribute to 
+the worldwide burden of death and illness. Early detection 
+and intervention are critical to effectively managing these 
+conditions, as timely diagnosis can improve patient outcomes 
+and quality of life while reducing the long-term burden on 
+healthcare systems. However, conventional diagnostic 
+methods often require specialized facilities and in-person 
+consultations, which may not be accessible to all individuals, 
+particularly in underserved regions. This study leveraged 
+machine learning (ML) to build predictive models for kidney 
+disease, breast cancer, and heart disease, with the aim of 
+developing a unified and accessible platform for risk 
+assessment and early disease detection. Using the Streamlit 
+Python framework, the project introduced an interactive web 
+interface that provides users with an intuitive and practical 
+tool for personalized health management. 
+A variety of advanced machine learning techniques, 
+including Random Forest, Decision Tree Classifier, K-
+Nearest Neighbor method, Gradient Boosting Classifier, and 
+XGboost, are integrated into the suggested system to analyze 
+patient data and produce predictions. The system ensures 
+high reliability of its predictions by selecting the most 
+accurate model for each disease. These results underscore the 
+potential of the system to make precise and reliable disease 
+predictions across multiple conditions, thereby providing 
+users with valuable insights into their health. The user 
+interface, built on the StreamLit platform, makes disease 
+prediction accessible to a broad audience, including 
+individuals without technical expertise.  
+Furthermore, this project tackles healthcare access 
+challenges by providing a remote, data-driven diagnostic tool 
+accessible from any location, reducing dependence on 
+traditional 
+healthcare 
+infrastructure. 
+By 
+enhancing 
+accessibility, especially in resource-limited regions, this 
+system brings disease prediction closer to underserved 
+populations. Through advanced machine learning techniques, 
+the project exemplifies how technology can transform 
+preventive healthcare, helping bridge gaps in healthcare 
+access. It not only supports early diagnosis but also promotes 
+health awareness, encouraging proactive health management. 
+Overall, this innovative digital health solution showcases the 
+potential of machine learning to improve patient outcomes 
+and redefine healthcare accessibility.  
+II.  LITERATURE SURVEY 
+ 
+This section of our work addresses the analysis of 
+previous disease prediction models associated with the 
+presented study. The prediction of heart disease uses two 
+main machine learning methods including logistic regression 
+and SVM for processing clinical diagnostic data and patient 
+symptoms and medical history. Research studies exist about 
+early disease detection and they evaluate multiple models to 
+enhance 
+cardiovascular 
+disease 
+prediction 
+accuracy. 
+Research 
+demonstrates 
+how 
+machine 
+learning 
+can 
+demonstrate improvements in both diagnostic precision and 
+healthcare results for patients. [1] 
+2025 IEEE International Conference on Contemporary Computing and Communications (InC4) | 979-8-3315-2118-9/25/$31.00 ©2025 IEEE | DOI: 10.1109/InC465408.2025.11256386
+Authorized licensed use limited to: Somaiya University. Downloaded on February 11,2026 at 02:43:08 UTC from IEEE Xplore.  Restrictions apply. 
+Ahire et al. [2] performed study using 700 cases obtained 
+from UCI Machine Learning Repository. A dataset 
+containing 700 cases was obtained from the UCI Machine 
+Learning Repository to execute the study. Classification 
+techniques like SVM, Random Forest, and This study 
+predicts heart disease through the execution of Artificial 
+Neural Network (ANN). The analysis from their study 
+indicated Random Forest demonstrated the minimum 
+accuracy level of 80.0%. Research findings demonstrated 
+that Random Forest achieved an accuracy of 80.0% but SVM 
+surpassed all other models with 84.0% [2]. 
+Agarwal [3] demonstrated an improved method to detect, 
+predict and evaluate breast cancer treatment outcomes 
+through SVM that reached 97.13% accuracy in the algorithm 
+review with Decision Tree, Random Forest, SVM, and 
+Logistic Regression. 
+The research proposes a single framework to forecast 
+diseases through machine learning classification models 
+including Support Vector Machine (SVM) as well as 
+Logistic Regression alongside K-Nearest Neighbor (KNN). 
+The technology streamlines diagnosis operations and reduces 
+medical costs through its single platform interface which 
+provides forecasts for diabetes cancer and heart disease. The 
+research evaluates prediction accuracy between SVM along 
+with ANN and KNN as well as Decision Trees in diagnosing 
+cardiac disease. The multiple disease prediction system holds 
+importance because it integrates a single platform for disease 
+assessment while enhancing access to medical solutions. 
+PCA functions together with data mining as well as machine 
+learning algorithms to deliver effective analysis [4]. 
+A machine learning-powered system for diagnosing 
+multiple diseases simultaneously is the main subject of 
+"Multiple Disease Prediction System." The approach 
+addresses current healthcare systems' individual-disease 
+orientation since they produce delays or ineffective 
+diagnostic outcomes. The prediction accuracy reached 88% 
+for Random Forest and 89% for XGBoost when detecting 
+diabetes. The heart disease prediction results from Random 
+Forest and KNN demonstrated 85% accuracy and 77% 
+accuracy. The accuracy rates for Random Forest and 
+XGBoost in diagnosing liver illnesses amounted to 73% and 
+68%. Users benefit from this technology because it provides 
+precise immediate disease predictions for various diseases 
+through a single website and eliminates the need for multiple 
+platforms. The implementation relies on machine learning 
+algorithms Bayesian Decision Tree among XGBoost and 
+KNN [5]. 
+The research develops MDPS which operates through the 
+web to forecast seven common health conditions with deep 
+learning algorithms and machine learning techniques. The 
+system provides accurate predictions through structured and 
+image-based data analysis done with Random Forest and 
+CNN models working together. The platform improves 
+healthcare access through its functions that enable real-time 
+distance monitoring of disease risks while promoting disease 
+awareness and early treatment. Flask and TensorFlow and 
+Keras work together in this system to deliver diagnostic tools 
+that give dependable and user-friendly capabilities for 
+promoting proactive health care [6]. 
+The "Multiple-Disease Prediction System" utilizes ML 
+algorithms to make early detections of Parkinson’s disease 
+and heart disease and diabetes and breast cancer. When 
+employed with PCA methodology SVM and Random Forest 
+produce better model performance than other methods. The 
+web application presents a user-friendly interface while 
+performing constraint checks to fill the gaps in multi-disease 
+prediction. [7] 
+Current studies in ML-based disease prediction identify 
+major weaknesses in their operation which include limited 
+disease scope, restricted accessibility and absence of model 
+performance analysis with no access to real-time remote 
+diagnosis. A user-friendly Streamlit-based system for kidney 
+disease and heart disease as well as breast cancer prediction 
+has been developed to overcome the identified gaps. 
+Predictive reliability together with healthcare accessibility 
+increases through choosing accurate models and ensuring 
+system availability which benefits underserved populations. 
+III. PROPOSED SYSTEM 
+Fig 1 discusses the use of various machine learning 
+algorithms, including, Decision Tree Classifier, Random 
+Forest, K-nearest neighbor algorithm, Gradient Boosting 
+Classifier and XGboost to predict multiple diseases. The aim 
+was to bridge the gap between patients and doctors, allowing 
+each to pursue their goals. The accuracy of each algorithm 
+was evaluated and compared to determine the most effective 
+for prediction. Multiple datasets are combined to enhance the 
+accuracy of the predicted results. A user-friendly web 
+application was developed that enables individuals to easily 
+predict diseases by inputting specific attribute values. 
+ 
+ 
+Fig. 1. Workflow of Proposed work 
+A. Datasets Used 
+Table 1 displays the datasets that we collect for each of 
+our models. 
+TABLE I.  
+DESCRIPTION OF EACH DATASET FOR OUR PREDICTION 
+SYSTEMS 
+Disease 
+prediction 
+system 
+Dataset  
+Name 
+Names of 
+medical 
+Parameters 
+Number of 
+Instance 
+Heart disease 
+prediction 
+“Heart 
+Disease 
+Dataset” 
+by 
+Kaggle 
+14  
+(including target 
+variable) 
+606 
+instances 
+Kidney disease 
+prediction  
+“Kidney 
+Disease 
+Dataset” by 
+Kaggle 
+25 
+(including target 
+variable) 
+400 
+instances 
+Breast Cancer 
+Predication 
+“Breast 
+Cancer 
+Wisconsin 
+Dataset” by UCI  
+32  
+(including target 
+variable) 
+569 
+instances 
+Authorized licensed use limited to: Somaiya University. Downloaded on February 11,2026 at 02:43:08 UTC from IEEE Xplore.  Restrictions apply. 
+B. Data Preprocessing 
+Data preparation is the process of converting raw data 
+into an understandable format by reduction, transformation, 
+and cleaning procedures. Necessary missing data points 
+received imputation through mean and mode substitution for 
+variables that were continuous or categorical respectively. 
+The LabelEncoder() function from sklearn.preprocessing 
+encoded all categorical features for this application. The 
+analysis included an Exploratory Data Analysis (EDA) to 
+show data distributions as well as discover patterns of 
+missing information and locate outliers and measure 
+correlations between features. The analysis used correlation 
+matrices to detect features which showed excessive 
+correlation therefore they were eliminated. SMOTE enabled 
+us to handle class imbalance by generating synthetic 
+minority examples which provided balanced training 
+conditions. 
+C. Splitting Train-Test 
+The dataset went through preprocessing then split into 
+training (80%) along with testing (20%) sections through 
+train_test_split() with stratification setting the value as Y for 
+keeping class distributions balanced. A model validation 
+through k-fold cross-validation (k=5) was conducted to 
+prevent overfitting and enhance generalization. 
+D. Model Training  
+After splitting our dataset, we first use the training data to 
+train our model using a variety of machine learning 
+techniques and classifiers. For any prediction system in our 
+situation, we use the Random Forest, Decision Tree 
+Classifier, k-nearest neighbor algorithm, Gradient Boosting 
+Classifier and XGboost techniques to train the model. 
+Hyperparameter tuning was performed using GridSearchCV 
+optimizing parameters like learning rate, depth, and 
+estimators to obtain better accuracy levels. 
+E. Model Evaluation and Optimal Model Selection 
+Model performance is evaluated using parameters such as
+ accuracy, precision, recall, and F1score to ensure accurate a
+nd robust results. The best model is chosen after its accuracy 
+is compared to other models. We proceed to Model 
+Prediction, where the model is tested for custom inputs, 
+using the best machine learning method and the testing data. 
+F. Model Deployment 
+After saving each model, we use Pickle to load them into 
+our web app's database. Finally, we use "streamlit" to 
+develop the web app. and "streamlit-options-menu", and then 
+install our model. We use constraint checks, such as drop-
+down columns and error pop-ups, to guarantee that users 
+provide consistent data to our models. 
+IV. RESULTS AND DISCUSSION 
+A. Insights from Exploratory Data Analysis 
+After conducting Exploratory Data Analysis (EDA), 
+missing values were handled, and new features that might be 
+more useful for the model were created. Categorical 
+variables were encoded using label encoding. Additionally, 
+to address multicollinearity, highly correlated features were 
+removed to ensure better model performance. 
+ 
+Fig. 2. Heatmap for kidney disease prediction 
+Key Insights from the correlation Heatmap for Kidney 
+Prediction : 
+• 
+Strong Relationships: A strong positive correlation 
+exists 
+between 
+haemoglobin 
+and 
+packed_cell_volume, as expected due to their 
+physiological relationship. 
+• 
+Kidney Function: blood_urea and serum_creatinine 
+show a strong negative correlation, indicating their 
+inverse relationship in kidney function. Albumin 
+levels also negatively correlate with these markers, 
+suggesting its role in kidney health.  
+• 
+Blood Glucose: Elevated blood_glucose_random 
+levels are associated with higher blood_urea and 
+serum_creatinine. 
+• 
+Class Prediction: specific_gravity, haemoglobin, and 
+packed_cell_volume strongly correlate with the 
+class, suggesting their potential importance for 
+classification. 
+ 
+Fig. 3. Heatmap for heart disease prediction 
+Key Insights from the correlation heatmap for heart disease 
+prediction : 
+• 
+Strong Predictors: Chest pain type, maximum heart 
+rate, and ST depression are strongly correlated with 
+the presence of heart disease.  
+• 
+Age and Sex: Age and sex (likely male) are 
+associated with a slightly increased risk of heart 
+disease.  
+• 
+Blood Pressure and Cholesterol: Resting blood 
+pressure and cholesterol levels have weaker 
+correlations with the target variable.  
+Authorized licensed use limited to: Somaiya University. Downloaded on February 11,2026 at 02:43:08 UTC from IEEE Xplore.  Restrictions apply. 
+• Predictor Relationships: Chest pain type is negatively 
+correlated with ST depression, and maximum heart 
+rate is negatively correlated with exercise-induced 
+angina. 
+ 
+Fig. 4. Histograms for heart disease prediction 
+Key Insights from the histograms for heart disease : 
+• 
+Age & Sex: The majority of patients are middle-aged 
+or older, with a slight male predominance.  
+• 
+Chest Pain: Typical and atypical angina are the most 
+common chest pain types.  
+• 
+Blood Pressure & Cholesterol: Both resting blood 
+pressure and cholesterol levels tend to have normal 
+distributions with slight right skews.  
+• 
+Fasting Blood Sugar: Fasting blood sugar levels in 
+the majority of patients are less than 120 mg/dl.  
+• 
+ECG Results: The majority of patients have normal 
+resting ECG results.  
+• 
+Exercise-Related Factors: Most patients do not 
+experience exercise-induced angina or significant ST 
+depression during exercise.  
+• 
+Vessel Coloration & Thallium Stress: A majority of 
+patients have 0 or 1 major vessels colored by 
+fluoroscopy and have normal thallium stress results. 
+Key Insights from the correlation heatmap for breast 
+cancer prediction : 
+• Strong Predictors: Several features are strongly 
+associated 
+with 
+malignancy, 
+including 
+radius, 
+perimeter, area, concavity, concave points, and 
+texture. These features provide valuable information 
+for predicting the likelihood of a tumor being 
+malignant. 
+• Feature Relationships: Strong correlations exist 
+between features like radius, perimeter, and area, 
+indicating their interdependencies.  
+• Mean vs. Worst: High correlations between mean and 
+worst values of features suggest that tumors with 
+larger or more irregular characteristics in the mean 
+measurements tend to have more severe or advanced 
+characteristics in the worst measurements. 
+ 
+Fig. 5. Heatmap for breast cancer prediction 
+ 
+Fig. 6. Histograms for breast cancer disease prediction 
+Key Insights from the histograms for breast cancer: 
+• 
+Distribution Shapes: Many features exhibit right-
+skewed distributions, indicating potential outliers. 
+Some 
+features 
+have 
+approximately 
+normal 
+distributions.  
+• 
+Outliers: The right-skewed distributions suggest the 
+presence of potential outliers that require careful 
+handling.  
+• 
+Feature Relationships: While not directly evident 
+from histograms, they can hint at potential 
+relationships between variables. 
+B. Algorithm Accuracies: Disease Comparison 
+1) XGBoost: Table 1 shows the highest accuracy (98.24) 
+for breast cancer. 
+TABLE II.  
+RESULTS OBTAINED USING XGBOOST  
+Disease Prediction 
+Accuracy 
+Heart Disease  
+94.50 
+Chronic Kidney Disease 
+95.83 
+Breast Cancer  
+98.24 
+ 
+Authorized licensed use limited to: Somaiya University. Downloaded on February 11,2026 at 02:43:08 UTC from IEEE Xplore.  Restrictions apply. 
+2) Decision Tree Classifier: Table 2 shows the highest 
+accuracy (97.50) for kidney disease. 
+TABLE III.  
+RESULTS OBTAINED USING DECISION TREE CLASSIFIER 
+Disease Prediction 
+Accuracy 
+Heart Disease  
+92.30 
+Kidney Disease 
+97.50 
+Breast Cancer  
+92.98 
+ 
+3) Gradient Boosting Classifier: Table 1 shows the 
+highest accuracy (97.50) for breast cancer. 
+TABLE IV.  
+RESULTS OBTAINED USING GRADIENT BOOSTING 
+CLASSIFIER   
+Disease Prediction 
+Accuracy 
+Heart Disease  
+92.85 
+Chronic Kidney Disease 
+97.50 
+Breast Cancer  
+96.49 
+ 
+4) K-nearest neighbor algorithm: Table 1 shows the 
+highest accuracy (98.24) for breast cancer. 
+TABLE V.  
+RESULTS OBTAINED USING  KNN 
+Disease Prediction 
+Accuracy 
+Heart Disease  
+81.86 
+Chronic Kidney Disease 
+63.33 
+Breast Cancer  
+91.81 
+ 
+5) Random Forest Classifier:Table 1 shows the highest 
+accuracy (99.16) for kidney disease. 
+TABLE VI.  
+RESULTS OBTAINED USING  RANDOM FOREST CLASSIFIER 
+Disease Prediction 
+Accuracy 
+Heart Disease  
+95.60 
+Chronic Kidney Disease 
+99.16 
+Breast Cancer  
+97.07 
+ 
+High accuracy rates emerge from Random Forest and 
+XGBoost but these two algorithms surpass K-Nearest 
+Neighbors (KNN) in terms of required computational 
+capacity. The extended complexity of ensemble methods 
+requires longer processing time and increased resource 
+consumption that needs examination before deploying them 
+in real-time systems. Decision Tree and KNN achieve lower 
+performance levels yet they simplify interpretation and need 
+less computing resources which makes them appropriate for 
+lightweight applications. 
+C. Optimal model selection for each prediction system 
+TABLE VII.  
+OPTIMAL MODEL SELECTION 
+Forecasting system 
+ML Model Used 
+Test Accuracy 
+Heart Disease  
+RFC 
+95.60 
+Kidney Disease 
+RFC 
+99.16 
+Breast Cancer  
+XGB 
+98.24 
+ 
+The table represents the best-performing models selected 
+after training and evaluating multiple models (Random 
+Forest, Decision Tree Classifier, k-nearest neighbor 
+algorithm, Gradient Boosting Classifier, and XGBoost) on 
+each disease dataset.  
+The models demonstrate superior accuracy when 
+working with the provided datasets yet their practical 
+implementation could face challenges because of bias issues 
+in the data registry. Future research should utilize expanded 
+training datasets comprising diverse patient populations 
+because it will tackle biases and enhance model performance 
+across different populations which will boost practical 
+generalization abilities. 
+D. Web-App Stimulation Model Deployment 
+Our multi-disease forecasting system has its web-based 
+interface built through "streamlit" Python library deployment 
+for optimized user experience. To access multiple web pages, 
+we incorporated the "streamlit options-menu" library into our 
+program. Each webpage includes specific prediction 
+algorithm titles while the input areas function as attribute 
+names. The system indicates the "prediction result" button 
+for users to submit their test requests after completing 
+required inputs. In specific predictive models the input field 
+type ambiguity between integer, floating-point or string 
+values gets validated. These systems present pre-text 
+guidance to users immediately before the input fields and 
+dropdown menus which contain required entry areas. 
+V. CONCUSION AND FUTURE SCOPE 
+The proposed Multi-Disease Prediction System shows 
+computer learning methods that improve healthcare 
+accessibility by identifying diseases early. The system 
+leverages advanced algorithms along with a user-friendly 
+web application that Streamlit created to deliver immediate 
+accurate evaluations of kidney disease and breast cancer and 
+heart disease. The platform completes missing capabilities 
+found in typical diagnostic approaches through which users 
+specifically in underserved regions can obtain meaningful 
+health data. The integration of several diseases into one 
+framework improves its practical value while increasing 
+operational efficiency thus providing a major advancement 
+for data-driven accessible healthcare solutions. The system 
+has the potential for transformation in preventive health 
+management due to ongoing development activities along 
+with user feedback implementation. 
+Future Advancements: 
+• 
+In order to improve generalizability and lessen 
+biases, future iterations of the system will use larger, 
+more diverse datasets from several sources. 
+• 
+For more reliable predictions, use deep learning 
+methods like Convolutional Neural Networks (CNN) 
+and Recurrent Neural Networks (RNN) to evaluate 
+complicated data, such as time-series data and 
+medical imaging. 
+• 
+To further improve accessibility and allow for on-
+the-go health assessments, develop a mobile 
+application version of the system. 
+• 
+To ensure inclusivity and serve a varied user base 
+worldwide, include support for many languages. 
+Authorized licensed use limited to: Somaiya University. Downloaded on February 11,2026 at 02:43:08 UTC from IEEE Xplore.  Restrictions apply. 
+REFERENCES 
+ 
+[1] A. Kumar, K. U. Singh and M. Kumar, "A Clinical Data Analysis 
+Based Diagnostic Systems for Heart Disease Prediction Using 
+Ensemble Method," in Big Data Mining and Analytics, vol. 6, no. 4, 
+pp. 513-525. 
+[2] Rindhe, Baban & Ahire, Nikita & Patil, Rupali & Gagare, Shweta & 
+Darade, Manisha. (2021). Heart Disease Prediction Using Machine 
+Learning. International Journal of Advanced Research in Science, 
+Communication and Technology, pp. 267-276. 
+[3] R. Rawal and VIT University, “Breast Cancer Prediction Using 
+Machine Learning,” Journal of Emerging Technologies and 
+Innovative Research (JETIR), vol. 7, no. 5, pp. 13–14. 
+[4] J. Visumathi, Tetala Durga Venkata Rama Reddy, Velagapudi 
+Abhinandhan, & Panamganti Anil Kumar, “Multi-Disease prediction 
+using machine learning algorithm,” International Journal for Research 
+in Applied Science and Engineering Technology, vol. 11, no. 4, pp. 
+447–453. 
+[5] I. Mohit, K. S. Kumar, U. A. K. Reddy, and B. S. Kumar, “An 
+Approach to detect multiple diseases using machine learning 
+algorithm,” Journal of Physics Conference Series, vol. 2089, no. 1, p. 
+012009. 
+[6] J. Mathews, J. Joseph, R. Reji, A. Kamthe and R. Deshmukh, "Multi-
+Disease Prediction System Using Machine Learning," 2023 6th 
+International Conference on Advances in Science and Technology 
+(ICAST), Mumbai, India, 2023, pp. 330-334. 
+[7] R. Shukla and R. Sawant, "Multiple Disease Prediction System Using 
+Machine 
+Learning," 
+2023 
+International 
+Conference 
+on 
+Electrical,Electronics, Communication and Computers (ELEXCOM), 
+Roorkee, India, 2023, pp. 1-6. 
+Authorized licensed use limited to: Somaiya University. Downloaded on February 11,2026 at 02:43:08 UTC from IEEE Xplore.  Restrictions apply. 

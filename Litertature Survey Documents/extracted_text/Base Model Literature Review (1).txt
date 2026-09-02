@@ -1,0 +1,231 @@
+Literature Review for Selection of Base Model 
+Heart disease remains one of the leading causes of global mortality, demanding accurate and 
+early prediction systems. With the advancement of Machine Learning (ML) and Deep Learning 
+(DL), predictive models have significantly improved diagnostic accuracy and decision support 
+systems in cardiology. 
+Recent studies show that traditional classifiers such as Support Vector Machine (SVM) and 
+Random Forest (RF) remain widely used due to their robustness and interpretability [8]. 
+However, more advanced approaches such as Stacked Ensemble Learning [1], Blending-based 
+Networks [5], and Deep Learning with Transfer Learning [3] have demonstrated superior 
+performance in certain datasets. 
+Binary classification models generally achieve higher accuracy compared to multiclass 
+prediction models, which remain more complex and challenging [1], [6]. Furthermore, 
+preprocessing techniques such as Principal Component Analysis (PCA) and optimized feature 
+selection have been shown to significantly improve model performance [2]. 
+This review analyzes and compares major machine learning techniques used for heart disease 
+prediction to identify suitable base models for further experimentation. 
+Research Gaps Indetified 
+Based on the reviewed literature, the following research gaps are observed: 
+1.​ Lower Performance in Multiclass Classification – Multiclass models show 
+significantly lower accuracy compared to binary classification models [1], [6].​
+ 
+2.​ Dependence on Dataset Quality – Model performance varies across datasets such as 
+Cleveland, UCI, and regional datasets, indicating limited generalizability [4], [8].​
+ 
+3.​ Limited Benchmarking Across Models – Many studies compare limited algorithms 
+rather than performing extensive benchmarking [8].​
+ 
+4.​ Need for Dimensionality Reduction – High-dimensional medical datasets require 
+preprocessing techniques like PCA for better performance [2].​
+ 
+5.​ Ensemble Complexity – Although stacking and blending improve accuracy, they 
+increase model complexity and computational cost [1], [5].​
+ 
+6.​ Limited Explainability and Real-World Deployment – Few models integrate 
+explainable AI or deploy practical web-based systems [9].​
+ 
+These gaps suggest that starting with strong baseline models before moving to complex 
+ensemble architectures is a systematic and practical approach. 
+Comparison Table of the Models used in the Papers 
+ 
+Ref No. 
+Study 
+Models Used 
+Best Performing 
+Model 
+Accuracy 
+Key 
+Technique
+s Used 
+[1] 
+Stacked Ensemble 
+(Binary 
+vs 
+Multiclass) 
+SVM 
+[1], 
+RF 
+[1], 
+XGBoost [1], Gradient 
+Boosting 
+[1], 
+Deep 
+Learning 
+[1], Stacking 
+Ensemble [1] 
+Stacking 
+Ensemble [1] 
+90.2% 
+(Binary), 
+64.1% 
+(Multiclass) 
+PCA, 
+Stacked 
+Ensemble 
+[2] 
+Comparative 
+Multiclass Analysis 
+SVM [2], RF [2], Logistic 
+Regression [2], XGBoost 
+[2] 
+XGBoost [2] 
+Improved 
+with 
+preprocessin
+g 
+Feature 
+Selection, 
+PCA 
+[3] 
+DL 
+& 
+Transfer 
+Learning Review 
+CNN [3], RNN [3], Hybrid 
+DL Models [3] 
+Deep 
+Learning 
+Models [3] 
+High 
+accuracy 
+(varies) 
+Transfer 
+Learning 
+[4] 
+Indonesia 
+Multiclass Study 
+SVM [4], RF [4], Decision 
+Tree [4] 
+Dataset-dependen
+t [4] 
+Moderate 
+Multiclass 
+Classificati
+on 
+[5] 
+EnsCVDD-Net 
+& 
+BlCVDD-Net 
+Ensemble Networks [5], 
+Blending Models [5] 
+Blended 
+Ensemble [5] 
+Improved 
+over 
+traditional 
+ML 
+Blending & 
+Ensemble 
+[6] 
+Stacked Ensemble 
+Comparison 
+RF [6], SVM [6], LGBM 
+[6], GBC [6], Stacking [6] Stacking [6] 
+Higher than 
+individual 
+models 
+Ensemble 
+Learning 
+[7] 
+ML 
+Classification 
+Techniques 
+SVM [7], KNN [7], DT [7], 
+RF [7] 
+Hybrid Model [7] 
+Improved 
+performance 
+Feature 
+Engineerin
+g 
+[8] 
+Systematic 
+Literature Review 
+SVM [8], RF [8], KNN [8], 
+NB [8] 
+No single best 
+Dataset 
+dependent 
+Preprocessi
+ng 
+& 
+Ensemble 
+[9] 
+Streamlit-Based 
+System 
+RF [9], XGBoost [9], DT 
+[9], KNN [9] 
+Random 
+Forest 
+[9] 
+95% (Heart 
+Disease) 
+Web 
+Deploymen
+t 
+Conclusion: From the literature analysis: 
+●​ SVM is consistently used across multiple studies and performs reliably across datasets 
+[1], [2], [4], [8].​
+ 
+●​ MLP (Multi-Layer Perceptron), as part of deep learning approaches, shows strong 
+potential in learning complex nonlinear relationships [3].​
+ 
+●​ Random Forest is robust, interpretable, and performs well in multiple comparative studies 
+[1], [8], [9].​
+ 
+Although ensemble and stacking models achieve higher accuracy [1], [5], [6], it is 
+methodologically sound to first establish strong baseline models before implementing complex 
+architectures. 
+Therefore, for baseline models, we propose: 
+1.​ Support Vector Machine (SVM)​
+ 
+2.​ Multi-Layer Perceptron (MLP)​
+ 
+3.​ Random Forest (RF) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+References Used:​
+[1] Improving Heart Disease Prediction with Stacked Ensemble Learning: A Comparison of 
+Binary and Multiclass.​
+ [2] Comparative Analysis of Multiclass Heart Disease Prediction Classification Models using 
+Preprocessing and Feature Selection.​
+ [3] Deep Learning and Transfer Learning in Cardiology: A Review of Cardiovascular Disease 
+Prediction Models.​
+ [4] Heart Disease Prediction in Indonesia Using Machine Learning Techniques for Multiclass 
+Classification.​
+ [5] Heart Disease Prediction Using Novel Ensemble and Blending Based Cardiovascular 
+Disease Detection Networks (EnsCVDD-Net and BlCVDD-Net).​
+ [6] Improving Heart Disease Prediction with Stacked Ensemble Learning: A Comparison of 
+Binary and Multiclass.​
+ [7] Predicting Heart Diseases Using Machine Learning and Different Data Classification 
+Techniques.​
+ [8] Survey of the Performance of Classification Algorithms on Heart Disease Datasets: A 
+Systematic Literature Review.​
+ [9] Streamlit-Based Multi-Disease Prediction System for Early Detection of Kidney Disease, 
+Breast Cancer, and Heart Disease. 
+ 
