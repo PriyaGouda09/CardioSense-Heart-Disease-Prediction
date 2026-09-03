@@ -155,7 +155,7 @@ class MLEngine:
 
         # Model storage
         self.fitted_models = {}
-        self.best_thresholds = {0: 0.5, 1: 0.5, 2: 0.5, 3: 0.25, 4: 0.20}
+        self.best_thresholds = {0: 0.5, 1: 0.5, 2: 0.5, 3: 0.30, 4: 0.50}
         self.explainer = None
         self.preprocessor = None
         self.scaler = None
@@ -164,15 +164,61 @@ class MLEngine:
         self.dataset_info = {}
         self.is_trained = False
 
-        # Initialize and train models
-        self.train_and_calibrate()
+        # Load saved models if present, otherwise train from scratch
+        if not self._try_load_saved_models():
+            self.train_and_calibrate()
+
+    def _try_load_saved_models(self):
+        """Attempts to load pre-trained models from saved_models directory."""
+        import json
+        save_dir = os.path.join(os.path.dirname(__file__), "saved_models")
+        rf_path = os.path.join(save_dir, "random_forest_model.joblib")
+        svm_path = os.path.join(save_dir, "svm_model.joblib")
+        mlp_path = os.path.join(save_dir, "mlp_model.joblib")
+        benchmarks_path = os.path.join(save_dir, "benchmarks.json")
+
+        if os.path.exists(rf_path) and os.path.exists(svm_path) and os.path.exists(mlp_path):
+            try:
+                print(f"[MLEngine] Loading pre-trained models from {save_dir}...")
+                self.load_and_preprocess_dataset()
+                self.fitted_models["Random Forest"] = joblib.load(rf_path)
+                self.fitted_models["SVM"] = joblib.load(svm_path)
+                self.fitted_models["MLP"] = joblib.load(mlp_path)
+
+                best_rf = self.fitted_models["Random Forest"]
+                self.preprocessor = best_rf.named_steps["preprocess"]
+                self.scaler = best_rf.named_steps["scaler"]
+                self.clf_rf = best_rf.named_steps["clf"]
+
+                if os.path.exists(benchmarks_path):
+                    with open(benchmarks_path, "r", encoding="utf-8") as f:
+                        bench_data = json.load(f)
+                        self.metrics = bench_data.get("models", {})
+                        if "clinical_thresholds" in bench_data:
+                            self.best_thresholds = {int(k): v for k, v in bench_data["clinical_thresholds"].items()}
+
+                if SHAP_AVAILABLE:
+                    try:
+                        self.explainer = shap.TreeExplainer(self.clf_rf)
+                        print("[MLEngine] TreeExplainer successfully initialized.")
+                    except Exception as e:
+                        print(f"[MLEngine] TreeExplainer init note: {e}")
+                        self.explainer = None
+
+                self.is_trained = True
+                print("[MLEngine] Pre-trained models loaded successfully.")
+                return True
+            except Exception as e:
+                print(f"[MLEngine] Could not load saved models ({e}), retraining...")
+                return False
+        return False
 
     def _find_dataset_path(self):
         candidates = [
-            os.path.join(os.getcwd(), "First_Review_Content", "heart_disease_uci.csv"),
-            os.path.join(os.path.dirname(__file__), "..", "First_Review_Content", "heart_disease_uci.csv"),
             os.path.join(os.getcwd(), "Second_Review_Content", "heart_disease_uci.csv"),
             os.path.join(os.path.dirname(__file__), "..", "Second_Review_Content", "heart_disease_uci.csv"),
+            os.path.join(os.getcwd(), "First_Review_Content", "heart_disease_uci.csv"),
+            os.path.join(os.path.dirname(__file__), "..", "First_Review_Content", "heart_disease_uci.csv"),
             os.path.join(os.getcwd(), "heart_disease_uci.csv"),
         ]
         for p in candidates:
@@ -182,7 +228,7 @@ class MLEngine:
         raise FileNotFoundError(f"Could not find heart_disease_uci.csv in expected directories: {candidates}")
 
     def _engineer_features(self, df):
-        """Creates clinical engineered features as specified in Heart_Disease_Severity_ML_Pipeline_corrected."""
+        """Creates clinical engineered features as specified in Heart_Disease_Severity_ML_Pipeline_fixed."""
         df_eng = df.copy()
         
         # 1. age_group
@@ -241,6 +287,7 @@ class MLEngine:
 
         self.dataset_info = {
             "path": self.dataset_path,
+            "pipeline_source": "Heart_Disease_Severity_ML_Pipeline_fixed",
             "total_samples": len(df),
             "columns": list(df.columns),
             "class_counts": df["num"].value_counts().sort_index().to_dict(),
@@ -252,7 +299,7 @@ class MLEngine:
         return df
 
     def train_and_calibrate(self):
-        """Executes full training pipeline, threshold tuning, and SHAP explainer setup."""
+        """Executes full training pipeline, threshold tuning, and SHAP explainer setup according to Heart_Disease_Severity_ML_Pipeline_fixed."""
         print(f"[MLEngine] Loading dataset from: {self.dataset_path}")
         df = self.load_and_preprocess_dataset()
 
@@ -280,14 +327,15 @@ class MLEngine:
             remainder="drop",
         )
 
-        # 1. Random Forest Pipeline
+        # 1. Random Forest Pipeline (Heart_Disease_Severity_ML_Pipeline_fixed)
         rf_pipe = ImbPipeline([
             ("preprocess", self.preprocessor),
             ("smote", SMOTE(random_state=self.seed)),
             ("scaler", StandardScaler()),
             ("clf", RandomForestClassifier(
                 n_estimators=100,
-                max_depth=12,
+                max_depth=10,
+                max_features="sqrt",
                 min_samples_split=2,
                 class_weight="balanced",
                 random_state=self.seed,
@@ -295,7 +343,7 @@ class MLEngine:
             )),
         ])
 
-        # 2. Support Vector Machine Pipeline
+        # 2. Support Vector Machine Pipeline (Heart_Disease_Severity_ML_Pipeline_fixed)
         svm_pipe = ImbPipeline([
             ("preprocess", self.preprocessor),
             ("smote", SMOTE(random_state=self.seed)),
@@ -306,11 +354,13 @@ class MLEngine:
                 gamma="scale",
                 probability=True,
                 class_weight="balanced",
-                random_state=self.seed
+                random_state=self.seed,
+                max_iter=2000,
+                cache_size=400
             )),
         ])
 
-        # 3. MLP Neural Network Pipeline
+        # 3. MLP Neural Network Pipeline (Heart_Disease_Severity_ML_Pipeline_fixed)
         mlp_pipe = ImbPipeline([
             ("preprocess", self.preprocessor),
             ("smote", SMOTE(random_state=self.seed)),
@@ -320,7 +370,7 @@ class MLEngine:
                 activation="relu",
                 alpha=0.0001,
                 learning_rate_init=0.001,
-                max_iter=300,
+                max_iter=500,
                 random_state=self.seed,
                 early_stopping=True
             )),

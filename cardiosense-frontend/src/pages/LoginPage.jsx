@@ -3,34 +3,40 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Activity, AlertCircle, CheckCircle2, ShieldCheck, ArrowRight } from "lucide-react";
+import { Activity, AlertCircle, CheckCircle2, ShieldCheck, ArrowRight, Mail, Lock } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { Button } from "../components/ui/Button";
 import { Input } from "../components/ui/Input";
 import { Card } from "../components/ui/Card";
 
+// Robust Email Regex matching RFC standard format
+const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+
 // Validation Schema for Log In
 const loginSchema = yup.object({
   email: yup
     .string()
+    .trim()
     .required("Email address is required")
-    .email("Please enter a valid email address"),
+    .matches(EMAIL_REGEX, "Please enter a valid email address (e.g. user@example.com)"),
   password: yup
     .string()
     .required("Password is required")
-    .min(8, "Password must be at least 8 characters"),
+    .min(6, "Password must be at least 6 characters"),
 });
 
 // Validation Schema for Sign Up
 const signupSchema = yup.object({
   name: yup
     .string()
+    .trim()
     .required("Display name is required")
     .min(2, "Name must be at least 2 characters"),
   email: yup
     .string()
+    .trim()
     .required("Email address is required")
-    .email("Please enter a valid email address"),
+    .matches(EMAIL_REGEX, "Please enter a valid email address (e.g. user@example.com)"),
   password: yup
     .string()
     .required("Password is required")
@@ -57,9 +63,11 @@ export const LoginPage = () => {
   const {
     register: registerLogin,
     handleSubmit: handleLoginSubmit,
+    setValue: setLoginValue,
     formState: { errors: loginErrors, isSubmitting: isLoginSubmitting },
     reset: resetLoginForm,
   } = useForm({
+    mode: "onTouched",
     resolver: yupResolver(loginSchema),
     defaultValues: { email: "", password: "" },
   });
@@ -72,6 +80,7 @@ export const LoginPage = () => {
     formState: { errors: signupErrors, isSubmitting: isSignupSubmitting },
     reset: resetSignupForm,
   } = useForm({
+    mode: "onTouched",
     resolver: yupResolver(signupSchema),
     defaultValues: {
       name: "",
@@ -87,7 +96,7 @@ export const LoginPage = () => {
   const onLogin = async (data) => {
     try {
       setAuthError("");
-      await login(data.email, data.password);
+      await login(data.email.trim(), data.password);
       navigate("/dashboard");
     } catch (err) {
       setAuthError(err.message || "Invalid email or password. Please try again.");
@@ -97,7 +106,7 @@ export const LoginPage = () => {
   const onSignup = async (data) => {
     try {
       setAuthError("");
-      await signup(data.name, data.email, data.password);
+      await signup(data.name.trim(), data.email.trim(), data.password);
       navigate("/dashboard");
     } catch (err) {
       setAuthError(err.message || "Could not create account. Please try again.");
@@ -119,6 +128,12 @@ export const LoginPage = () => {
     navigate("/dashboard");
   };
 
+  const handleFillDemo = (demoEmail, demoPass = "patient123") => {
+    setAuthError("");
+    setLoginValue("email", demoEmail, { shouldValidate: true, shouldTouch: true });
+    setLoginValue("password", demoPass, { shouldValidate: true, shouldTouch: true });
+  };
+
   const switchTab = (tab) => {
     setActiveTab(tab);
     setAuthError("");
@@ -138,7 +153,7 @@ export const LoginPage = () => {
             Welcome to Cardio<span className="text-primary">Sense</span>
           </h1>
           <p className="text-sm text-text-secondary">
-            Understand your heart health patterns with explainable AI
+            Sign in to track assessments, save results, and generate clinical reports
           </p>
         </div>
 
@@ -181,11 +196,36 @@ export const LoginPage = () => {
           {/* LOG IN FORM */}
           {activeTab === "login" && (
             <form onSubmit={handleLoginSubmit(onLogin)} className="space-y-4">
+              {/* Demo Quick Fill Options */}
+              <div className="bg-slate-50 p-3 rounded-xl border border-slate-200/80 space-y-2">
+                <div className="flex items-center justify-between text-[11px] font-semibold text-text-secondary">
+                  <span className="uppercase tracking-wider">Quick Fill Demo</span>
+                  <span className="text-text-muted">Click to fill</span>
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => handleFillDemo("patient@cardiosense.com", "patient123")}
+                    className="px-2.5 py-1 rounded-lg bg-surface hover:bg-primary-50 hover:border-primary-200 border border-border text-text-primary text-xs font-medium transition-colors shadow-xs"
+                  >
+                    👤 patient@cardiosense.com
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleFillDemo("doctor@cardiosense.com", "doctor123")}
+                    className="px-2.5 py-1 rounded-lg bg-surface hover:bg-primary-50 hover:border-primary-200 border border-border text-text-primary text-xs font-medium transition-colors shadow-xs"
+                  >
+                    🩺 doctor@cardiosense.com
+                  </button>
+                </div>
+              </div>
+
               <Input
                 id="login-email"
                 type="email"
                 label="Email address"
                 placeholder="name@example.com"
+                helperText="Enter a valid email address (e.g. user@domain.com)"
                 required
                 error={loginErrors.email}
                 {...registerLogin("email")}
@@ -279,6 +319,7 @@ export const LoginPage = () => {
                 type="email"
                 label="Email address"
                 placeholder="name@example.com"
+                helperText="Enter a valid email address (e.g. user@domain.com)"
                 required
                 error={signupErrors.email}
                 {...registerSignup("email")}
@@ -315,7 +356,7 @@ export const LoginPage = () => {
                     {...registerSignup("consentDisclaimer")}
                   />
                   <span className="text-xs text-primary-900 leading-relaxed">
-                    <strong>Required:</strong> I understand CardioSense is an educational demo and does not provide a medical diagnosis.
+                    <strong>Required:</strong> I understand CardioSense is an educational health tool and does not formulate a medical diagnosis.
                   </span>
                 </label>
                 {signupErrors.consentDisclaimer && (
@@ -351,7 +392,7 @@ export const LoginPage = () => {
               <ArrowRight className="w-3 h-3" />
             </button>
             <p className="text-[11px] text-text-muted mt-0.5">
-              Guest users can test predictions freely without saving history
+              Guest visitors can test predictions freely without saving history
             </p>
           </div>
         </Card>
@@ -368,7 +409,7 @@ export const LoginPage = () => {
               <div className="space-y-3 text-center py-3">
                 <CheckCircle2 className="w-10 h-10 text-emerald-600 mx-auto" />
                 <p className="text-xs text-text-secondary">
-                  If that email exists in our demo registry, a password reset link has been dispatched.
+                  If that email exists in our registry, a password reset link has been dispatched.
                 </p>
                 <Button
                   fullWidth

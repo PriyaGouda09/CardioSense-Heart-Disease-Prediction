@@ -28,7 +28,7 @@ export const Footer = () => {
               </span>
             </div>
             <p className="text-sm text-text-secondary max-w-sm">
-              Understand your heart health patterns with explainable machine learning and SHAP feature analysis.
+              Understand your heart health patterns with clinical risk analysis and transparent factor attribution.
             </p>
           </div>
 
@@ -39,23 +39,23 @@ export const Footer = () => {
             </h4>
             <ul className="space-y-2 text-sm text-text-secondary">
               <li>
+                <Link to="/about" className="hover:text-primary transition-colors">
+                  About CardioSense
+                </Link>
+              </li>
+              <li>
                 <Link to="/dashboard" className="hover:text-primary transition-colors">
-                  Patient Dashboard
+                  Patient Assessment
                 </Link>
               </li>
               <li>
                 <Link to="/results" className="hover:text-primary transition-colors">
-                  Results & SHAP Analysis
+                  Results & Analysis
                 </Link>
               </li>
               <li>
                 <Link to="/reviews" className="hover:text-primary transition-colors">
                   Community Reviews
-                </Link>
-              </li>
-              <li>
-                <Link to="/about" className="hover:text-primary transition-colors">
-                  About the Model
                 </Link>
               </li>
             </ul>
@@ -64,7 +64,7 @@ export const Footer = () => {
           {/* Col 3: Reference & Research */}
           <div>
             <h4 className="text-xs font-bold text-text-primary uppercase tracking-wider font-heading mb-3">
-              Research & Ethics
+              Research & Guidance
             </h4>
             <ul className="space-y-2 text-sm text-text-secondary">
               <li>
@@ -80,12 +80,12 @@ export const Footer = () => {
               </li>
               <li>
                 <Link to="/about#limitations" className="hover:text-primary transition-colors">
-                  Model Limitations
+                  Clinical Boundaries
                 </Link>
               </li>
               <li>
-                <Link to="/about#methodology" className="hover:text-primary transition-colors">
-                  SHAP Methodology
+                <Link to="/about" className="hover:text-primary transition-colors">
+                  Assessment Procedure
                 </Link>
               </li>
               <li>

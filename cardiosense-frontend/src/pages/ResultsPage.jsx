@@ -138,22 +138,12 @@ export const ResultsPage = () => {
           />
 
           <div className="relative space-y-4">
-            {/* Top row with Badge, Model Tag, and Timestamp */}
+            {/* Top row with Badge and Timestamp */}
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="flex flex-wrap items-center gap-2">
                 <Badge severityClass={result.predictedClass} size="lg">
                   {severity.badgeLabel}
                 </Badge>
-                {result.modelUsed && (
-                  <span className="text-[11px] font-semibold px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 border border-slate-200">
-                    ⚡ {result.modelUsed}
-                  </span>
-                )}
-                {result.thresholdTuningApplied && (
-                  <span className="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-amber-50 text-amber-800 border border-amber-200">
-                    Calibrated Threshold
-                  </span>
-                )}
               </div>
 
               <div className="flex items-center gap-1.5 text-xs text-text-muted">
@@ -176,7 +166,7 @@ export const ResultsPage = () => {
             <div className="pt-2 flex items-start gap-2 text-xs text-text-muted border-t border-border/80">
               <ShieldAlert className="w-4 h-4 text-primary shrink-0 mt-0.5" />
               <span>
-                <strong>Educational note:</strong> This analysis reflects mathematical patterns identified by an ML model and is not a medical diagnosis. Please consult a qualified healthcare professional to evaluate your cardiac health.
+                <strong>Educational note:</strong> This analysis reflects cardiovascular pattern indicators and is not a medical diagnosis. Please consult a qualified healthcare professional to evaluate your cardiac health.
               </span>
             </div>
           </div>
@@ -192,17 +182,17 @@ export const ResultsPage = () => {
             </div>
             <div>
               <h2 className="text-lg font-bold font-heading text-text-primary">
-                Multi-Class Probability Spread
+                Multi-Class Risk Breakdown
               </h2>
               <p className="text-xs text-text-secondary">
-                Model confidence distribution across all 5 clinical categories
+                Likelihood distribution across all 5 cardiovascular categories
               </p>
             </div>
           </div>
 
           <Tooltip
-            title="Probability Distribution"
-            content="Real machine learning models calculate a likelihood distribution rather than an absolute single verdict. This chart illustrates how the model's confidence is distributed across classes."
+            title="Risk Distribution"
+            content="CardioSense calculates a likelihood distribution across all 5 severity tiers. This chart illustrates how your vital signs align with each category."
           />
         </div>
 

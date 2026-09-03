@@ -7,7 +7,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 from backend.ml_engine import MLEngine
 
 def train_and_save():
-    print("[+] Training models from Heart_Disease_Severity_ML_Pipeline_corrected...")
+    print("[+] Training models from Heart_Disease_Severity_ML_Pipeline_fixed...")
     engine = MLEngine()
     
     save_dir = os.path.join(os.path.dirname(__file__), "saved_models")

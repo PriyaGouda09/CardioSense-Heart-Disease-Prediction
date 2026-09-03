@@ -11,16 +11,16 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        {/* Index redirects to Dashboard */}
-        <Route index element={<Navigate to="/dashboard" replace />} />
-        <Route path="login" element={<LoginPage />} />
+        {/* Index redirects to About tab first */}
+        <Route index element={<Navigate to="/about" replace />} />
         <Route path="about" element={<AboutPage />} />
-        <Route path="reviews" element={<ReviewsPage />} />
         <Route path="dashboard" element={<DashboardPage />} />
         <Route path="results" element={<ResultsPage />} />
         <Route path="results/:id" element={<ResultsPage />} />
+        <Route path="reviews" element={<ReviewsPage />} />
+        <Route path="login" element={<LoginPage />} />
         {/* Catch-all fallback */}
-        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        <Route path="*" element={<Navigate to="/about" replace />} />
       </Route>
     </Routes>
   );

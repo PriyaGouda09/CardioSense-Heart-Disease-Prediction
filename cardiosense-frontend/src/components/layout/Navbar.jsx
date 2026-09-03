@@ -51,21 +51,21 @@ export const Navbar = () => {
 
           {/* Desktop Navigation Links */}
           <nav className="hidden md:flex items-center space-x-1">
+            <NavLink to="/about" className={navLinkClasses}>
+              About
+            </NavLink>
             <NavLink to="/dashboard" className={navLinkClasses}>
               Dashboard
             </NavLink>
             <NavLink to={resultsUrl} className={navLinkClasses}>
-              Results & SHAP
+              Results & Analysis
             </NavLink>
             <NavLink to="/reviews" className={navLinkClasses}>
               Community Reviews
             </NavLink>
-            <NavLink to="/about" className={navLinkClasses}>
-              About the Model
-            </NavLink>
           </nav>
 
-          {/* User Auth Action & CTA */}
+          {/* User Auth Action */}
           <div className="hidden md:flex items-center gap-3">
             {isLoggedIn ? (
               <div className="relative">
@@ -113,12 +113,6 @@ export const Navbar = () => {
                 </Button>
               </Link>
             )}
-
-            <Link to="/dashboard">
-              <Button size="sm" icon={Heart} className="shadow-xs">
-                Check Health Pattern
-              </Button>
-            </Link>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -139,6 +133,13 @@ export const Navbar = () => {
       {mobileMenuOpen && (
         <div className="md:hidden border-b border-border bg-surface px-4 pt-2 pb-6 space-y-2 shadow-lg">
           <NavLink
+            to="/about"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block px-3 py-2 rounded-lg text-base font-medium text-text-primary hover:bg-slate-50"
+          >
+            About
+          </NavLink>
+          <NavLink
             to="/dashboard"
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-lg text-base font-medium text-text-primary hover:bg-slate-50"
@@ -150,7 +151,7 @@ export const Navbar = () => {
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-lg text-base font-medium text-text-primary hover:bg-slate-50"
           >
-            Results & SHAP Analysis
+            Results & Analysis
           </NavLink>
           <NavLink
             to="/reviews"
@@ -158,13 +159,6 @@ export const Navbar = () => {
             className="block px-3 py-2 rounded-lg text-base font-medium text-text-primary hover:bg-slate-50"
           >
             Community Reviews
-          </NavLink>
-          <NavLink
-            to="/about"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-lg text-base font-medium text-text-primary hover:bg-slate-50"
-          >
-            About the Model
           </NavLink>
 
           <div className="pt-4 border-t border-border flex flex-col gap-2">
@@ -187,7 +181,7 @@ export const Navbar = () => {
             )}
             <Link to="/dashboard" onClick={() => setMobileMenuOpen(false)}>
               <Button fullWidth size="md" icon={Heart}>
-                Start New Evaluation
+                Patient Assessment
               </Button>
             </Link>
           </div>

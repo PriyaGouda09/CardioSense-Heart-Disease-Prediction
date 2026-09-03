@@ -12,7 +12,7 @@ if __name__ == "__main__":
     print(" CARDIOSENSE FLASK ML BACKEND SERVER")
     print(" Models: Random Forest, SVM, MLP, Ensemble")
     print(" Pipeline: Preprocessing + SMOTE + Scaling + Threshold Tuning + SHAP")
-    print(" Dataset: First_Review_Content/heart_disease_uci.csv")
+    print(" Dataset: Second_Review_Content/heart_disease_uci.csv (Heart_Disease_Severity_ML_Pipeline_fixed)")
     print("============================================================")
     get_engine()
     port = int(os.environ.get("PORT", 5000))

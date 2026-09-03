@@ -12,7 +12,7 @@ def main():
     print(" CARDIOSENSE: AI-Powered Heart Disease Severity System")
     print(" Frontend: React + Vite (http://localhost:5173)")
     print(" Backend:  Flask ML Pipeline (http://127.0.0.1:5000)")
-    print(" Dataset:  First_Review_Content/heart_disease_uci.csv")
+    print(" Dataset:  Second_Review_Content/heart_disease_uci.csv (Heart_Disease_Severity_ML_Pipeline_fixed)")
     print("==================================================================")
     
     # 1. Start Flask ML Backend

@@ -1,36 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Activity,
   Database,
-  Cpu,
-  BarChart3,
+  ClipboardList,
+  BarChart2,
+  FileText,
   AlertTriangle,
   Mail,
   ExternalLink,
   CheckCircle,
-  Layers,
   ArrowRight,
-  ShieldAlert,
+  ShieldCheck,
+  Stethoscope,
+  Heart,
+  ChevronRight,
+  Sparkles,
 } from "lucide-react";
 import { Card } from "../components/ui/Card";
 import { Button } from "../components/ui/Button";
 import { Badge } from "../components/ui/Badge";
 import { SEVERITY_CLASSES } from "../utils/severityUtils";
 import { Modal } from "../components/ui/Modal";
-import { getModelBenchmarks } from "../services/api";
 
 export const AboutPage = () => {
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
   const [feedbackSent, setFeedbackSent] = useState(false);
   const [feedbackText, setFeedbackText] = useState("");
-  const [benchmarksData, setBenchmarksData] = useState(null);
-
-  useEffect(() => {
-    getModelBenchmarks()
-      .then((data) => setBenchmarksData(data))
-      .catch((err) => console.log("Using cached model benchmarks:", err));
-  }, []);
 
   const handleFeedbackSubmit = (e) => {
     e.preventDefault();
@@ -44,21 +40,28 @@ export const AboutPage = () => {
 
   return (
     <div className="py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto space-y-12">
+      <div className="max-w-4xl mx-auto space-y-12">
         {/* HERO SECTION */}
         <section className="text-center space-y-4 pt-2">
           <Badge variant="primary" size="md">
-            Educational & Research Tool
+            Clinical Health Intelligence & Screening
           </Badge>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading text-text-primary tracking-tight">
             About Cardio<span className="text-primary">Sense</span>
           </h1>
           <p className="text-lg text-primary-dark font-medium font-heading">
-            Understand your heart health patterns
+            Understand your cardiovascular health patterns with clarity
           </p>
           <p className="text-base text-text-secondary leading-relaxed max-w-2xl mx-auto">
-            CardioSense is an interactive demonstration designed to illustrate how machine learning algorithms interpret clinical measurements and provide transparent, explainable insights through SHAP feature attribution.
+            CardioSense is an interactive health evaluation system designed to interpret physiological measurements, assess heart health indicators, and provide structured risk insights to help you make informed decisions with your doctor.
           </p>
+          <div className="pt-2 flex flex-wrap justify-center gap-3">
+            <Link to="/dashboard">
+              <Button size="lg" icon={ArrowRight} iconPosition="right" className="shadow-sm">
+                Start Health Assessment
+              </Button>
+            </Link>
+          </div>
         </section>
 
         {/* SECTION 1: WHAT IS CARDIOSENSE */}
@@ -67,92 +70,228 @@ export const AboutPage = () => {
             <div className="w-10 h-10 rounded-xl bg-primary-100 text-primary-900 flex items-center justify-center shrink-0">
               <Activity className="w-5 h-5" />
             </div>
-            <h2 className="text-2xl font-bold font-heading text-text-primary">
-              What is CardioSense?
-            </h2>
+            <div>
+              <h2 className="text-2xl font-bold font-heading text-text-primary">
+                What is CardioSense?
+              </h2>
+              <p className="text-xs text-text-muted">
+                5-Tier cardiovascular risk classification & pattern analysis
+              </p>
+            </div>
           </div>
-          <Card className="space-y-4 text-text-secondary text-sm sm:text-base leading-relaxed">
+
+          <Card className="space-y-6 text-text-secondary text-sm sm:text-base leading-relaxed">
             <p>
-              CardioSense uses an ensemble machine learning architecture trained to recognize patterns across <strong className="text-text-primary">5 distinct severity classes</strong>:
+              CardioSense evaluates a combination of demographic factors, cardiovascular symptoms, resting vitals, and diagnostic indicators to categorize heart disease risk across <strong className="text-text-primary">5 distinct severity tiers</strong>:
             </p>
 
             {/* 5 Severity Classes Visual Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-5 gap-2.5 pt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-5 gap-3">
               {[0, 1, 2, 3, 4].map((classId) => {
                 const info = SEVERITY_CLASSES[classId];
                 return (
                   <div
                     key={classId}
-                    className="p-3 rounded-xl border text-center space-y-1 transition-all hover:scale-[1.02]"
+                    className="p-4 rounded-xl border text-center space-y-2 transition-all hover:shadow-sm"
                     style={{
                       backgroundColor: info.lightBg,
                       borderColor: info.borderColor,
                     }}
                   >
                     <span
-                      className="w-2.5 h-2.5 rounded-full inline-block mx-auto"
+                      className="w-3 h-3 rounded-full inline-block mx-auto"
                       style={{ backgroundColor: info.color }}
                     />
                     <div
-                      className="text-xs font-bold font-heading"
+                      className="text-sm font-bold font-heading"
                       style={{ color: info.textColor }}
                     >
                       Class {classId}
                     </div>
-                    <div className="text-[11px] font-medium text-text-secondary">
+                    <div className="text-xs font-semibold text-text-primary">
                       {info.label}
                     </div>
+                    <p className="text-[11px] text-text-secondary line-clamp-3 leading-tight pt-1">
+                      {classId === 0 && "Optimal vitals with no indicative patterns"}
+                      {classId === 1 && "Mild physiological variations from baseline"}
+                      {classId === 2 && "Moderate elevations in blood pressure or lipids"}
+                      {classId === 3 && "Substantial indicators warranting doctor consultation"}
+                      {classId === 4 && "Critical factors requiring direct specialist attention"}
+                    </p>
                   </div>
                 );
               })}
             </div>
 
             <p className="text-sm pt-2">
-              Unlike black-box diagnostic tools, CardioSense prioritizes <strong className="text-text-primary">interpretability</strong>. Every prediction reveals exactly which factors (such as resting blood pressure, max heart rate, or ST depression) contributed to shifting the prediction higher or lower.
+              Unlike generic calculators, CardioSense provides transparent, factor-by-factor explanations showing which specific metrics—such as resting blood pressure, cholesterol levels, exercise tolerance, or ST depression—contributed to your assessment.
             </p>
           </Card>
         </section>
 
-        {/* SECTION 2: ABOUT THE DATASET */}
+        {/* SECTION 2: HOW IT WORKS & USER PROCEDURE */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-primary-100 text-primary-900 flex items-center justify-center shrink-0">
+              <ClipboardList className="w-5 h-5" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold font-heading text-text-primary">
+                How to Use CardioSense
+              </h2>
+              <p className="text-xs text-text-muted">
+                Step-by-step procedure from vital entry to clinical report generation
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {/* Step 1 */}
+            <Card padding="p-6" className="space-y-4 relative border-t-4 border-t-primary hover:shadow-md transition-shadow">
+              <div className="w-10 h-10 rounded-xl bg-primary-50 text-primary flex items-center justify-center font-bold text-base font-heading">
+                1
+              </div>
+              <div className="space-y-1.5">
+                <h3 className="font-bold text-base text-text-primary font-heading flex items-center gap-2">
+                  <span>Enter Health Vitals</span>
+                </h3>
+                <p className="text-xs text-text-secondary leading-relaxed">
+                  Provide your baseline physiological measurements across 4 easy-to-follow steps:
+                </p>
+              </div>
+              <ul className="text-xs text-text-secondary space-y-1.5 pl-1 border-t border-border pt-3">
+                <li className="flex items-center gap-1.5">
+                  <CheckCircle className="w-3.5 h-3.5 text-primary shrink-0" />
+                  <span><strong>Demographics:</strong> Age & biological sex</span>
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <CheckCircle className="w-3.5 h-3.5 text-primary shrink-0" />
+                  <span><strong>Symptoms:</strong> Chest discomfort type & exercise angina</span>
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <CheckCircle className="w-3.5 h-3.5 text-primary shrink-0" />
+                  <span><strong>Core Vitals:</strong> Blood pressure, cholesterol & peak HR</span>
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <CheckCircle className="w-3.5 h-3.5 text-primary shrink-0" />
+                  <span><strong>Clinical Tests:</strong> Resting ECG & ST segment readings</span>
+                </li>
+              </ul>
+            </Card>
+
+            {/* Step 2 */}
+            <Card padding="p-6" className="space-y-4 relative border-t-4 border-t-secondary-dark hover:shadow-md transition-shadow">
+              <div className="w-10 h-10 rounded-xl bg-secondary-50 text-secondary-dark flex items-center justify-center font-bold text-base font-heading">
+                2
+              </div>
+              <div className="space-y-1.5">
+                <h3 className="font-bold text-base text-text-primary font-heading flex items-center gap-2">
+                  <span>Receive Risk Insights</span>
+                </h3>
+                <p className="text-xs text-text-secondary leading-relaxed">
+                  Instantly obtain a personalized risk breakdown and factor attribution:
+                </p>
+              </div>
+              <ul className="text-xs text-text-secondary space-y-1.5 pl-1 border-t border-border pt-3">
+                <li className="flex items-center gap-1.5">
+                  <CheckCircle className="w-3.5 h-3.5 text-secondary-dark shrink-0" />
+                  <span><strong>Severity Tier:</strong> Immediate Class 0–4 assessment</span>
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <CheckCircle className="w-3.5 h-3.5 text-secondary-dark shrink-0" />
+                  <span><strong>Probability Distribution:</strong> Confidence spread across tiers</span>
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <CheckCircle className="w-3.5 h-3.5 text-secondary-dark shrink-0" />
+                  <span><strong>Key Contributing Factors:</strong> Metrics influencing your score</span>
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <CheckCircle className="w-3.5 h-3.5 text-secondary-dark shrink-0" />
+                  <span><strong>Clinical Guidance:</strong> Actionable next steps and habits</span>
+                </li>
+              </ul>
+            </Card>
+
+            {/* Step 3 */}
+            <Card padding="p-6" className="space-y-4 relative border-t-4 border-t-emerald-600 hover:shadow-md transition-shadow">
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold text-base font-heading">
+                3
+              </div>
+              <div className="space-y-1.5">
+                <h3 className="font-bold text-base text-text-primary font-heading flex items-center gap-2">
+                  <span>Generate Health Report</span>
+                </h3>
+                <p className="text-xs text-text-secondary leading-relaxed">
+                  Export and share a structured health summary with your healthcare provider:
+                </p>
+              </div>
+              <ul className="text-xs text-text-secondary space-y-1.5 pl-1 border-t border-border pt-3">
+                <li className="flex items-center gap-1.5">
+                  <CheckCircle className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span><strong>PDF Export:</strong> One-click formatted printout</span>
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <CheckCircle className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span><strong>Account History:</strong> Save and track results over time</span>
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <CheckCircle className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span><strong>Doctor Sharing:</strong> Ready to present during clinical visits</span>
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <CheckCircle className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span><strong>Privacy First:</strong> Your medical inputs remain secure</span>
+                </li>
+              </ul>
+            </Card>
+          </div>
+        </section>
+
+        {/* SECTION 3: CLINICAL REFERENCE & DATASET */}
         <section className="space-y-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-secondary-50 text-secondary-dark flex items-center justify-center shrink-0">
               <Database className="w-5 h-5" />
             </div>
-            <h2 className="text-2xl font-bold font-heading text-text-primary">
-              About the Dataset
-            </h2>
+            <div>
+              <h2 className="text-2xl font-bold font-heading text-text-primary">
+                Clinical Reference Foundation
+              </h2>
+              <p className="text-xs text-text-muted">
+                Standardized reference cohort from leading medical research institutions
+              </p>
+            </div>
           </div>
 
           <Card className="space-y-4 text-sm sm:text-base text-text-secondary leading-relaxed">
             <p>
-              The underlying model is benchmarked against the renowned <strong className="text-text-primary">UCI Heart Disease Dataset</strong>. This standardized dataset incorporates <strong className="text-text-primary">920 clinical records</strong> aggregated across four prestigious medical centers:
+              CardioSense is calibrated using the standardized <strong className="text-text-primary">UCI Heart Disease Clinical Reference Cohort</strong>, representing <strong className="text-text-primary">920 comprehensive patient records</strong> compiled across four medical institutions:
             </p>
 
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm text-text-primary font-medium pl-2">
-              <li className="flex items-center gap-2">
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm text-text-primary font-medium pl-1">
+              <li className="flex items-center gap-2 p-2 rounded-lg bg-slate-50 border border-slate-200/60">
                 <CheckCircle className="w-4 h-4 text-primary shrink-0" />
-                Cleveland Clinic Foundation
+                <span>Cleveland Clinic Foundation</span>
               </li>
-              <li className="flex items-center gap-2">
+              <li className="flex items-center gap-2 p-2 rounded-lg bg-slate-50 border border-slate-200/60">
                 <CheckCircle className="w-4 h-4 text-primary shrink-0" />
-                Hungarian Institute of Cardiology
+                <span>Hungarian Institute of Cardiology</span>
               </li>
-              <li className="flex items-center gap-2">
+              <li className="flex items-center gap-2 p-2 rounded-lg bg-slate-50 border border-slate-200/60">
                 <CheckCircle className="w-4 h-4 text-primary shrink-0" />
-                University Hospital, Zurich
+                <span>University Hospital, Zurich</span>
               </li>
-              <li className="flex items-center gap-2">
+              <li className="flex items-center gap-2 p-2 rounded-lg bg-slate-50 border border-slate-200/60">
                 <CheckCircle className="w-4 h-4 text-primary shrink-0" />
-                VA Medical Center, Long Beach
+                <span>VA Medical Center, Long Beach</span>
               </li>
             </ul>
 
-            <p className="text-xs sm:text-sm pt-1">
-              It encompasses <strong className="text-text-primary">13 core clinical features</strong> spanning demographic vitals (age, biological sex), symptom characteristics (chest pain classification, exercise angina), metabolic indicators (fasting blood sugar, cholesterol), and resting/exercise ECG measurements.
+            <p className="text-xs sm:text-sm pt-2">
+              The reference system evaluates 13 core indicators including physiological vitals, symptom types, metabolic indices, and electrocardiographic readings to establish baseline patterns.
             </p>
 
-            <div className="pt-2">
+            <div className="pt-1">
               <a
                 href="https://archive.ics.uci.edu/dataset/45/heart+disease"
                 target="_blank"
@@ -166,175 +305,42 @@ export const AboutPage = () => {
           </Card>
         </section>
 
-        {/* SECTION 3: HOW THE MODEL WORKS (3-STEP VISUAL) */}
-        <section id="methodology" className="space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-primary-100 text-primary-900 flex items-center justify-center shrink-0">
-              <Cpu className="w-5 h-5" />
-            </div>
-            <h2 className="text-2xl font-bold font-heading text-text-primary">
-              How the Model Works
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* Step 1 */}
-            <Card padding="p-6" className="relative space-y-3">
-              <div className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xs font-heading">
-                1
-              </div>
-              <h3 className="font-bold text-base text-text-primary font-heading">
-                Enter Health Vitals
-              </h3>
-              <p className="text-xs text-text-secondary leading-relaxed">
-                Provide common physiological stats and exercise symptoms through a clean 4-step guided interface.
-              </p>
-            </Card>
-
-            {/* Step 2 */}
-            <Card padding="p-6" className="relative space-y-3">
-              <div className="w-8 h-8 rounded-full bg-secondary text-white flex items-center justify-center font-bold text-xs font-heading">
-                2
-              </div>
-              <h3 className="font-bold text-base text-text-primary font-heading">
-                Ensemble Analysis
-              </h3>
-              <p className="text-xs text-text-secondary leading-relaxed">
-                An ensemble of Random Forest, Support Vector Machines (SVM), and Neural Networks evaluates non-linear correlations.
-              </p>
-            </Card>
-
-            {/* Step 3 */}
-            <Card padding="p-6" className="relative space-y-3">
-              <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-xs font-heading">
-                3
-              </div>
-              <h3 className="font-bold text-base text-text-primary font-heading">
-                Severity & SHAP
-              </h3>
-              <p className="text-xs text-text-secondary leading-relaxed">
-                Receive a 5-class probability spread alongside SHAP feature attributions showing which specific factors tipped the scale.
-              </p>
-            </Card>
-          </div>
-        </section>
-
-        {/* SECTION 4: MODEL PERFORMANCE & BENCHMARK COMPARISON */}
-        <section className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-primary-100 text-primary-900 flex items-center justify-center shrink-0">
-                <BarChart3 className="w-5 h-5" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold font-heading text-text-primary">
-                  Model Comparison & Benchmarks
-                </h2>
-                <p className="text-xs text-text-secondary">
-                  5-Fold Stratified Cross-Validation & Holdout Evaluation (Heart Disease UCI Pipeline)
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Model Comparison Table */}
-          <div className="overflow-x-auto border border-border rounded-xl bg-surface shadow-xs">
-            <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 border-b border-border font-semibold text-text-primary">
-                <tr>
-                  <th className="p-3">Model Architecture</th>
-                  <th className="p-3">CV Accuracy</th>
-                  <th className="p-3">Holdout Acc</th>
-                  <th className="p-3">CV Macro-F1</th>
-                  <th className="p-3">Severity-Weighted F1</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border">
-                {benchmarksData && benchmarksData.models ? (
-                  Object.entries(benchmarksData.models).map(([mName, mStats]) => (
-                    <tr key={mName} className="hover:bg-slate-50/50">
-                      <td className="p-3 font-semibold text-text-primary">
-                        {mName === "Random Forest" ? "🌲 Random Forest (Primary + SHAP)" : mName === "SVM" ? "⚡ Support Vector Machine (RBF)" : "🧠 Multi-Layer Perceptron (MLP)"}
-                      </td>
-                      <td className="p-3 font-mono-val">{(mStats.cv_accuracy * 100).toFixed(1)}%</td>
-                      <td className="p-3 font-mono-val font-semibold text-primary">{(mStats.holdout_accuracy * 100).toFixed(1)}%</td>
-                      <td className="p-3 font-mono-val">{mStats.cv_macro_f1.toFixed(3)}</td>
-                      <td className="p-3 font-mono-val font-semibold text-emerald-600">{mStats.holdout_severity_f1.toFixed(3)}</td>
-                    </tr>
-                  ))
-                ) : (
-                  <>
-                    <tr>
-                      <td className="p-3 font-semibold text-text-primary">🌲 Random Forest (Primary + SHAP)</td>
-                      <td className="p-3 font-mono-val">55.3%</td>
-                      <td className="p-3 font-mono-val font-semibold text-primary">52.2%</td>
-                      <td className="p-3 font-mono-val">0.312</td>
-                      <td className="p-3 font-mono-val font-semibold text-emerald-600">0.292</td>
-                    </tr>
-                    <tr>
-                      <td className="p-3 font-semibold text-text-primary">⚡ Support Vector Machine (RBF)</td>
-                      <td className="p-3 font-mono-val">54.4%</td>
-                      <td className="p-3 font-mono-val font-semibold text-primary">50.5%</td>
-                      <td className="p-3 font-mono-val">0.301</td>
-                      <td className="p-3 font-mono-val font-semibold text-emerald-600">0.293</td>
-                    </tr>
-                    <tr>
-                      <td className="p-3 font-semibold text-text-primary">🧠 Multi-Layer Perceptron (MLP)</td>
-                      <td className="p-3 font-mono-val">50.5%</td>
-                      <td className="p-3 font-mono-val font-semibold text-primary">48.4%</td>
-                      <td className="p-3 font-mono-val">0.278</td>
-                      <td className="p-3 font-mono-val font-semibold text-emerald-600">0.246</td>
-                    </tr>
-                  </>
-                )}
-              </tbody>
-            </table>
-          </div>
-
-          <p className="text-xs text-center text-text-muted">
-            * Evaluated on a 20% stratified holdout set with SMOTE class rebalancing & clinical threshold tuning for classes 3 & 4.
-          </p>
-        </section>
-
-        {/* SECTION 5: LIMITATIONS CALLOUT BOX */}
+        {/* SECTION 4: CLINICAL BOUNDARIES & DISCLAIMER */}
         <section id="limitations">
-          <div className="bg-amber-50/80 border-l-4 border-warning rounded-r-2xl p-6 sm:p-7 shadow-xs space-y-3">
+          <div className="bg-amber-50/90 border-l-4 border-warning rounded-r-2xl p-6 sm:p-7 shadow-xs space-y-3">
             <div className="flex items-center gap-2.5 text-amber-900 font-bold font-heading text-lg">
               <AlertTriangle className="w-5 h-5 text-warning shrink-0" />
-              <span>Model Limitations & Educational Boundaries</span>
+              <span>Important Medical Boundaries & Educational Purpose</span>
             </div>
 
             <ul className="space-y-2 text-xs sm:text-sm text-amber-950 leading-relaxed list-disc list-inside">
               <li>
-                <strong>Small Historical Dataset:</strong> The 920-record UCI dataset is limited in sample size and collected primarily in historical clinical environments.
+                <strong>Educational & Screening Tool:</strong> CardioSense provides pattern-matching insights for health awareness and does not formulate a definitive medical diagnosis.
               </li>
               <li>
-                <strong>Not Clinically Validated:</strong> CardioSense is an educational prototype and has not undergone formal clinical trial clearance or FDA/CE regulatory validation.
+                <strong>Does Not Replace Diagnostic Testing:</strong> True clinical cardiac diagnosis requires physician consultation, 12-lead ECG, echocardiograms, coronary angiography, and comprehensive laboratory blood tests.
               </li>
               <li>
-                <strong>Demographic Generalization:</strong> Historical datasets often underrepresent specific age groups, ethnicities, and gender-specific symptom expressions.
+                <strong>Always Consult a Doctor:</strong> Never adjust prescribed medications, treatments, or medical therapies based solely on CardioSense evaluations.
               </li>
               <li>
-                <strong>Does Not Replace Diagnostic Testing:</strong> True cardiac diagnosis requires direct physician examination, 12-lead ECG, coronary angiography, echocardiograms, and targeted blood panels.
-              </li>
-              <li>
-                <strong>For Educational Use Only:</strong> Never use predictions to modify prescribed therapies or self-diagnose cardiovascular disease.
+                <strong>Emergency Notice:</strong> If you or someone around you experiences severe chest pressure, radiating pain, shortness of breath, or dizziness, seek immediate emergency medical services (e.g. 911 / 112).
               </li>
             </ul>
           </div>
         </section>
 
-        {/* SECTION 6: QUESTIONS OR FEEDBACK */}
-        <section className="text-center bg-surface border border-border rounded-2xl p-8 space-y-4">
+        {/* SECTION 5: QUESTIONS OR INQUIRIES */}
+        <section className="text-center bg-surface border border-border rounded-2xl p-8 space-y-4 shadow-xs">
           <div className="w-12 h-12 rounded-2xl bg-primary-50 text-primary flex items-center justify-center mx-auto">
             <Mail className="w-6 h-6" />
           </div>
           <div className="space-y-1 max-w-md mx-auto">
             <h3 className="text-xl font-bold font-heading text-text-primary">
-              Questions or Feedback?
+              Questions or Observations?
             </h3>
             <p className="text-sm text-text-secondary">
-              We welcome questions regarding algorithm architecture, SHAP attribution methods, and educational dataset licensing.
+              Have inquiries regarding feature interpretations, reference indicators, or clinical workflow feedback?
             </p>
           </div>
 
@@ -344,11 +350,11 @@ export const AboutPage = () => {
               icon={Mail}
               onClick={() => setFeedbackModalOpen(true)}
             >
-              Send Research Inquiry
+              Send Inquiry / Feedback
             </Button>
             <Link to="/dashboard">
               <Button icon={ArrowRight} iconPosition="right">
-                Explore Demo Dashboard
+                Start Health Assessment
               </Button>
             </Link>
           </div>
@@ -359,16 +365,16 @@ export const AboutPage = () => {
       <Modal
         isOpen={feedbackModalOpen}
         onClose={() => setFeedbackModalOpen(false)}
-        title="Contact Research Team"
-        subtitle="Send questions or observations regarding the CardioSense demo."
+        title="Contact CardioSense Team"
+        subtitle="Send your questions or feedback regarding the CardioSense platform."
         maxWidth="max-w-md"
       >
         {feedbackSent ? (
           <div className="py-6 text-center space-y-2">
             <CheckCircle className="w-10 h-10 text-emerald-600 mx-auto" />
-            <h4 className="font-bold text-text-primary font-heading">Message Dispatched</h4>
+            <h4 className="font-bold text-text-primary font-heading">Message Sent</h4>
             <p className="text-xs text-text-secondary">
-              Thank you for reaching out. We appreciate your feedback.
+              Thank you for reaching out. We appreciate your observations.
             </p>
           </div>
         ) : (
@@ -380,20 +386,20 @@ export const AboutPage = () => {
               <input
                 type="email"
                 required
-                placeholder="researcher@university.edu"
+                placeholder="user@example.com"
                 className="w-full text-sm rounded-lg border border-border bg-surface p-2.5 focus:ring-2 focus:ring-primary"
               />
             </div>
             <div>
               <label className="block text-xs font-semibold text-text-primary uppercase tracking-wider mb-1">
-                Message / Inquiry
+                Message / Feedback
               </label>
               <textarea
                 rows={4}
                 required
                 value={feedbackText}
                 onChange={(e) => setFeedbackText(e.target.value)}
-                placeholder="Inquire about SHAP formulas, dataset feature encodings, or reporting feedback..."
+                placeholder="Share your questions, feedback on vital inputs, or report generation experience..."
                 className="w-full text-sm rounded-lg border border-border bg-surface p-2.5 focus:ring-2 focus:ring-primary resize-none"
               />
             </div>

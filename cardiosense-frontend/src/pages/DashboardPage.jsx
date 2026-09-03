@@ -102,9 +102,9 @@ export const DashboardPage = () => {
 
   // Cycling analysis messages for full-page loading state
   const loadingMessages = [
-    "Analyzing input patterns against reference cohort...",
-    "Running machine learning pipeline with clinical feature engineering...",
-    "Computing SHAP feature attributions & preparing report...",
+    "Analyzing vital measurements against clinical reference cohort...",
+    "Evaluating cardiovascular indicators and risk patterns...",
+    "Calculating factor attributions and preparing clinical summary report...",
   ];
 
   useEffect(() => {
@@ -344,7 +344,7 @@ export const DashboardPage = () => {
                     min="20"
                     max="100"
                     placeholder="Enter age (20–100)"
-                    helperText="Reference model cohort ranges from 20 to 100 years of age."
+                    helperText="Reference cohort ranges from 20 to 100 years of age."
                     error={errors.age}
                     {...register("age", { valueAsNumber: true })}
                   />
