@@ -333,11 +333,10 @@ export const ResultsPage = () => {
                     {item.plainLabel}
                   </span>
                   <span
-                    className={`text-[11px] font-semibold shrink-0 px-2 py-0.5 rounded-full ${
-                      item.shap > 0
+                    className={`text-[11px] font-semibold shrink-0 px-2 py-0.5 rounded-full ${item.shap > 0
                         ? "bg-amber-50 text-amber-900 border border-amber-200"
                         : "bg-emerald-50 text-emerald-900 border border-emerald-200"
-                    }`}
+                      }`}
                   >
                     {item.shap > 0 ? "Increased severity" : "Decreased severity"}
                   </span>
@@ -357,10 +356,10 @@ export const ResultsPage = () => {
             </div>
             <div>
               <h2 className="text-lg font-bold font-heading text-text-primary">
-                Your Values vs. Clinical Reference Ranges
+                Your Values vs. General Reference Benchmarks
               </h2>
               <p className="text-xs text-text-secondary">
-                Comparative benchmarks based on standard adult cardiovascular baselines
+                Comparison with commonly used adult cardiovascular reference values
               </p>
             </div>
           </div>
@@ -427,8 +426,8 @@ export const ResultsPage = () => {
               {savedSuccess
                 ? "Saved to Account!"
                 : isLoggedIn && !isGuest
-                ? "Save to My Account"
-                : "Log In to Save Result"}
+                  ? "Save to My Account"
+                  : "Log In to Save Result"}
             </Button>
           </div>
 
@@ -459,7 +458,7 @@ export const ResultsPage = () => {
         isOpen={reviewModalOpen}
         onClose={() => setReviewModalOpen(false)}
         predictedSeverityClass={result.predictedClass}
-        onAddReview={() => {}}
+        onAddReview={() => { }}
       />
     </div>
   );

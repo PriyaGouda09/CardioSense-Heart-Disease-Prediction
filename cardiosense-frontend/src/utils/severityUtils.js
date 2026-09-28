@@ -80,37 +80,45 @@ export const CLINICAL_REFERENCE_RANGES = {
   trestbps: {
     label: "Resting Blood Pressure",
     unit: "mmHg",
-    min: 80,
+    min: 70,
     max: 200,
     healthyMin: 90,
     healthyMax: 120,
-    description: "Standard normal resting systolic pressure is under 120 mmHg.",
+    description:
+      "Normal adult systolic blood pressure is below 120 mmHg. Values of 120 mmHg or higher may require further interpretation based on the full blood pressure reading.",
   },
+
   chol: {
     label: "Total Serum Cholesterol",
-    unit: "mg/dl",
+    unit: "mg/dL",
     min: 100,
     max: 500,
     healthyMin: 125,
     healthyMax: 200,
-    description: "Desirable total cholesterol level is typically below 200 mg/dl.",
+    description:
+      "A total cholesterol level below 200 mg/dL is commonly used as a desirable reference value. Individual cardiovascular risk should be interpreted using the complete lipid profile and other risk factors.",
   },
+
   thalach: {
     label: "Max Heart Rate Achieved",
     unit: "bpm",
     min: 60,
     max: 220,
-    healthyMin: 120,
-    healthyMax: 175,
-    description: "General target peak exercise rate varies with age (roughly 220 minus age).",
+    healthyMin: 100,
+    healthyMax: 190,
+    description:
+      "Maximum heart rate varies with age. A commonly used estimate is approximately 220 minus age, so there is no single universal healthy maximum-heart-rate range for all adults.",
   },
+
   oldpeak: {
     label: "ST Depression (Oldpeak)",
     unit: "mm",
     min: 0,
     max: 6.5,
     healthyMin: 0,
-    healthyMax: 1.0,
-    description: "ECG ST depression below 1.0 mm is commonly considered a standard baseline.",
+    healthyMax: 1,
+    description:
+      "ST-segment depression is an ECG finding that requires clinical interpretation. Lower values generally indicate less ST depression, but this measure should not be interpreted independently.",
   },
 };
+
