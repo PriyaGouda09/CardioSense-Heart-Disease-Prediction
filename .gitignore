@@ -3,3 +3,14 @@
 /Final_Research_Paper_corrected (1).docx
 /Final_Research_Paper_revised.docx
 /main-accepted.pdf
+
+# Secrets and environment configs
+.env
+.env.*
+*.env
+backend/.env
+
+# Python cache artifacts
+__pycache__/
+*.py[cod]
+*$py.class

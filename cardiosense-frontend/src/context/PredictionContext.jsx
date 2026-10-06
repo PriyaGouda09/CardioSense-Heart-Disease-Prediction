@@ -107,6 +107,21 @@ export const PredictionProvider = ({ children }) => {
     return DEMO_PREDICTION;
   };
 
+  const updatePredictionExplanation = useCallback((predictionId, explanationText) => {
+    if (!predictionId || !explanationText) return;
+    setCurrentPrediction((prev) => {
+      if (prev && prev.id === predictionId) {
+        return { ...prev, llmExplanation: explanationText };
+      }
+      return prev;
+    });
+    setPredictionHistory((prevHistory) =>
+      prevHistory.map((p) =>
+        p.id === predictionId ? { ...p, llmExplanation: explanationText } : p
+      )
+    );
+  }, []);
+
   return (
     <PredictionContext.Provider
       value={{
@@ -115,6 +130,7 @@ export const PredictionProvider = ({ children }) => {
         generatePrediction,
         getPredictionById,
         setCurrentPrediction,
+        updatePredictionExplanation,
         backendStatus,
         backendInfo,
         selectedModel,
@@ -127,6 +143,7 @@ export const PredictionProvider = ({ children }) => {
       {children}
     </PredictionContext.Provider>
   );
+
 };
 
 export const usePrediction = () => {

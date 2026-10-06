@@ -18,6 +18,8 @@ import {
   AlertCircle,
   Zap,
   TrendingUp,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import { Card } from "../components/ui/Card";
 import { Button } from "../components/ui/Button";
@@ -27,6 +29,103 @@ import { Tooltip } from "../components/ui/Tooltip";
 import { ProgressStepper } from "../components/ui/ProgressStepper";
 import { usePrediction } from "../context/PredictionContext";
 import { SAMPLE_INPUTS } from "../data/samplePredictions";
+
+const TEST_INFORMATION_GROUPS = [
+  {
+    title: "Basic Information",
+    items: [
+      ["Age (age)", "Basic patient information", "Age in years"],
+      ["Sex (sex)", "Basic patient information", "Sex recorded for the assessment"],
+    ],
+  },
+  {
+    title: "Routine Measurement",
+    items: [
+      [
+        "Resting Blood Pressure (trestbps)",
+        "Blood pressure measurement or routine checkup",
+        "Resting systolic blood pressure",
+      ],
+    ],
+  },
+  {
+    title: "Symptoms",
+    items: [
+      [
+        "Chest Discomfort Pattern (cp)",
+        "Patient-reported symptom information",
+        "The chest discomfort pattern selected in the form",
+      ],
+    ],
+  },
+  {
+    title: "Blood Tests",
+    items: [
+      ["Cholesterol (chol)", "Lipid profile / blood test", "Serum cholesterol level"],
+      [
+        "Fasting Blood Sugar (fbs)",
+        "Fasting blood glucose test",
+        "Whether fasting blood sugar is above 120 mg/dL",
+      ],
+    ],
+  },
+  {
+    title: "Resting Heart Test",
+    items: [
+      [
+        "Resting ECG (restecg)",
+        "Electrocardiogram (ECG/EKG)",
+        "Electrical activity of the heart while at rest",
+      ],
+    ],
+  },
+  {
+    title: "Exercise / Stress Test",
+    description: "One exercise stress test can provide several of these values.",
+    items: [
+      [
+        "Maximum Heart Rate (thalach)",
+        "Recorded during the exercise test",
+        "Highest heart rate reached during exercise",
+      ],
+      [
+        "Exercise-Induced Angina (exang)",
+        "Recorded during the exercise test",
+        "Whether chest discomfort occurs during exercise",
+      ],
+      [
+        "ST Depression / Oldpeak (oldpeak)",
+        "Exercise test ECG report",
+        "ST-segment depression observed during exercise",
+      ],
+      [
+        "ST Slope (slope)",
+        "Exercise test ECG report",
+        "Slope of the ST segment during exercise",
+      ],
+    ],
+  },
+  {
+    title: "Specialized Cardiac Investigation",
+    items: [
+      [
+        "Number of Major Vessels (ca)",
+        "Existing coronary angiography or relevant cardiac report",
+        "Major coronary vessel information, including narrowing",
+      ],
+    ],
+  },
+  {
+    title: "Other Cardiac Information",
+    items: [
+      [
+        "Thal / Perfusion Category (thal)",
+        "Existing cardiac perfusion report or medical record",
+        "Normal, fixed-defect, or reversible-defect category; this app field is not a request for a new thalassemia blood test",
+      ],
+    ],
+  },
+];
 
 // Step 1 Yup Schema: Demographics
 const step1Schema = yup.object({
@@ -96,6 +195,7 @@ export const DashboardPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [loadingMessageIndex, setLoadingMessageIndex] = useState(0);
+  const [isTestDetailsOpen, setIsTestDetailsOpen] = useState(false);
 
   const navigate = useNavigate();
   const { generatePrediction, currentPrediction, selectedModel, applyThresholds } = usePrediction();
@@ -282,6 +382,118 @@ export const DashboardPage = () => {
             </button>
           </div>
         </div>
+
+        <section
+          aria-labelledby="test-information-heading"
+          className="rounded-2xl border border-primary-200/80 bg-primary-50/70 p-4 sm:p-5 shadow-xs"
+        >
+          <div className="flex items-start gap-3">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary-100 text-primary">
+              <Stethoscope className="h-4 w-4" aria-hidden="true" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <h2
+                id="test-information-heading"
+                className="text-base font-bold font-heading text-text-primary"
+              >
+                🩺 What Tests &amp; Information Do I Need?
+              </h2>
+              <div className="mt-3 grid grid-cols-1 gap-x-5 gap-y-2.5 text-xs sm:grid-cols-2 sm:text-sm">
+                <p>
+                  <strong className="text-text-primary">🩸 Blood Tests</strong>
+                  <span className="text-text-secondary"> — Cholesterol, fasting blood sugar</span>
+                </p>
+                <p>
+                  <strong className="text-text-primary">❤️ ECG</strong>
+                  <span className="text-text-secondary"> — Resting ECG</span>
+                </p>
+                <p>
+                  <strong className="text-text-primary">🏃 Exercise Stress Test</strong>
+                  <span className="text-text-secondary"> — Maximum heart rate, exercise-induced angina, ST depression, ST slope</span>
+                </p>
+                <p>
+                  <strong className="text-text-primary">🫀 Other Cardiac Reports</strong>
+                  <span className="text-text-secondary"> — Major vessel and thal/perfusion information</span>
+                </p>
+                <p>
+                  <strong className="text-text-primary">👤 Basic Information</strong>
+                  <span className="text-text-secondary"> — Age, sex</span>
+                </p>
+                <p>
+                  <strong className="text-text-primary">🩺 Routine Check &amp; Symptoms</strong>
+                  <span className="text-text-secondary"> — Resting blood pressure, chest discomfort pattern</span>
+                </p>
+              </div>
+
+              <p className="mt-3 text-xs leading-relaxed text-text-secondary">
+                You do not need every listed test. Use existing recent medical reports where available. Only undergo medical tests when recommended by a qualified healthcare professional.
+              </p>
+
+              <button
+                type="button"
+                aria-expanded={isTestDetailsOpen}
+                aria-controls="test-information-details"
+                onClick={() => setIsTestDetailsOpen((isOpen) => !isOpen)}
+                className="mt-3 inline-flex items-center gap-1.5 rounded-lg py-1 text-xs font-semibold text-primary-dark transition-colors hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              >
+                {isTestDetailsOpen ? "Hide Details" : "View Details"}
+                {isTestDetailsOpen ? (
+                  <ChevronUp className="h-3.5 w-3.5" aria-hidden="true" />
+                ) : (
+                  <ChevronDown className="h-3.5 w-3.5" aria-hidden="true" />
+                )}
+              </button>
+
+              {isTestDetailsOpen && (
+                <div
+                  id="test-information-details"
+                  className="mt-3 space-y-3 border-t border-primary-200/70 pt-3"
+                >
+                  <p className="text-xs leading-relaxed text-text-secondary">
+                    Some information comes from basic patient details or routine measurements. Other values may already be in recent blood, ECG, exercise-test, or cardiac reports. Specialized values may only be available if a healthcare professional previously recommended that investigation. Do not guess unavailable values; use “I don’t know” where the form offers it.
+                  </p>
+
+                  <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
+                    {TEST_INFORMATION_GROUPS.map((group) => (
+                      <section
+                        key={group.title}
+                        className="rounded-xl border border-border/80 bg-surface p-3"
+                      >
+                        <h3 className="text-xs font-bold text-text-primary">
+                          {group.title}
+                        </h3>
+                        {group.description && (
+                          <p className="mt-1 text-[11px] font-medium text-primary-dark">
+                            {group.description}
+                          </p>
+                        )}
+                        <dl className="mt-2 space-y-2">
+                          {group.items.map(([name, source, meaning]) => (
+                            <div key={name} className="text-[11px] leading-relaxed">
+                              <dt className="font-semibold text-text-primary">{name}</dt>
+                              <dd className="text-text-secondary">
+                                {source} → {meaning}
+                              </dd>
+                            </div>
+                          ))}
+                        </dl>
+                      </section>
+                    ))}
+                  </div>
+
+                  <div className="space-y-1 border-t border-primary-200/70 pt-3 text-[11px] leading-relaxed text-text-secondary">
+                    <p className="font-semibold text-text-primary">
+                      CardioSense is intended for educational and research purposes only and does not provide a medical diagnosis.
+                    </p>
+                    <p>
+                      These tests should only be taken when recommended by a qualified healthcare professional. CardioSense does not recommend undergoing medical tests solely to obtain a prediction.
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
 
         {/* 4-Step Progress Stepper */}
         <ProgressStepper

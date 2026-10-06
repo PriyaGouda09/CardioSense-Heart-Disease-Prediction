@@ -40,11 +40,13 @@ def index():
         "endpoints": [
             "/api/health",
             "/api/predict",
+            "/api/chat-predict",
             "/api/models",
             "/api/sample-cases",
             "/api/dataset-stats",
         ]
     })
+
 
 @app.route("/api/health", methods=["GET"])
 def health_check():
@@ -94,7 +96,210 @@ def predict():
             "error": str(e)
         }), 500
 
+@app.route("/api/chat-predict", methods=["POST"])
+def chat_predict():
+    """
+    Connects the Google Gemini clinical explanation service with the ML model via tool calling.
+
+    Accepts JSON body:
+      - message (str, required): The patient's query or clinical details.
+      - conversationHistory / conversation_history (list, optional): Previous messages.
+      - modelName (str, optional): Gemini model override.
+
+    Returns JSON:
+      - success (bool)
+      - explanation (str)
+      - ml_prediction (dict or None)
+      - status (str)
+      - error (str or None)
+      - tool_called (bool)
+      - tool_status (str)
+      - disclaimer (str)
+      - conversation_history (list)
+    """
+    try:
+        # 1. Validate that the request has JSON content
+        if not request.is_json:
+            return jsonify({
+                "success": False,
+                "status": "invalid_request",
+                "explanation": "",
+                "ml_prediction": None,
+                "error": "Request body must be valid JSON with 'Content-Type: application/json'.",
+            }), 400
+
+        try:
+            payload = request.get_json(silent=True)
+            if payload is None:
+                return jsonify({
+                    "success": False,
+                    "status": "invalid_json",
+                    "explanation": "",
+                    "ml_prediction": None,
+                    "error": "Malformed or empty JSON payload in request.",
+                }), 400
+        except Exception:
+            return jsonify({
+                "success": False,
+                "status": "invalid_json",
+                "explanation": "",
+                "ml_prediction": None,
+                "error": "Malformed JSON payload in request.",
+            }), 400
+
+        if not isinstance(payload, dict):
+            return jsonify({
+                "success": False,
+                "status": "invalid_request",
+                "explanation": "",
+                "ml_prediction": None,
+                "error": "JSON payload must be an object.",
+            }), 400
+
+        # 2. Extract and validate 'message'
+        message = payload.get("message")
+        if message is None:
+            return jsonify({
+                "success": False,
+                "status": "missing_message",
+                "explanation": "",
+                "ml_prediction": None,
+                "error": "'message' field is required in the request body.",
+            }), 400
+
+        if not isinstance(message, str):
+            return jsonify({
+                "success": False,
+                "status": "invalid_message",
+                "explanation": "",
+                "ml_prediction": None,
+                "error": "'message' must be a string.",
+            }), 400
+
+        clean_message = message.strip()
+        if not clean_message:
+            return jsonify({
+                "success": False,
+                "status": "empty_message",
+                "explanation": "",
+                "ml_prediction": None,
+                "error": "'message' cannot be empty or blank.",
+            }), 400
+
+        # 3. Extract optional conversation history
+        history = payload.get("conversationHistory") or payload.get("conversation_history") or []
+        if not isinstance(history, list):
+            history = []
+
+        model_name = payload.get("modelName")
+        patient_inputs = payload.get("patientInputs") or payload.get("patient_inputs")
+        if not isinstance(patient_inputs, dict):
+            patient_inputs = None
+
+        # 4. Lazy-import LLM service and register singleton ML engine
+        from llm_service import generate_response
+        from llm_tools import set_ml_engine
+        set_ml_engine(get_engine())
+
+        logger.info(f"Received chat-predict message ({len(clean_message)} chars). History length: {len(history)}")
+
+        # 5. Execute Gemini tool-calling pipeline
+        response_data = generate_response(
+            user_message=clean_message,
+            conversation_history=history,
+            model_name=model_name,
+            patient_inputs=patient_inputs,
+        )
+
+        # 6. Map status codes appropriately
+        status = response_data.get("status", "success")
+        from llm_service import _sanitize_error_message
+
+        error_msg = _sanitize_error_message(
+            response_data.get("error_details") or response_data.get("explanation") or ""
+        )
+        explanation_msg = _sanitize_error_message(
+            response_data.get("explanation", "")
+        )
+
+        if status in ("api_key_missing", "api_key_invalid"):
+            return jsonify({
+                "success": False,
+                "status": "api_key_missing",
+                "explanation": explanation_msg,
+                "ml_prediction": None,
+                "tool_called": False,
+                "tool_status": "none",
+                "error": error_msg or "Gemini API key is not configured or invalid.",
+                "disclaimer": response_data.get("disclaimer"),
+                "conversation_history": history,
+            }), 503
+
+        if status == "service_unavailable":
+            return jsonify({
+                "success": False,
+                "status": "service_unavailable",
+                "explanation": explanation_msg,
+                "ml_prediction": None,
+                "tool_called": response_data.get("tool_called", False),
+                "tool_status": response_data.get("tool_status", "error"),
+                "error": error_msg or "The Gemini model is temporarily experiencing high demand. Please try again later.",
+                "disclaimer": response_data.get("disclaimer"),
+                "conversation_history": history,
+            }), 503
+
+        if status == "rate_limit_exceeded":
+            return jsonify({
+                "success": False,
+                "status": "rate_limit_exceeded",
+                "explanation": explanation_msg,
+                "ml_prediction": None,
+                "tool_called": response_data.get("tool_called", False),
+                "tool_status": response_data.get("tool_status", "error"),
+                "error": error_msg or "The Gemini API request rate limit has been exceeded.",
+                "disclaimer": response_data.get("disclaimer"),
+                "conversation_history": history,
+            }), 429
+
+        if not response_data.get("success", False) and status == "error":
+            return jsonify({
+                "success": False,
+                "status": "error",
+                "explanation": explanation_msg,
+                "ml_prediction": None,
+                "tool_called": response_data.get("tool_called", False),
+                "tool_status": response_data.get("tool_status", "error"),
+                "error": error_msg or explanation_msg,
+                "disclaimer": response_data.get("disclaimer"),
+                "conversation_history": history,
+            }), 500
+
+        # 7. Success response (including missing_inputs or validation_error conversational guidance)
+        return jsonify({
+            "success": True,
+            "status": status,
+            "explanation": response_data.get("explanation", ""),
+            "ml_prediction": response_data.get("ml_prediction"),
+            "tool_called": response_data.get("tool_called", False),
+            "tool_status": response_data.get("tool_status", "none"),
+            "tool_result": response_data.get("tool_result"),
+            "error": None,
+            "disclaimer": response_data.get("disclaimer"),
+            "conversation_history": response_data.get("conversation_history", []),
+        }), 200
+
+    except Exception as e:
+        logger.exception(f"Unexpected error in /api/chat-predict: {e}")
+        return jsonify({
+            "success": False,
+            "status": "internal_error",
+            "explanation": "An unexpected backend error occurred.",
+            "ml_prediction": None,
+            "error": str(e),
+        }), 500
+
 @app.route("/api/models", methods=["GET"])
+
 def get_models():
     try:
         engine = get_engine()
